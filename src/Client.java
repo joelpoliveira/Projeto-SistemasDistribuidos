@@ -26,6 +26,8 @@ public class Client {
             System.exit(1);
         }
 
+        String texto = "", data = "";
+
         // Create socket
         try (Socket s = new Socket(args[0], socketPort)) {
             System.out.println("Created socket = " + s);
@@ -34,15 +36,36 @@ public class Client {
             DataInputStream in = new DataInputStream(s.getInputStream());
             DataOutputStream out = new DataOutputStream(s.getOutputStream());
 
-            // Read input from System.in, send to server and print response
-            try (Scanner sc = new Scanner(System.in)) {
-                while (true) {
-                    String texto = sc.nextLine();
+            
+            // ==== AUTH ===
+            try {
+                try (Scanner sc = new Scanner(System.in)) {
+                    //username
+                    System.out.print(in.readUTF());
+                    texto = sc.nextLine();
                     out.writeUTF(texto);
-                    String data = in.readUTF();
-                    System.out.println("Received: " + data);
+                    //password
+                    System.out.print(in.readUTF());
+                    texto = sc.nextLine();
+                    out.writeUTF(texto);
+
+                    //out.writeUTF()
                 }
+
+            } catch (EOFException e) {
+                System.out.println("EOF:" + e); // Client closed socket
+            } catch (IOException e) {
+                System.out.println("IO:" + e);
             }
+
+            // try (Scanner sc = new Scanner(System.in)) {
+            //     while (true) {
+            //         texto = sc.nextLine();
+            //         out.writeUTF(texto);
+            //         data = in.readUTF();
+            //         System.out.println(">" + data);
+            //     }
+            // }
 
         } catch (UnknownHostException e) {
             System.out.println("Sock:" + e.getMessage());

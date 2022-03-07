@@ -28,7 +28,7 @@ public class MainServer {
     }
 }
 
-// = Thread para tratar de cada canal de comunicação com um cliente
+// Thread para tratar de cada canal de comunicação com um cliente
 class Connection extends Thread {
     DataInputStream in;
     DataOutputStream out;
@@ -49,20 +49,34 @@ class Connection extends Thread {
 
     // =============================
     public void run() {
-        String resposta = "";
+        String resposta = "", username = "", password = "";
 
         try {
-            while (true) {
-                // an echo server
-                String data = in.readUTF();
-                System.out.println("T[" + thread_number + "] Recebeu: " + data);
-                resposta = data.toUpperCase();
-                out.writeUTF(resposta);
-            }
+            out.writeUTF("username: ");
+            username = in.readUTF();
+            out.writeUTF("password: ");
+            password = in.readUTF();    
+
         } catch (EOFException e) {
             System.out.println("EOF:" + e); // Client closed socket
         } catch (IOException e) {
             System.out.println("IO:" + e);
         }
+
+
+
+        // try {
+        //     while (true) {
+        //         // an echo server
+        //         String data = in.readUTF();
+        //         System.out.println("T[" + thread_number + "] Recebeu: " + data);
+        //         resposta = data.toUpperCase();
+        //         out.writeUTF(resposta);
+        //     }
+        // } catch (EOFException e) {
+        //     System.out.println("EOF:" + e); // Client closed socket
+        // } catch (IOException e) {
+        //     System.out.println("IO:" + e);
+        // }
     }
 }
