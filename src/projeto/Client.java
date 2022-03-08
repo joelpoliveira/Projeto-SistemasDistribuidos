@@ -1,3 +1,5 @@
+package projeto;
+
 import java.net.*;
 import java.util.Scanner;
 import java.io.*;
@@ -26,8 +28,6 @@ public class Client {
             System.exit(1);
         }
 
-        String texto = "", data = "";
-
         // Create socket
         try (Socket s = new Socket(args[0], socketPort)) {
             System.out.println("Created socket = " + s);
@@ -36,36 +36,50 @@ public class Client {
             DataInputStream in = new DataInputStream(s.getInputStream());
             DataOutputStream out = new DataOutputStream(s.getOutputStream());
 
-            
-            // ==== AUTH ===
-            try {
-                try (Scanner sc = new Scanner(System.in)) {
-                    //username
-                    System.out.print(in.readUTF());
-                    texto = sc.nextLine();
-                    out.writeUTF(texto);
-                    //password
-                    System.out.print(in.readUTF());
-                    texto = sc.nextLine();
-                    out.writeUTF(texto);
+            String text = "", data = "";
 
-                    //out.writeUTF()
+            try {
+                Scanner sc = new Scanner(System.in);
+
+                while (true) {
+                    System.out.print("> ");
+                    switch (text = sc.nextLine()) {
+                        case "register":
+                            out.writeUTF(text);
+                            // username
+                            System.out.print(in.readUTF());
+                            out.writeUTF(sc.nextLine());
+                            // password
+                            System.out.print(in.readUTF());
+                            out.writeUTF(sc.nextLine());
+
+                            System.out.println(in.readUTF());
+                            break;
+
+                        case "login":
+                            out.writeUTF(text);
+                            // username
+                            System.out.print(in.readUTF());
+                            out.writeUTF(sc.nextLine());
+                            // password
+                            System.out.print(in.readUTF());
+                            out.writeUTF(sc.nextLine());
+                            break;
+
+                        case "teste":
+                            out.writeUTF(text);
+                            break;
+
+                        default:
+                            break;
+                    }
                 }
 
             } catch (EOFException e) {
-                System.out.println("EOF:" + e); // Client closed socket
+                System.out.println("EOF:" + e); // Server closed socket
             } catch (IOException e) {
                 System.out.println("IO:" + e);
             }
-
-            // try (Scanner sc = new Scanner(System.in)) {
-            //     while (true) {
-            //         texto = sc.nextLine();
-            //         out.writeUTF(texto);
-            //         data = in.readUTF();
-            //         System.out.println(">" + data);
-            //     }
-            // }
 
         } catch (UnknownHostException e) {
             System.out.println("Sock:" + e.getMessage());
