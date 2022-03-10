@@ -1,0 +1,3 @@
+#! /bin/bash
+
+javac projeto/*.java && java projeto.MainServer 8000

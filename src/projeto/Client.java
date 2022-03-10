@@ -36,7 +36,7 @@ public class Client {
             DataInputStream in = new DataInputStream(s.getInputStream());
             DataOutputStream out = new DataOutputStream(s.getOutputStream());
 
-            String text = "", data = "";
+            String text = "";
 
             try {
                 Scanner sc = new Scanner(System.in);
@@ -64,6 +64,8 @@ public class Client {
                             // password
                             System.out.print(in.readUTF());
                             out.writeUTF(sc.nextLine());
+
+                            System.out.println(in.readUTF());
                             break;
 
                         case "teste":

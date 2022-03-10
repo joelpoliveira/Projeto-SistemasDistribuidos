@@ -2,6 +2,7 @@ package projeto;
 
 import java.io.*;
 import java.util.Scanner;
+import java.util.HashMap;
 
 public class FileHandler {
     String filename;
@@ -36,6 +37,25 @@ public class FileHandler {
         } catch (IOException e) {
             System.out.println("Failed to write to file");
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    public HashMap<String, String> getCredentials(){
+        HashMap<String, String> teste = null;
+
+        try {
+            ObjectInputStream i = new ObjectInputStream(new FileInputStream("credentials"));
+            teste = (HashMap<String, String>) i.readObject();
+            i.close();
+
+        } catch (IOException e) {
+            System.err.println("Credentials file doesnt exist");
+        } catch (ClassNotFoundException e) {
+            System.err.println("Erro 2");
+        }
+
+        return teste;
+
     }
 
 }
