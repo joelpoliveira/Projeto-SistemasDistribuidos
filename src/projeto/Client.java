@@ -53,6 +53,7 @@ public class Client {
                             System.out.print(in.readUTF());
                             out.writeUTF(sc.nextLine());
 
+                            // Server message
                             System.out.println(in.readUTF());
                             break;
 
@@ -65,6 +66,20 @@ public class Client {
                             System.out.print(in.readUTF());
                             out.writeUTF(sc.nextLine());
 
+                            // Server message
+                            System.out.println(in.readUTF());
+                            break;
+                        
+                        case "change":
+                            out.writeUTF(text);
+                            // Password 1
+                            System.out.print(in.readUTF());
+                            out.writeUTF(sc.nextLine());
+                            // Password 2
+                            System.out.print(in.readUTF());
+                            out.writeUTF(sc.nextLine());
+
+                            // Server message
                             System.out.println(in.readUTF());
                             break;
 

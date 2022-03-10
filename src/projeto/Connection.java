@@ -54,6 +54,10 @@ public class Connection implements Runnable {
                     case "login":
                         login();
                         break;
+                    
+                    case "change":
+                        change_password();
+                        break;
 
                     case "teste":
                         try {
@@ -197,6 +201,58 @@ public class Connection implements Runnable {
         } catch (IOException e) {
             System.out.println("Error login");
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    public void change_password() {
+        String password1 = "", password2 = "";
+        try {
+            if (this.loggedIn){
+                this.out.writeUTF("New password: ");
+                password1 = this.in.readUTF();
+                
+                this.out.writeUTF("Repeat password: ");
+                password2 = this.in.readUTF();
+
+                if (password1.equals(password2)){
+                    // mudar no hashmap
+                    try {
+                        ObjectInputStream i = new ObjectInputStream(new FileInputStream("credentials"));
+                        HashMap<String, String> credentials;
+        
+                        credentials = (HashMap<String, String>) i.readObject();
+                        credentials.replace(this.username, password1);
+                        i.close();
+        
+                        ObjectOutputStream o = new ObjectOutputStream(new FileOutputStream("credentials"));
+                        o.writeObject(credentials);
+                        o.close();
+        
+                    } catch (IOException e) {
+                        System.err.println("Failed to write credentials file");
+                    } catch (ClassNotFoundException e) {
+                        System.err.println("Erro");
+                    }
+                    
+
+                    
+                    this.password = password1;
+                    this.out.writeUTF("Password changed");
+                    return;
+                    
+                } else {
+                    this.out.writeUTF("Passwords don't match");
+                    return;
+                }
+                
+            } else {
+                this.out.writeUTF("User not looged in");
+            }
+
+        } catch (IOException e) {
+            System.out.println("Erro sendig message");
+        }
+    
     }
 
 }
