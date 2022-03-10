@@ -2,6 +2,7 @@ package projeto;
 
 import java.net.*;
 import java.util.HashMap;
+import java.util.ArrayList;
 import java.io.*;
 import java.nio.file.*;
 
@@ -31,7 +32,7 @@ public class Connection implements Runnable {
         }
 
         // Start Thread
-        t.start();
+        this.t.start();
     }
 
     // ================== Thread main
@@ -39,24 +40,49 @@ public class Connection implements Runnable {
                                    // will be read
     public void run() {
         String text = "";
+        String[] temp;
         try {
             FileHandler fh = new FileHandler("credentials");
 
             while (true) {
                 text = in.readUTF();
                 System.out.printf("Received %s from %d\n", text, threadNumber);
+                temp = text.split(" ");
 
-                switch (text) {
+                switch (temp[0]) {
                     case "register":
                         register(fh);
                         break;
 
                     case "login":
                         login();
+                        last_directory();
                         break;
-                    
+
                     case "change":
                         change_password();
+                        break;
+
+                    case "cd":
+                        if (this.loggedIn) {
+                            ArrayList<String> aux;
+                            try {
+                                // System.out.println(temp[1]);
+                                // System.out.println("./users/" + this.username + "/.config");
+
+                                FileHandler fh2 = new FileHandler("./users/" + this.username + "/.config");
+                                aux = fh2.readFile();
+                                System.out.println(aux);
+                                aux.set(0, temp[1]);
+                                fh2.reWriteFile(aux);
+
+                            } catch (ArrayIndexOutOfBoundsException e) {
+                                System.out.println("No directory specified");
+                            }
+                        } else {
+                            // change local directory if not logged in
+                            System.out.println("User not logged in");
+                        }
                         break;
 
                     case "teste":
@@ -75,7 +101,7 @@ public class Connection implements Runnable {
                         break;
 
                     default:
-                        System.out.println("Entered default");
+                        System.out.println("Unknown command");
                         break;
                 }
             }
@@ -113,7 +139,7 @@ public class Connection implements Runnable {
             // Create user config file
             try {
                 FileHandler configFile = new FileHandler("./users/" + username + "/.config");
-                configFile.writeFile("");
+                configFile.writeLine("home/");
             } catch (Exception e) {
                 System.out.println("Failed to create .config file");
                 out.writeUTF("Failed to create config file. User not created");
@@ -134,13 +160,10 @@ public class Connection implements Runnable {
                 o.close();
 
             } catch (IOException e) {
-                System.err.println("Erro");
+                System.out.println("Erro");
             } catch (ClassNotFoundException e) {
-                System.err.println("Erro");
+                System.out.println("Erro a converter");
             }
-
-            // fh.writeFile(username);
-            // fh.writeFile(password);
 
             out.writeUTF("User created");
         } catch (IOException e) {
@@ -152,6 +175,7 @@ public class Connection implements Runnable {
     @SuppressWarnings("unchecked")
     public synchronized void login() {
         String username = "", password = "", temp = "";
+
         try {
             this.out.writeUTF("username: ");
             username = this.in.readUTF();
@@ -168,7 +192,7 @@ public class Connection implements Runnable {
 
                 teste = (HashMap<String, String>) i.readObject();
                 i.close();
-                
+
                 // Check if user is already logged in
                 if (this.username.equals(username)) {
                     this.out.writeUTF("User alredy logged in");
@@ -207,44 +231,42 @@ public class Connection implements Runnable {
     public void change_password() {
         String password1 = "", password2 = "";
         try {
-            if (this.loggedIn){
+            if (this.loggedIn) {
                 this.out.writeUTF("New password: ");
                 password1 = this.in.readUTF();
-                
+
                 this.out.writeUTF("Repeat password: ");
                 password2 = this.in.readUTF();
 
-                if (password1.equals(password2)){
+                if (password1.equals(password2)) {
                     // mudar no hashmap
                     try {
                         ObjectInputStream i = new ObjectInputStream(new FileInputStream("credentials"));
                         HashMap<String, String> credentials;
-        
+
                         credentials = (HashMap<String, String>) i.readObject();
                         credentials.replace(this.username, password1);
                         i.close();
-        
+
                         ObjectOutputStream o = new ObjectOutputStream(new FileOutputStream("credentials"));
                         o.writeObject(credentials);
                         o.close();
-        
+
                     } catch (IOException e) {
                         System.err.println("Failed to write credentials file");
                     } catch (ClassNotFoundException e) {
                         System.err.println("Erro");
                     }
-                    
 
-                    
                     this.password = password1;
                     this.out.writeUTF("Password changed");
                     return;
-                    
+
                 } else {
                     this.out.writeUTF("Passwords don't match");
                     return;
                 }
-                
+
             } else {
                 this.out.writeUTF("User not looged in");
             }
@@ -252,7 +274,13 @@ public class Connection implements Runnable {
         } catch (IOException e) {
             System.out.println("Erro sendig message");
         }
-    
+
+    }
+
+    public void last_directory() {
+        ArrayList<String> text;
+        FileHandler fh = new FileHandler("./users/" + this.username + "/.config");
+        text = fh.readFile();
     }
 
 }

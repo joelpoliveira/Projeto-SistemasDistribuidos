@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.io.*;
 
 public class MainServer {
-    @SuppressWarnings("unchecked")
     public static void main(String[] args) {
         int numero = 0;
         int serverPort = 0;

@@ -43,9 +43,14 @@ public class Client {
 
                 while (true) {
                     System.out.print("> ");
-                    switch (text = sc.nextLine()) {
+                    // System.out.print(in.readUTF());
+                    text = sc.nextLine();
+                    
+                    if (!text.equals(""))
+                        out.writeUTF(text);
+                    
+                    switch (text) {
                         case "register":
-                            out.writeUTF(text);
                             // username
                             System.out.print(in.readUTF());
                             out.writeUTF(sc.nextLine());
@@ -58,7 +63,6 @@ public class Client {
                             break;
 
                         case "login":
-                            out.writeUTF(text);
                             // username
                             System.out.print(in.readUTF());
                             out.writeUTF(sc.nextLine());
@@ -71,7 +75,6 @@ public class Client {
                             break;
                         
                         case "change":
-                            out.writeUTF(text);
                             // Password 1
                             System.out.print(in.readUTF());
                             out.writeUTF(sc.nextLine());
@@ -84,7 +87,6 @@ public class Client {
                             break;
 
                         case "teste":
-                            out.writeUTF(text);
                             break;
 
                         default:
