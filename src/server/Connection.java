@@ -75,6 +75,10 @@ public class Connection implements Runnable {
                         }
                         break;
 
+                    case "ls":
+                        listDirectory();
+                        break;
+
                     case "send":
                         break;
 
@@ -203,18 +207,53 @@ public class Connection implements Runnable {
             }
 
             if (newDirectory.equals(""))
-                newDirectory = "home/";
+                newDirectory = "home";
+            
+            if (new File("server/users/" + this.user.username + "/" + newDirectory).exists()) {
+                this.user.currentDirectory = newDirectory;
+                config = this.fh.readFile("server/users/" + this.user.username + "/.config");
+                config.set(2, newDirectory);
+                this.fh.reWriteFile("server/users/" + this.user.username + "/.config", config);
 
-            this.user.currentDirectory = newDirectory;
-            config = this.fh.readFile("server/users/" + this.user.username + "/.config");
-            config.set(2, newDirectory);
-            this.fh.reWriteFile("server/users/" + this.user.username + "/.config", config);
-
-            // send empty message for client because it's waiting for a message
-            this.out.writeUTF("");
+                // send empty message for client because it's waiting for a message
+                this.out.writeUTF("");
+            } else {
+                this.out.writeUTF("Directory doesn't exist");
+            }
 
         } catch (IOException e) {
             System.out.println("Erro changing directory");
+        }
+    }
+
+    public void listDirectory() {
+        try {
+            // Check if user is logged in first
+            if (this.user == null) {
+                this.out.writeUTF("Login is required");
+                return;
+            }
+
+            StringBuilder result = new StringBuilder();
+
+            File folder = new File("server/users/" + this.user.username + "/" + this.user.currentDirectory);
+            File[] files = folder.listFiles();
+
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    //System.out.println("*" + file.getName() + "*");
+                    result.append("*" + file.getName() + "*");
+                } else {
+                    //System.out.println(file.getName());
+                    result.append(file.getName());
+                }
+                result.append("\t");
+            }
+
+            this.out.writeUTF(result.toString());
+
+        } catch (IOException e) {
+            System.out.println("Erro listing directory files");
         }
     }
 

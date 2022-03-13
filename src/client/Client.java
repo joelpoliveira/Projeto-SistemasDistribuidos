@@ -83,8 +83,13 @@ public class Client {
 
                         case "cd":
                             // Server message
-                            if (!(text = in.readUTF()).equals(""))
-                                System.out.println(in.readUTF());
+                            if (!((text = in.readUTF()).equals("")))
+                                System.out.println(text);
+                            break;
+                        
+                        case "ls":
+                            // Server message
+                            System.out.println(in.readUTF());
                             break;
 
                         
