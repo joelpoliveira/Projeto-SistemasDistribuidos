@@ -1,0 +1,4 @@
+#!/bin/bash
+javac server/*.java
+javac common/*.java
+javac client/*.java

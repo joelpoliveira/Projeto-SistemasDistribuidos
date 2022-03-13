@@ -1,4 +1,4 @@
-package projeto;
+package client;
 
 import java.net.*;
 import java.util.Scanner;
@@ -37,31 +37,21 @@ public class Client {
             DataOutputStream out = new DataOutputStream(s.getOutputStream());
 
             String text = "";
+            String[] temp;
 
             try {
                 Scanner sc = new Scanner(System.in);
 
                 while (true) {
-                    System.out.print("> ");
-                    // System.out.print(in.readUTF());
+                    System.out.print(in.readUTF() + "> ");
                     text = sc.nextLine();
                     
                     if (!text.equals(""))
                         out.writeUTF(text);
                     
-                    switch (text) {
-                        case "register":
-                            // username
-                            System.out.print(in.readUTF());
-                            out.writeUTF(sc.nextLine());
-                            // password
-                            System.out.print(in.readUTF());
-                            out.writeUTF(sc.nextLine());
-
-                            // Server message
-                            System.out.println(in.readUTF());
-                            break;
-
+                    temp = text.split(" ");
+                    
+                    switch (temp[0]) {
                         case "login":
                             // username
                             System.out.print(in.readUTF());
@@ -74,9 +64,14 @@ public class Client {
                             System.out.println(in.readUTF());
                             break;
                         
-                        case "change":
+                        case "passwd":
                             // Password 1
-                            System.out.print(in.readUTF());
+                            // check if server asks for password. If not, user is not logged in
+                            if (!(text = in.readUTF()).equals("New password: ")){
+                                System.out.println(text);
+                                break;
+                            }
+                            System.out.print(text);
                             out.writeUTF(sc.nextLine());
                             // Password 2
                             System.out.print(in.readUTF());
@@ -86,7 +81,20 @@ public class Client {
                             System.out.println(in.readUTF());
                             break;
 
-                        case "teste":
+                        case "cd":
+                            // Server message
+                            if (!(text = in.readUTF()).equals(""))
+                                System.out.println(in.readUTF());
+                            break;
+
+                        
+                        case "send":
+                            // Server message
+                            System.out.println(in.readUTF());
+                            break;
+
+                        case "help":
+                            System.out.println(in.readUTF());
                             break;
 
                         default:
@@ -95,7 +103,8 @@ public class Client {
                 }
 
             } catch (EOFException e) {
-                System.out.println("EOF:" + e); // Server closed socket
+                System.out.println("Server closed connection"); // Server closed socket
+                // TODO connect to secondary server
             } catch (IOException e) {
                 System.out.println("IO:" + e);
             }

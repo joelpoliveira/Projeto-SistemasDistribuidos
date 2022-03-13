@@ -1,4 +1,4 @@
-package projeto;
+package server;
 
 import java.net.*;
 import java.util.HashMap;
@@ -27,7 +27,7 @@ public class MainServer {
         }
 
         // Try to open credentials file
-        // If execptions is thown -> file didnt exist -> create it
+        // If exception is thown -> file didnt exist -> create it
         try {
             ObjectInputStream i = new ObjectInputStream(new FileInputStream("credentials"));
             i.close();
@@ -51,7 +51,7 @@ public class MainServer {
                 Socket clientSocket = listenSocket.accept(); // BLOQUEANTE
                 System.out.println("Created client socket: " + clientSocket);
                 numero++;
-                new Connection(clientSocket, numero);
+                new Connection(clientSocket, numero, "MainServer");
             }
         } catch (IOException e) {
             System.out.println("Listen:" + e.getMessage());

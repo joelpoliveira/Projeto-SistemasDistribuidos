@@ -1,4 +1,4 @@
-package projeto;
+package server;
 
 import java.net.*;
 import java.util.ArrayList;
