@@ -45,12 +45,12 @@ public class Client {
                 while (true) {
                     System.out.print(in.readUTF() + "> ");
                     text = sc.nextLine();
-                    
+
                     if (!text.equals(""))
                         out.writeUTF(text);
-                    
+
                     temp = text.split(" ");
-                    
+
                     switch (temp[0]) {
                         case "login":
                             // username
@@ -63,11 +63,11 @@ public class Client {
                             // Server message
                             System.out.println(in.readUTF());
                             break;
-                        
+
                         case "passwd":
                             // Password 1
                             // check if server asks for password. If not, user is not logged in
-                            if (!(text = in.readUTF()).equals("New password: ")){
+                            if (!(text = in.readUTF()).equals("New password: ")) {
                                 System.out.println(text);
                                 break;
                             }
@@ -86,16 +86,58 @@ public class Client {
                             if (!((text = in.readUTF()).equals("")))
                                 System.out.println(text);
                             break;
-                        
+
                         case "ls":
                             // Server message
                             System.out.println(in.readUTF());
                             break;
 
-                        
                         case "send":
-                            // Server message
-                            System.out.println(in.readUTF());
+                            // Receive connection port
+                            int downloadPort = Integer.parseInt(in.readUTF());
+                            //System.out.println(downloadPort);
+                            
+                            // Create socket and received port
+                            try (Socket downloadSocket = new Socket(args[0], downloadPort)) {
+                                System.out.println("Ready do send file");
+
+                                byte[] contents; // arary of bytes read
+
+                                OutputStream os = downloadSocket.getOutputStream();
+
+                                File file = new File("client/test");
+                                FileInputStream fin = new FileInputStream(file);
+                                BufferedInputStream bis = new BufferedInputStream(fin);
+
+                                long fileLength = file.length();
+                                long current = 0; // curent number of bytes read
+                                int size = 100; // number of bytes to send at once
+
+                                while (current != fileLength) {
+                                    if (fileLength - current >= size)
+                                        current += size;
+                                    else {
+                                        size = (int) (fileLength - current);
+                                        current = fileLength;
+                                    }
+                                    contents = new byte[size];
+                                    bis.read(contents, 0, size);
+                                    os.write(contents);
+                                    os.flush();
+                                    System.out.print("Sending file ... " + (current * 100) / fileLength + "% complete!\n");
+                                }
+
+                                // File transfer completed
+                                fin.close();
+                                bis.close();
+                            } catch (UnknownHostException e) {
+                                System.out.println("Sock:" + e.getMessage());
+                            } catch (EOFException e) {
+                                System.out.println("EOF:" + e.getMessage()); // Server socket not open anymore
+                            } catch (IOException e) {
+                                System.out.println("IO:" + e.getMessage()); // Connection refused. Port not open on
+                                                                            // hostname
+                            }
                             break;
 
                         case "help":

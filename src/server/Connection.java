@@ -15,10 +15,12 @@ public class Connection implements Runnable {
     String serverName;
     User user;
     FileHandler fh;
+    int downloadId;
 
     public Connection(Socket clientSocket, int number, String serverName) {
         this.threadNumber = number;
         this.serverName = serverName;
+        this.downloadId = 0;
         try {
             this.clientSocket = clientSocket;
             this.in = new DataInputStream(clientSocket.getInputStream());
@@ -39,7 +41,6 @@ public class Connection implements Runnable {
         String text = "";
         String[] temp;
         try {
-            // FileHandler fh = new FileHandler("credentials");
 
             while (true) {
                 if (this.user != null) {
@@ -52,11 +53,6 @@ public class Connection implements Runnable {
 
                 text = this.in.readUTF();
                 temp = text.split(" ");
-
-                // try{
-                // if (temp[1].equals("")){}
-
-                // } catch (ArrayIndexOutOfBoundsException e){}
 
                 switch (temp[0]) {
                     case "login":
@@ -80,6 +76,21 @@ public class Connection implements Runnable {
                         break;
 
                     case "send":
+                        // if port set to 0, a random port wil be used
+                        try (ServerSocket downloadSocket = new ServerSocket(0)) {
+                            System.out.println("Download socket created: " + downloadSocket);
+
+                            this.out.writeUTF(Integer.toString(downloadSocket.getLocalPort()));
+
+                            Socket soc = downloadSocket.accept(); // BLOQUEANTE
+
+                            System.out.printf("Client %d connected to download socket\n", this.threadNumber);
+                            this.downloadId++;
+                            new DownloadConnection(soc, this.downloadId);
+
+                        } catch (IOException e) {
+                            System.out.println("Listen:" + e.getMessage());
+                        }
                         break;
 
                     case "help":
@@ -89,7 +100,6 @@ public class Connection implements Runnable {
                                 passwd - change password (requires login)
                                 cd - changes directory. cd [path]
                                 """
-
                         );
                         break;
 
@@ -208,7 +218,7 @@ public class Connection implements Runnable {
 
             if (newDirectory.equals(""))
                 newDirectory = "home";
-            
+
             if (new File("server/users/" + this.user.username + "/" + newDirectory).exists()) {
                 this.user.currentDirectory = newDirectory;
                 config = this.fh.readFile("server/users/" + this.user.username + "/.config");
@@ -241,10 +251,10 @@ public class Connection implements Runnable {
 
             for (File file : files) {
                 if (file.isDirectory()) {
-                    //System.out.println("*" + file.getName() + "*");
+                    // System.out.println("*" + file.getName() + "*");
                     result.append("*" + file.getName() + "*");
                 } else {
-                    //System.out.println(file.getName());
+                    // System.out.println(file.getName());
                     result.append(file.getName());
                 }
                 result.append("\t");
