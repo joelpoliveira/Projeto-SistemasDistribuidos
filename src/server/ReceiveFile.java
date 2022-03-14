@@ -1,30 +1,18 @@
 package server;
 
-import common.*;
-
 import java.net.*;
 import java.io.*;
-import java.util.ArrayList;
 
-public class DownloadConnection implements Runnable {
-    DataInputStream in;
-    DataOutputStream out;
-    FileInputStream fin;
-    FileOutputStream fout;
+// Receive file from a client
+public class ReceiveFile implements Runnable {
     Socket downloadSocket;
     int threadNumber;
     Thread t;
 
-    public DownloadConnection(Socket downloadSocket, int threadNumber) {
+    public ReceiveFile(Socket downloadSocket, int threadNumber) {
         this.threadNumber = threadNumber;
-        //try {
-            this.downloadSocket = downloadSocket;
-            //this.in = new DataInputStream(downloadSocket.getInputStream());
-            //this.out = new DataOutputStream(downloadSocket.getOutputStream());
-            this.t = new Thread(this, Integer.toString(threadNumber));
-        //} catch (IOException e) {
-        //    System.out.println("Connection:" + e.getMessage());
-       // }
+        this.downloadSocket = downloadSocket;
+        this.t = new Thread(this, Integer.toString(threadNumber));
 
         this.t.start();
     }
