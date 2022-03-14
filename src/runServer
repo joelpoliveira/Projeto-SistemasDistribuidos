@@ -1,2 +1,1 @@
-#! /bin/bash
 java server.MainServer 8000
