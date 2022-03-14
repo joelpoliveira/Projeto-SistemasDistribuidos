@@ -20,7 +20,7 @@ public class ReceiveFile implements Runnable {
     public void run() {
         System.out.printf("Download thread %d ready!\n", this.threadNumber);
         try {
-            byte[] contents = new byte[100];
+            byte[] contents = new byte[5];
             // Initialize the FileOutputStream to the output file's full path.
             FileOutputStream fos = new FileOutputStream("server/teste");
             InputStream is = this.downloadSocket.getInputStream();

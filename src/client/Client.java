@@ -93,56 +93,7 @@ public class Client {
                             break;
 
                         case "send":
-                            // Receive connection port
-                            int downloadPort = Integer.parseInt(in.readUTF());
-                            //System.out.println(downloadPort);
-
-                            if (downloadPort == -1){
-                                System.out.println("Login is required");
-                                break;
-                            }
-                            
-                            // Create socket and received port
-                            try (Socket downloadSocket = new Socket(args[0], downloadPort)) {
-                                System.out.println("Ready do send file");
-
-                                byte[] contents; // arary of bytes read
-
-                                OutputStream os = downloadSocket.getOutputStream();
-
-                                File file = new File("client/test");
-                                FileInputStream fin = new FileInputStream(file);
-                                BufferedInputStream bis = new BufferedInputStream(fin);
-
-                                long fileLength = file.length();
-                                long current = 0; // curent number of bytes read
-                                int size = 100; // number of bytes to send at once
-
-                                while (current != fileLength) {
-                                    if (fileLength - current >= size)
-                                        current += size;
-                                    else {
-                                        size = (int) (fileLength - current);
-                                        current = fileLength;
-                                    }
-                                    contents = new byte[size];
-                                    bis.read(contents, 0, size);
-                                    os.write(contents);
-                                    os.flush();
-                                    System.out.print("Sending file ... " + (current * 100) / fileLength + "% complete!\n");
-                                }
-
-                                // File transfer completed
-                                fin.close();
-                                bis.close();
-                            } catch (UnknownHostException e) {
-                                System.out.println("Sock:" + e.getMessage());
-                            } catch (EOFException e) {
-                                System.out.println("EOF:" + e.getMessage()); // Server socket not open anymore
-                            } catch (IOException e) {
-                                System.out.println("IO:" + e.getMessage()); // Connection refused. Port not open on
-                                                                            // hostname
-                            }
+                            new SendFile(args[0], in, out);
                             break;
                         
                         case "download":
