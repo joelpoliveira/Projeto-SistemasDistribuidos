@@ -1,5 +1,7 @@
 package client;
 
+import common.*;
+
 import java.net.*;
 import java.util.Scanner;
 import java.io.*;
@@ -7,6 +9,8 @@ import java.io.*;
 public class Client {
     public static void main(String args[]) {
         int socketPort = 0;
+        String username;
+        boolean loggedIn = false;
 
         // args[0] <- hostname of destination
         // args[1] <- port of destination
@@ -28,6 +32,13 @@ public class Client {
             System.exit(1);
         }
 
+        // ask username
+        Scanner sc = new Scanner(System.in);
+        System.out.print("username: ");
+        username = sc.nextLine();
+        //sc.close();
+
+
         // Create socket
         try (Socket s = new Socket(args[0], socketPort)) {
             System.out.println("Created socket = " + s);
@@ -38,9 +49,11 @@ public class Client {
 
             String text = "";
             String[] temp;
+            // sc = null;
 
-            try {
-                Scanner sc = new Scanner(System.in);
+            try  {
+                // Scanner sc = new Scanner(System.in);
+                // sc = new Scanner(System.in);
 
                 while (true) {
                     System.out.print(in.readUTF() + "> ");
@@ -54,13 +67,22 @@ public class Client {
                     switch (temp[0]) {
                         case "login":
                             // username
-                            System.out.print(in.readUTF());
-                            out.writeUTF(sc.nextLine());
+                            //System.out.print(in.readUTF());
+                            //out.writeUTF(sc.nextLine());
+                            out.writeUTF(username);
                             // password
                             System.out.print(in.readUTF());
                             out.writeUTF(sc.nextLine());
 
                             // Server message
+                            text = in.readUTF();
+                            if (text.equals("Logged in"))
+                                loggedIn = true;
+
+                            System.out.println(text);
+                            break;
+
+                        case "logout":                                
                             System.out.println(in.readUTF());
                             break;
 
@@ -93,7 +115,15 @@ public class Client {
                             break;
 
                         case "send":
-                            new SendFile(args[0], in, out);
+                            // Receive connection port
+                            int downloadPort = Integer.parseInt(in.readUTF());
+                            //System.out.println(downloadPort);
+                            if (downloadPort == -1) {
+                                System.out.println("Login is required");
+                                break;
+                            }
+                            // Create thread to send file
+                            new SendFile(args[0], downloadPort);
                             break;
                         
                         case "download":
@@ -108,19 +138,24 @@ public class Client {
                     }
                 }
 
-            } catch (EOFException e) {
-                System.out.println("Server closed connection"); // Server closed socket
-                // TODO connect to secondary server
-            } catch (IOException e) {
-                System.out.println("IO:" + e);
+            } finally {
+                System.out.println("TESTE");
+                sc.close();
             }
+
+            // } catch (EOFException e) {
+            //     System.out.println("sdasndasndi"); // Server closed socket
+            // } catch (IOException e) {
+            //     System.out.println("IO:" + e);
+            // }
 
         } catch (UnknownHostException e) {
             System.out.println("Sock:" + e.getMessage());
         } catch (EOFException e) {
-            System.out.println("EOF:" + e.getMessage()); // Server socket not open anymore
+            System.out.println("Server closed connection"); // Server closed socket
+            // TODO connect to secondary server
         } catch (IOException e) {
-            System.out.println("IO:" + e.getMessage()); // Connection refused. Port not open on hostname
+            System.out.printf("Connection refused to %s:%s\n", args[0], args[1]); // Connection refused. Port not open on hostname
         }
     }
     

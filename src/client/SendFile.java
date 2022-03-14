@@ -10,35 +10,27 @@ public class SendFile implements Runnable {
     DataInputStream in;
     DataOutputStream out;
     String hostname;
+    int downloadPort;
 
-    public SendFile(String hostname) {
+    public SendFile(String hostname, int port) {
         this.hostname = hostname;
-        this.in = in;
-        this.out = out;
+        this.downloadPort = port;
+        
+        // nome da thread pode dar problemas se tentarmos mandar varios ficheiros
         this.t = new Thread(this, "clientFileSender");
 
         this.t.start();
     }
 
     public void run() {
-        int downloadPort = 0;
 
-        try {
-            // Receive connection port
-            downloadPort = Integer.parseInt(this.in.readUTF());
-            // System.out.println(downloadPort);
+        System.out.println("Created thread to send file");
 
-            if (downloadPort == -1) {
-                System.out.println("Login is required");
-                return;
-            }
-        } catch (IOException e) {
-            System.out.println("Failed to read port");
-        }
-
-        // Create socket and received port
-        try (Socket downloadSocket = new Socket(this.hostname, downloadPort)) {
-            System.out.println("Ready do send file");
+        // Create socket with received port from server
+        try (Socket downloadSocket = new Socket(this.hostname, this.downloadPort)) {
+            
+            this.in = new DataInputStream(downloadSocket.getInputStream());
+            this.out = new DataOutputStream(downloadSocket.getOutputStream());
 
             byte[] contents; // arary of bytes read
 
@@ -51,6 +43,8 @@ public class SendFile implements Runnable {
             long fileLength = file.length();
             long current = 0; // curent number of bytes read
             int size = 5; // number of bytes to send at once
+
+            System.out.println("Sending file...");
 
             while (current != fileLength) {
                 if (fileLength - current >= size)

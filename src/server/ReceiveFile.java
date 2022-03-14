@@ -21,10 +21,12 @@ public class ReceiveFile implements Runnable {
         System.out.printf("Download thread %d ready!\n", this.threadNumber);
         try {
             byte[] contents = new byte[5];
+
             // Initialize the FileOutputStream to the output file's full path.
             FileOutputStream fos = new FileOutputStream("server/teste");
             InputStream is = this.downloadSocket.getInputStream();
-            // No of bytes read in one read() call
+
+            // Number of bytes read in one read() cicle
             int bytesRead = 0;
             while ((bytesRead = is.read(contents)) != -1){
                 fos.write(contents, 0, bytesRead);

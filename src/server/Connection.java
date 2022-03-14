@@ -59,6 +59,15 @@ public class Connection implements Runnable {
                         login();
                         break;
 
+                    case "logout":
+                        if(this.user != null){
+                            this.user = null;
+                            this.out.writeUTF("Logged out");
+                        } else {
+                            this.out.writeUTF("Login is required");
+                        }
+                        break;
+
                     case "passwd":
                         changePassword();
                         break;
@@ -77,6 +86,12 @@ public class Connection implements Runnable {
                     
                     // Client -> Server
                     case "send":
+                    // send filename path_local path_server
+                        try {
+                            System.out.printf("%s %s %s\n", temp[1], temp[2], temp[3]);
+                        } catch (ArrayIndexOutOfBoundsException e) {
+                            System.out.println("Out of bounds");
+                        }
                         sendFile();
                         break;
                     
@@ -121,7 +136,7 @@ public class Connection implements Runnable {
         this.fh = new FileHandler();
 
         try {
-            this.out.writeUTF("username: ");
+            //this.out.writeUTF("username: ");
             username = this.in.readUTF();
             // System.out.println(username);
 
