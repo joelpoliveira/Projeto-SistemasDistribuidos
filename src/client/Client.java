@@ -96,6 +96,11 @@ public class Client {
                             // Receive connection port
                             int downloadPort = Integer.parseInt(in.readUTF());
                             //System.out.println(downloadPort);
+
+                            if (downloadPort == -1){
+                                System.out.println("Login is required");
+                                break;
+                            }
                             
                             // Create socket and received port
                             try (Socket downloadSocket = new Socket(args[0], downloadPort)) {
@@ -139,6 +144,9 @@ public class Client {
                                                                             // hostname
                             }
                             break;
+                        
+                        case "download":
+                            break;
 
                         case "help":
                             System.out.println(in.readUTF());
@@ -164,4 +172,5 @@ public class Client {
             System.out.println("IO:" + e.getMessage()); // Connection refused. Port not open on hostname
         }
     }
+    
 }

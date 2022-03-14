@@ -74,23 +74,15 @@ public class Connection implements Runnable {
                     case "ls":
                         listDirectory();
                         break;
-
+                    
+                    // Client -> Server
                     case "send":
-                        // if port set to 0, a random port wil be used
-                        try (ServerSocket downloadSocket = new ServerSocket(0)) {
-                            System.out.println("Download socket created: " + downloadSocket);
-
-                            this.out.writeUTF(Integer.toString(downloadSocket.getLocalPort()));
-
-                            Socket soc = downloadSocket.accept(); // BLOQUEANTE
-
-                            System.out.printf("Client %d connected to download socket\n", this.threadNumber);
-                            this.downloadId++;
-                            new DownloadConnection(soc, this.downloadId);
-
-                        } catch (IOException e) {
-                            System.out.println("Listen:" + e.getMessage());
-                        }
+                        sendFile();
+                        break;
+                    
+                    // Server -> Client
+                    case "download":
+                        downloadFile();
                         break;
 
                     case "help":
@@ -265,6 +257,39 @@ public class Connection implements Runnable {
         } catch (IOException e) {
             System.out.println("Erro listing directory files");
         }
+    }
+
+    public void sendFile(){
+        try {
+            // send -1 if user not logged in
+            if (this.user == null){
+                this.out.writeUTF(Integer.toString(-1));
+                return;
+            }
+
+            // if port set to 0, a random port wil be used
+            try (ServerSocket downloadSocket = new ServerSocket(0)) {
+                System.out.println("Download socket created: " + downloadSocket);
+
+                this.out.writeUTF(Integer.toString(downloadSocket.getLocalPort()));
+
+                Socket soc = downloadSocket.accept(); // BLOQUEANTE
+
+                System.out.printf("Client %d connected to download socket\n", this.threadNumber);
+                this.downloadId++;
+                new ReceiveFile(soc, this.downloadId);
+
+            } catch (IOException e) {
+                System.out.println("Listen:" + e.getMessage());
+            }
+
+        } catch (IOException e) {
+            System.out.println("SendFile:" + e.getMessage());
+        }
+    }
+
+    public void downloadFile() {
+
     }
 
 }
