@@ -1,2 +1,1 @@
-#! /bin/bash
 java client.Client localhost 8000
