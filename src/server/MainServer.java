@@ -5,37 +5,29 @@ import java.io.*;
 
 public class MainServer {
     public static void main(String[] args) {
-        int numero = 0;
-        int serverPort = 0;
+        int mainPort = 0;
 
         if (args.length > 1) {
-            System.out.println("Too many arguments. MainServer.java <port>");
+            System.out.println("Too many arguments. Usage: Main.java <port>");
             System.exit(1);
         }
 
         if (args.length < 1) {
-            System.out.println("Missing arguments. MainServer.java <port>");
+            System.out.println("Missing arguments. Usage: Main.java <port>");
             System.exit(1);
         }
 
         try {
-            serverPort = Integer.parseInt(args[0]);
+            mainPort = Integer.parseInt(args[0]);
         } catch (NumberFormatException e) {
-            e.printStackTrace();
+            System.out.println("Ports must be integers");
             System.exit(1);
         }
 
-        try (ServerSocket listenSocket = new ServerSocket(serverPort)) {
-            System.out.println("Main server started");
-            System.out.println("Created listen socket: " + listenSocket);
-            while (true) {
-                Socket clientSocket = listenSocket.accept(); // BLOQUEANTE
-                System.out.println("Created client socket: " + clientSocket);
-                numero++;
-                new Connection(clientSocket, numero, "MainServer");
-            }
-        } catch (IOException e) {
-            System.out.println("Listen:" + e.getMessage());
-        }
+        new Server(mainPort, "MainServer");
+
+        System.out.println("Main server created");
+
     }
+    
 }

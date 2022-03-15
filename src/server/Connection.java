@@ -47,10 +47,10 @@ public class Connection implements Runnable {
                 if (this.user != null) {
                     // this.out.writeUTF(this.serverName + "@" + this.user.username + "/" +
                     // this.user.currentDirectory);
-                    System.out.printf("Received %s from %d -> %s\n", text, threadNumber, this.user.username);
+                    System.out.printf("%s received %s from %d -> %s\n", this.serverName, text, threadNumber, this.user.username);
                 } else {
                     // this.out.writeUTF("");
-                    System.out.printf("Received %s from %d\n", text, threadNumber);
+                    System.out.printf("%s Received %s from %d\n", this.serverName, text, threadNumber);
                 }
 
                 text = this.in.readUTF();
@@ -295,7 +295,6 @@ public class Connection implements Runnable {
     }
 
     // Send file to client
-    // download Desktop/file file123
     public void sendFile(String source) {
         // if port set to 0, a random port wil be used
         try (ServerSocket downloadSocket = new ServerSocket(0)) {

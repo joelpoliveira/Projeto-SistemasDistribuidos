@@ -8,37 +8,46 @@ import java.io.*;
 
 public class Client {
     public static void main(String args[]) {
-        int socketPort = 0;
+        int mainPort = 0;
+        int secondaryPort = 0;
         String username = "";
         boolean loggedIn = false;
 
-        // args[0] <- hostname of destination
-        // args[1] <- port of destination
-        if (args.length > 2) {
-            System.out.println("Too many arguments. Client.java <hostname> <port>");
+        // args[0] <- hostname
+        // args[1] <- main server port
+        // args[1] <- secondary server port
+        if (args.length > 3) {
+            System.out.println("Too many arguments. Client.java <hostname> <port> <port>");
             System.exit(1);
         }
 
-        if (args.length < 2) {
-            System.out.println("Missing arguments. Client.java <hostname> <port>");
+        if (args.length < 3) {
+            System.out.println("Missing arguments. Client.java <hostname> <port> <port>");
             System.exit(1);
         }
 
         try {
-            socketPort = Integer.parseInt(args[1]);
+            mainPort = Integer.parseInt(args[1]);
+            secondaryPort = Integer.parseInt(args[2]);
         } catch (NumberFormatException e) {
             // e.printStackTrace();
             System.out.println("Port must be an integer");
             System.exit(1);
         }
 
+        // Main server hostname and port
+        String mainHostname = args[0];
+
+        // Secondary server hostname and port
+        String secondaryHostname = args[0];
+
         Scanner sc = new Scanner(System.in);
 
         // Ask for a username. Keep asking for a valid one
         username = askUsername(sc);
-        
+
         // Create socket
-        try (Socket s = new Socket(args[0], socketPort)) {
+        try (Socket s = new Socket(mainHostname, mainPort)) {
             System.out.println("Created socket: " + s);
 
             // Create input and output DataStreams
@@ -50,195 +59,186 @@ public class Client {
             String serverPath = "";
             // sc = null;
 
-            try {
-                while (true) {
-                    // System.out.println("text = " + text);
+            // try {
+            while (true) {
+                // System.out.println("text = " + text);
 
-                    if (!loggedIn)
-                        System.out.print("> ");
-                    else {
-                        // if(/* !text.equals("") && */text.equals("Logged in"))
-                        // serverPath = in.readUTF();
-                        System.out.print(serverPath + "> ");
-                    }
+                if (!loggedIn)
+                    System.out.print("> ");
+                else {
+                    // if(/* !text.equals("") && */text.equals("Logged in"))
+                    // serverPath = in.readUTF();
+                    System.out.print(serverPath + "> ");
+                }
 
-                    text = sc.nextLine();
+                text = sc.nextLine();
 
-                    // if (!text.equals(""))
-                    // out.writeUTF(text);
+                // if (!text.equals(""))
+                // out.writeUTF(text);
 
-                    temp = text.split(" ");
+                temp = text.split(" ");
 
-                    switch (temp[0]) {
-                        case "login":
+                switch (temp[0]) {
+                    case "login":
+                        out.writeUTF(text);
+
+                        // username
+                        // System.out.print(in.readUTF());
+                        // out.writeUTF(sc.nextLine());
+                        out.writeUTF(username);
+                        // password
+                        System.out.print(in.readUTF());
+                        out.writeUTF(sc.nextLine());
+
+                        // Server message
+                        text = in.readUTF();
+                        if (text.equals("Logged in")) {
+                            loggedIn = true;
+                            serverPath = in.readUTF();
+                        }
+
+                        System.out.println(text);
+                        break;
+
+                    case "logout":
+                        out.writeUTF(text);
+
+                        loggedIn = false;
+                        System.out.println(in.readUTF());
+                        break;
+
+                    case "passwd":
+                        if (loggedIn) {
                             out.writeUTF(text);
 
-                            // username
-                            // System.out.print(in.readUTF());
-                            // out.writeUTF(sc.nextLine());
-                            out.writeUTF(username);
-                            // password
+                            // Password 1
+                            System.out.print(text);
+                            out.writeUTF(sc.nextLine());
+                            // Password 2
                             System.out.print(in.readUTF());
                             out.writeUTF(sc.nextLine());
 
                             // Server message
+                            System.out.println(in.readUTF());
+
+                        } else {
+                            System.out.println("Login Required!");
+                        }
+                        break;
+
+                    case "cd":
+                        if (loggedIn) {
+                            out.writeUTF(text);
+
+                            // Server message
                             text = in.readUTF();
-                            if (text.equals("Logged in")) {
-                                loggedIn = true;
-                                serverPath = in.readUTF();
-                            }
-
-                            System.out.println(text);
-                            break;
-
-                        case "logout":
-                            out.writeUTF(text);
-
-                            loggedIn = false;
-                            System.out.println(in.readUTF());
-                            break;
-
-                        case "passwd":
-                            if (loggedIn) {
-                                out.writeUTF(text);
-
-                                //Password 1
-                                System.out.print(text);
-                                out.writeUTF(sc.nextLine());
-                                // Password 2
-                                System.out.print(in.readUTF());
-                                out.writeUTF(sc.nextLine());
-
-                                // Server message
-                                System.out.println(in.readUTF());
-
-                            } else {
-                                System.out.println("Login Required!");
-                            }
-                            break;
-
-                        case "cd":
-                            if (loggedIn) {
-                                out.writeUTF(text);
-
-                                // Server message
-                                text = in.readUTF();
-                                if (text.equals("Directory doesn't exist"))
-                                    System.out.println(text);
-                                else
-                                    serverPath = text;
-                            } else {
-                                System.out.println("TODO Local cd");
-                            }
-                            break;
-
-                        case "ls":
-                            if (loggedIn) {
-                                out.writeUTF(text);
-                                // Server message
-                                text = in.readUTF();
+                            if (text.equals("Directory doesn't exist"))
                                 System.out.println(text);
-                            } else {
-                                System.out.println("TODO Local ls");
-                            }
-                            break;
+                            else
+                                serverPath = text;
+                        } else {
+                            System.out.println("TODO Local cd");
+                        }
+                        break;
 
-                        case "send":
-                            if (loggedIn) {
-                                // check params
-                                // send file_path_client file_path_server
-                                String source = "", destination = "";
-
-                                try {
-                                    source = temp[1];
-                                    destination = temp[2];
-                                } catch (ArrayIndexOutOfBoundsException e){
-                                    System.out.println("Command usage: send <source> <destination>");
-                                    break;
-                                }
-
-                                out.writeUTF(text);
-
-                                // Receive connection port
-                                int downloadPort = Integer.parseInt(in.readUTF());
-                                // System.out.println(downloadPort);
-
-                                // Send file destination
-                                out.writeUTF(destination);
-
-                                // Create thread to send file
-                                new SendFile(username, args[0], downloadPort, source);
-                            } else {
-                                System.out.println("Login is required");
-                            }
-
-                            break;
-
-                        case "download":
-                            // String source = "";
-                            String destination = "";
-                            if (loggedIn){
-
-                                try{
-                                    // source = temp[1];
-                                    destination = temp[2];
-                                } catch (ArrayIndexOutOfBoundsException e) {
-                                    System.out.println("Command usage: download <souce> <destination>");
-                                    break;
-                                }
-
-                                out.writeUTF(text);
-                                // Receive connection port
-                                int downloadPort = Integer.parseInt(in.readUTF());
-                                // System.out.println(downloadPort);
-
-                                // Create thread to send file
-                                new ReceiveFile(username, args[0], downloadPort, destination);
-
-                            } else {
-                                System.out.println("Login is required");
-                            }
-                            break;
-
-                        case "help":
+                    case "ls":
+                        if (loggedIn) {
                             out.writeUTF(text);
-                            System.out.println(in.readUTF());
-                            break;
-                        
-                        case "exit":
-                            loggedIn = false;
-                            username = askUsername(sc);
-                            break;
+                            // Server message
+                            text = in.readUTF();
+                            System.out.println(text);
+                        } else {
+                            System.out.println("TODO Local ls");
+                        }
+                        break;
 
-                        default:
-                            System.out.println("Unknown command");
-                            break;
-                    }
+                    case "send":
+                        if (loggedIn) {
+                            // check params
+                            // send file_path_client file_path_server
+                            String source = "", destination = "";
+
+                            try {
+                                source = temp[1];
+                                destination = temp[2];
+                            } catch (ArrayIndexOutOfBoundsException e) {
+                                System.out.println("Command usage: send <source> <destination>");
+                                break;
+                            }
+
+                            out.writeUTF(text);
+
+                            // Receive connection port
+                            int downloadPort = Integer.parseInt(in.readUTF());
+                            // System.out.println(downloadPort);
+
+                            // Send file destination
+                            out.writeUTF(destination);
+
+                            // Create thread to send file
+                            new SendFile(username, mainHostname, downloadPort, source);
+                        } else {
+                            System.out.println("Login is required");
+                        }
+
+                        break;
+
+                    case "download":
+                        // String source = "";
+                        String destination = "";
+                        if (loggedIn) {
+
+                            try {
+                                // source = temp[1];
+                                destination = temp[2];
+                            } catch (ArrayIndexOutOfBoundsException e) {
+                                System.out.println("Command usage: download <souce> <destination>");
+                                break;
+                            }
+
+                            out.writeUTF(text);
+                            // Receive connection port
+                            int downloadPort = Integer.parseInt(in.readUTF());
+                            // System.out.println(downloadPort);
+
+                            // Create thread to send file
+                            new ReceiveFile(username, mainHostname, downloadPort, destination);
+
+                        } else {
+                            System.out.println("Login is required");
+                        }
+                        break;
+
+                    case "help":
+                        out.writeUTF(text);
+                        System.out.println(in.readUTF());
+                        break;
+
+                    case "exit":
+                        loggedIn = false;
+                        username = askUsername(sc);
+                        break;
+
+                    default:
+                        System.out.println("Unknown command");
+                        break;
                 }
-
-            } finally {
-                System.out.println("TESTE");
-                sc.close();
             }
-
-            // } catch (EOFException e) {
-            // System.out.println("sdasndasndi"); // Server closed socket
-            // } catch (IOException e) {
-            // System.out.println("IO:" + e);
-            // }
 
         } catch (UnknownHostException e) {
             System.out.println("Sock:" + e.getMessage());
         } catch (EOFException e) {
-            System.out.println("Server closed connection"); // Server closed socket
-            // TODO connect to secondary server
+            // Server closed socket
+            System.out.println("EOF: " + e.getMessage());
+            System.out.println("Connecting to Secondary server...");
         } catch (IOException e) {
-            System.out.printf("Connection refused to %s:%s\n", args[0], args[1]); // Connection refused. Port not open
-                                                                                  // on hostname
+            // Connection refused. Broken pipe
+            System.out.println("IO: " + e.getMessage());
+            System.out.println("Connecting to Secondary server...");
         }
     }
 
-    public static String askUsername(Scanner sc){
+    public static String askUsername(Scanner sc) {
         String username = "";
         boolean exist = false;
 
@@ -254,7 +254,7 @@ public class Client {
                 }
             }
 
-            if (!exist){
+            if (!exist) {
                 System.out.println("User doesn't exist");
             }
         }
@@ -265,28 +265,28 @@ public class Client {
         // copy paste da função listDirectory do server
 
         // try {
-        //     StringBuilder result = new StringBuilder();
+        // StringBuilder result = new StringBuilder();
 
-        //     // System.out.println("Full path = " + this.user.getFullPath());
+        // // System.out.println("Full path = " + this.user.getFullPath());
 
-        //     File folder = new File("server/users/" + this.user.getFullPath());
-        //     File[] files = folder.listFiles();
+        // File folder = new File("server/users/" + this.user.getFullPath());
+        // File[] files = folder.listFiles();
 
-        //     for (File file : files) {
-        //         if (file.isDirectory()) {
-        //             // System.out.println("*" + file.getName() + "*");
-        //             result.append("*" + file.getName() + "*");
-        //         } else {
-        //             // System.out.println(file.getName());
-        //             result.append(file.getName());
-        //         }
-        //         result.append("\t");
-        //     }
+        // for (File file : files) {
+        // if (file.isDirectory()) {
+        // // System.out.println("*" + file.getName() + "*");
+        // result.append("*" + file.getName() + "*");
+        // } else {
+        // // System.out.println(file.getName());
+        // result.append(file.getName());
+        // }
+        // result.append("\t");
+        // }
 
-        //     this.out.writeUTF(result.toString());
+        // this.out.writeUTF(result.toString());
 
         // } catch (IOException e) {
-        //     System.out.println("Erro listing directory files");
+        // System.out.println("Erro listing directory files");
         // }
     }
 
