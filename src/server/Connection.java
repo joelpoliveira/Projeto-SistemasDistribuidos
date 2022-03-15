@@ -73,12 +73,14 @@ public class Connection implements Runnable {
                         break;
 
                     case "cd":
-                        try {
-                            System.out.println("Changing to " + temp[1]);
-                            changeDirectory(temp[1]);
-                        } catch (ArrayIndexOutOfBoundsException e) {
-                            System.out.println("Out of Bounds");
-                            changeDirectory("");
+                        if (this.user != null){
+                            try {
+                                System.out.println("Changing to " + temp[1]);
+                                changeDirectory(temp[1]);
+                            } catch (ArrayIndexOutOfBoundsException e) {
+                                System.out.println("Out of Bounds");
+                                changeDirectory("");
+                            }
                         }
                         break;
 
@@ -228,7 +230,7 @@ public class Connection implements Runnable {
             }
 
             if (newDirectory.equals(""))
-                newDirectory = "home";
+                newDirectory = "home/";
 
             if (new File("server/users/" + this.user.username + "/" + newDirectory).exists()) {
                 this.user.currentDirectory = newDirectory;
