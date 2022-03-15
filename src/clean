@@ -1,5 +1,5 @@
 #! /bin/bash
 
-rm projeto/*.class
-rm credentials
-rm -rf users
+rm server/*.class
+rm client/*.class
+rm common/*.class
