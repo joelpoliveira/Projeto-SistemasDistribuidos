@@ -37,7 +37,6 @@ public class Client {
         // Ask for a username. Keep asking for a valid one
         username = askUsername(sc);
         
-
         // Create socket
         try (Socket s = new Socket(args[0], socketPort)) {
             System.out.println("Created socket: " + s);
@@ -52,16 +51,12 @@ public class Client {
             // sc = null;
 
             try {
-                // Scanner sc = new Scanner(System.in);
-                // sc = new Scanner(System.in);
-
                 while (true) {
-                    //System.out.println("text = " + text);
+                    // System.out.println("text = " + text);
 
                     if (!loggedIn)
                         System.out.print("> ");
                     else {
-                        // Only update serverPath on cd and login
                         // if(/* !text.equals("") && */text.equals("Logged in"))
                         // serverPath = in.readUTF();
                         System.out.print(serverPath + "> ");
@@ -107,13 +102,7 @@ public class Client {
                             if (loggedIn) {
                                 out.writeUTF(text);
 
-                                // Password 1
-                                // check if server asks for password. If not, user is not logged in
-                                // if (!(text = in.readUTF()).equals("New password: ")) {
-                                // System.out.println(text);
-                                // break;
-                                // }
-
+                                //Password 1
                                 System.out.print(text);
                                 out.writeUTF(sc.nextLine());
                                 // Password 2
@@ -156,20 +145,29 @@ public class Client {
 
                         case "send":
                             if (loggedIn) {
+                                // check params
+                                // send file_path_client file_path_server
+                                String source = "", destination = "";
+
+                                try {
+                                    source = temp[1];
+                                    destination = temp[2];
+                                } catch (ArrayIndexOutOfBoundsException e){
+                                    System.out.println("Command usage: send <source> <destination>");
+                                    break;
+                                }
+
                                 out.writeUTF(text);
 
                                 // Receive connection port
                                 int downloadPort = Integer.parseInt(in.readUTF());
                                 // System.out.println(downloadPort);
 
-                                // if (downloadPort == -1) {
-                                // System.out.println("Login is required");
-                                // break;
-                                // }
+                                // Send file destination
+                                out.writeUTF(destination);
 
                                 // Create thread to send file
-                                new SendFile(args[0], downloadPort);
-
+                                new SendFile(username, args[0], downloadPort, source);
                             } else {
                                 System.out.println("Login is required");
                             }
@@ -177,9 +175,26 @@ public class Client {
                             break;
 
                         case "download":
+                            // String source = "";
+                            String destination = "";
                             if (loggedIn){
+
+                                try{
+                                    // source = temp[1];
+                                    destination = temp[2];
+                                } catch (ArrayIndexOutOfBoundsException e) {
+                                    System.out.println("Command usage: download <souce> <destination>");
+                                    break;
+                                }
+
                                 out.writeUTF(text);
-                                System.out.println("TODO download");
+                                // Receive connection port
+                                int downloadPort = Integer.parseInt(in.readUTF());
+                                // System.out.println(downloadPort);
+
+                                // Create thread to send file
+                                new ReceiveFile(username, args[0], downloadPort, destination);
+
                             } else {
                                 System.out.println("Login is required");
                             }
@@ -191,6 +206,7 @@ public class Client {
                             break;
                         
                         case "exit":
+                            loggedIn = false;
                             username = askUsername(sc);
                             break;
 
@@ -243,6 +259,35 @@ public class Client {
             }
         }
         return username;
+    }
+
+    public static void listDirectory() {
+        // copy paste da função listDirectory do server
+
+        // try {
+        //     StringBuilder result = new StringBuilder();
+
+        //     // System.out.println("Full path = " + this.user.getFullPath());
+
+        //     File folder = new File("server/users/" + this.user.getFullPath());
+        //     File[] files = folder.listFiles();
+
+        //     for (File file : files) {
+        //         if (file.isDirectory()) {
+        //             // System.out.println("*" + file.getName() + "*");
+        //             result.append("*" + file.getName() + "*");
+        //         } else {
+        //             // System.out.println(file.getName());
+        //             result.append(file.getName());
+        //         }
+        //         result.append("\t");
+        //     }
+
+        //     this.out.writeUTF(result.toString());
+
+        // } catch (IOException e) {
+        //     System.out.println("Erro listing directory files");
+        // }
     }
 
 }

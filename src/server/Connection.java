@@ -43,7 +43,7 @@ public class Connection implements Runnable {
         try {
 
             while (true) {
-                //System.out.println("text = " + text);
+                // System.out.println("text = " + text);
                 if (this.user != null) {
                     // this.out.writeUTF(this.serverName + "@" + this.user.username + "/" +
                     // this.user.currentDirectory);
@@ -65,9 +65,9 @@ public class Connection implements Runnable {
                         if (this.user != null) {
                             this.user = null;
                             this.out.writeUTF("Logged out");
-                        } else {
+                        } else 
                             this.out.writeUTF("Login is required");
-                        }
+
                         break;
 
                     case "passwd":
@@ -92,18 +92,12 @@ public class Connection implements Runnable {
 
                     // Client -> Server
                     case "send":
-                        // send filename path_local path_server
-                        try {
-                            System.out.printf("%s %s %s\n", temp[1], temp[2], temp[3]);
-                        } catch (ArrayIndexOutOfBoundsException e) {
-                            System.out.println("Out of bounds");
-                        }
-                        sendFile();
+                        receiveFile();
                         break;
 
                     // Server -> Client
                     case "download":
-                        downloadFile();
+                        sendFile(temp[1]);
                         break;
 
                     case "help":
@@ -239,7 +233,7 @@ public class Connection implements Runnable {
                 // this.user.getFullPath());
                 this.out.writeUTF(this.serverName + "@" + this.user.getFullPath());
             } else {
-                this.out.writeUTF("Directory doesn't exist");
+                this.out.writeUTF("Directory doesn't exist. Please use full path");
             }
 
         } catch (IOException e) {
@@ -251,7 +245,7 @@ public class Connection implements Runnable {
         try {
             StringBuilder result = new StringBuilder();
 
-            //System.out.println("Full path = " + this.user.getFullPath());
+            // System.out.println("Full path = " + this.user.getFullPath());
 
             File folder = new File("server/users/" + this.user.getFullPath());
             File[] files = folder.listFiles();
@@ -274,37 +268,51 @@ public class Connection implements Runnable {
         }
     }
 
-    public void sendFile() {
-        try {
-            // send -1 if user not logged in
-            if (this.user == null) {
-                this.out.writeUTF(Integer.toString(-1));
-                return;
-            }
+    // Receive file from client
+    public void receiveFile() {
+        String destination = "";
 
-            // if port set to 0, a random port wil be used
-            try (ServerSocket downloadSocket = new ServerSocket(0)) {
-                System.out.println("Download socket created: " + downloadSocket);
+        // if port set to 0, a random port wil be used
+        try (ServerSocket downloadSocket = new ServerSocket(0)) {
+            System.out.println("Download socket created: " + downloadSocket);
+            
+            // Send port to client
+            this.out.writeUTF(Integer.toString(downloadSocket.getLocalPort()));
 
-                this.out.writeUTF(Integer.toString(downloadSocket.getLocalPort()));
+            // Read file destination
+            destination = this.in.readUTF();
 
-                Socket soc = downloadSocket.accept(); // BLOQUEANTE
+            Socket soc = downloadSocket.accept(); // BLOQUEANTE
 
-                System.out.printf("Client %d connected to download socket\n", this.threadNumber);
-                this.downloadId++;
-                new ReceiveFile(soc, this.downloadId);
-
-            } catch (IOException e) {
-                System.out.println("Listen:" + e.getMessage());
-            }
+            System.out.printf("Client %d connected to download socket\n", this.threadNumber);
+            //this.downloadId++;
+            new ReceiveFile(soc, destination, this.user.username);
 
         } catch (IOException e) {
-            System.out.println("SendFile:" + e.getMessage());
+            System.out.println("Listen:" + e.getMessage());
         }
+
     }
 
-    public void downloadFile() {
+    // Send file to client
+    // download Desktop/file file123
+    public void sendFile(String source) {
+        // if port set to 0, a random port wil be used
+        try (ServerSocket downloadSocket = new ServerSocket(0)) {
+            System.out.println("Download socket created: " + downloadSocket);
+            
+            // Send port to client
+            this.out.writeUTF(Integer.toString(downloadSocket.getLocalPort()));
 
+            Socket soc = downloadSocket.accept(); // BLOQUEANTE
+
+            System.out.printf("Client %d connected to download socket\n", this.threadNumber);
+            // this.downloadId++;
+            new SendFile(soc, source, this.user.username);
+
+        } catch (IOException e) {
+            System.out.println("Listen:" + e.getMessage());
+        }
     }
 
 }
