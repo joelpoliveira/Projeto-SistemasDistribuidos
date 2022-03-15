@@ -47,7 +47,7 @@ public class Connection implements Runnable {
                     this.out.writeUTF(this.serverName + " " + this.user.username + "/" + this.user.currentDirectory);
                     System.out.printf("Received %s from %d -> %s\n", text, threadNumber, this.user.username);
                 } else {
-                    this.out.writeUTF("");
+                    //this.out.writeUTF("");
                     System.out.printf("Received %s from %d\n", text, threadNumber);
                 }
 
@@ -74,8 +74,10 @@ public class Connection implements Runnable {
 
                     case "cd":
                         try {
+                            System.out.println("Changing to " + temp[1]);
                             changeDirectory(temp[1]);
                         } catch (ArrayIndexOutOfBoundsException e) {
+                            System.out.println("Out of Bounds");
                             changeDirectory("");
                         }
                         break;
@@ -112,6 +114,8 @@ public class Connection implements Runnable {
 
                     default:
                         System.out.println("Unknown command");
+                        //if (this.user != null)
+                        //    this.out.writeUTF("");
                         break;
                 }
             }
@@ -124,7 +128,7 @@ public class Connection implements Runnable {
             else
                 System.out.printf("Client %d closed connection\n", this.threadNumber); // Client closed socket
         } catch (IOException e) {
-            System.out.println("IO:" + e);
+            System.out.println("IO:" + e);// Error reading from pipe
         }
 
     }

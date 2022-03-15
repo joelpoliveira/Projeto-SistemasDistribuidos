@@ -9,7 +9,7 @@ import java.io.*;
 public class Client {
     public static void main(String args[]) {
         int socketPort = 0;
-        String username;
+        String username = "";
         boolean loggedIn = false;
 
         // args[0] <- hostname of destination
@@ -32,16 +32,29 @@ public class Client {
             System.exit(1);
         }
 
-        // ask username
+        boolean exist = false;
         Scanner sc = new Scanner(System.in);
-        System.out.print("username: ");
-        username = sc.nextLine();
-        //sc.close();
 
+        // Ask for a username. Keep asking for a valid one
+        File[] users = new File("client/users/").listFiles();
+        while (!exist) {
+            System.out.print("username: ");
+            username = sc.nextLine();
+
+            for (File user : users) {
+                if (user.getName().equals(username)) {
+                    exist = true;
+                    break;
+                }
+            }
+
+            if (!exist)
+                System.out.println("User doesn't exist");
+        }
 
         // Create socket
         try (Socket s = new Socket(args[0], socketPort)) {
-            System.out.println("Created socket = " + s);
+            System.out.println("Created socket: " + s);
 
             // Create input and output DataStreams
             DataInputStream in = new DataInputStream(s.getInputStream());
@@ -49,26 +62,39 @@ public class Client {
 
             String text = "";
             String[] temp;
+            String serverPath = "";
             // sc = null;
 
-            try  {
+            try {
                 // Scanner sc = new Scanner(System.in);
                 // sc = new Scanner(System.in);
 
                 while (true) {
-                    System.out.print(in.readUTF() + "> ");
+                    if (!loggedIn)
+                        System.out.print("> ");
+                    else {
+                        if (!text.equals(""))
+                            serverPath = in.readUTF();
+                        System.out.print(serverPath + "> ");
+                    }
+
                     text = sc.nextLine();
 
-                    if (!text.equals(""))
-                        out.writeUTF(text);
+                    //if (!text.equals("")) {
+                    //    out.writeUTF(text);
+                        // System.out.println("not empty!!!!!!!!!!!!!");
+                    //} // else
+                      // System.out.println("---: " + text);
 
                     temp = text.split(" ");
 
                     switch (temp[0]) {
                         case "login":
+                            //out.writeUTF(text);
+
                             // username
-                            //System.out.print(in.readUTF());
-                            //out.writeUTF(sc.nextLine());
+                            // System.out.print(in.readUTF());
+                            // out.writeUTF(sc.nextLine());
                             out.writeUTF(username);
                             // password
                             System.out.print(in.readUTF());
@@ -82,7 +108,10 @@ public class Client {
                             System.out.println(text);
                             break;
 
-                        case "logout":                                
+                        case "logout":
+                            //out.writeUTF(text);
+                            
+                            loggedIn = false;
                             System.out.println(in.readUTF());
                             break;
 
@@ -104,9 +133,14 @@ public class Client {
                             break;
 
                         case "cd":
-                            // Server message
-                            if (!((text = in.readUTF()).equals("")))
-                                System.out.println(text);
+                            if (loggedIn) {
+                                // Server message
+                                text = in.readUTF();
+                                if (!text.equals(""))
+                                    System.out.println(text);
+                            } else {
+                                System.out.println("Local cd");
+                            }
                             break;
 
                         case "ls":
@@ -117,7 +151,7 @@ public class Client {
                         case "send":
                             // Receive connection port
                             int downloadPort = Integer.parseInt(in.readUTF());
-                            //System.out.println(downloadPort);
+                            // System.out.println(downloadPort);
                             if (downloadPort == -1) {
                                 System.out.println("Login is required");
                                 break;
@@ -125,7 +159,7 @@ public class Client {
                             // Create thread to send file
                             new SendFile(args[0], downloadPort);
                             break;
-                        
+
                         case "download":
                             break;
 
@@ -134,6 +168,7 @@ public class Client {
                             break;
 
                         default:
+                            // System.out.println(in.readUTF());
                             break;
                     }
                 }
@@ -144,9 +179,9 @@ public class Client {
             }
 
             // } catch (EOFException e) {
-            //     System.out.println("sdasndasndi"); // Server closed socket
+            // System.out.println("sdasndasndi"); // Server closed socket
             // } catch (IOException e) {
-            //     System.out.println("IO:" + e);
+            // System.out.println("IO:" + e);
             // }
 
         } catch (UnknownHostException e) {
@@ -155,8 +190,9 @@ public class Client {
             System.out.println("Server closed connection"); // Server closed socket
             // TODO connect to secondary server
         } catch (IOException e) {
-            System.out.printf("Connection refused to %s:%s\n", args[0], args[1]); // Connection refused. Port not open on hostname
+            System.out.printf("Connection refused to %s:%s\n", args[0], args[1]); // Connection refused. Port not open
+                                                                                  // on hostname
         }
     }
-    
+
 }
