@@ -43,11 +43,13 @@ public class Connection implements Runnable {
         try {
 
             while (true) {
+                //System.out.println("text = " + text);
                 if (this.user != null) {
-                    this.out.writeUTF(this.serverName + " " + this.user.username + "/" + this.user.currentDirectory);
+                    // this.out.writeUTF(this.serverName + "@" + this.user.username + "/" +
+                    // this.user.currentDirectory);
                     System.out.printf("Received %s from %d -> %s\n", text, threadNumber, this.user.username);
                 } else {
-                    //this.out.writeUTF("");
+                    // this.out.writeUTF("");
                     System.out.printf("Received %s from %d\n", text, threadNumber);
                 }
 
@@ -60,7 +62,7 @@ public class Connection implements Runnable {
                         break;
 
                     case "logout":
-                        if(this.user != null){
+                        if (this.user != null) {
                             this.user = null;
                             this.out.writeUTF("Logged out");
                         } else {
@@ -73,12 +75,12 @@ public class Connection implements Runnable {
                         break;
 
                     case "cd":
-                        if (this.user != null){
+                        if (this.user != null) {
                             try {
                                 System.out.println("Changing to " + temp[1]);
                                 changeDirectory(temp[1]);
                             } catch (ArrayIndexOutOfBoundsException e) {
-                                System.out.println("Out of Bounds");
+                                // System.out.println("Out of Bounds");
                                 changeDirectory("");
                             }
                         }
@@ -87,10 +89,10 @@ public class Connection implements Runnable {
                     case "ls":
                         listDirectory();
                         break;
-                    
+
                     // Client -> Server
                     case "send":
-                    // send filename path_local path_server
+                        // send filename path_local path_server
                         try {
                             System.out.printf("%s %s %s\n", temp[1], temp[2], temp[3]);
                         } catch (ArrayIndexOutOfBoundsException e) {
@@ -98,7 +100,7 @@ public class Connection implements Runnable {
                         }
                         sendFile();
                         break;
-                    
+
                     // Server -> Client
                     case "download":
                         downloadFile();
@@ -110,27 +112,29 @@ public class Connection implements Runnable {
                                 login - login to server
                                 passwd - change password (requires login)
                                 cd - changes directory. cd [path]
-                                """
-                        );
+                                """);
                         break;
 
                     default:
                         System.out.println("Unknown command");
-                        //if (this.user != null)
-                        //    this.out.writeUTF("");
+                        // if (this.user != null)
+                        // this.out.writeUTF("");
                         break;
                 }
             }
 
         } catch (EOFException e) {
+            // Client closed socket
             if (this.user != null)
-                System.out.printf("Client %d -> %s closed connection\n", this.threadNumber, this.user.username); // Client
-                                                                                                                 // closed
-                                                                                                                 // socket
+                System.out.printf("Client %d -> %s closed connection\n", this.threadNumber, this.user.username);
             else
-                System.out.printf("Client %d closed connection\n", this.threadNumber); // Client closed socket
+                System.out.printf("Client %d closed connection\n", this.threadNumber);
         } catch (IOException e) {
-            System.out.println("IO:" + e);// Error reading from pipe
+            if (this.user != null)
+                // Error reading from pipe. Client closed connection
+                System.out.printf("Client %d -> %s closed connection\n", this.threadNumber, this.user.username);
+            else
+                System.out.printf("Client %d closed connection\n", this.threadNumber);
         }
 
     }
@@ -142,7 +146,7 @@ public class Connection implements Runnable {
         this.fh = new FileHandler();
 
         try {
-            //this.out.writeUTF("username: ");
+            // this.out.writeUTF("username: ");
             username = this.in.readUTF();
             // System.out.println(username);
 
@@ -171,7 +175,8 @@ public class Connection implements Runnable {
             this.user = new User("server/users/" + username + "/.config");
             this.user.loggedIn = true;
 
-            // Change to last directory after login
+            // Send directory to client
+            this.out.writeUTF(this.serverName + "@" + this.user.getFullPath());
 
         } catch (IOException e) {
             System.out.println("Error login");
@@ -223,21 +228,16 @@ public class Connection implements Runnable {
         ArrayList<String> config;
 
         try {
-            // Check if user is logged in first
-            if (this.user == null) {
-                this.out.writeUTF("Login is required");
-                return;
-            }
-            
-            System.out.println("server/users/" + this.user.username + "/home/" + newDirectory);
             if (new File("server/users/" + this.user.username + "/home/" + newDirectory).exists()) {
-                this.user.currentDirectory = "home/"+newDirectory;
+                this.user.currentDirectory = "home/" + newDirectory;
                 config = this.fh.readFile("server/users/" + this.user.username + "/.config");
-                config.set(2, "home/"+newDirectory);
+                config.set(2, "home/" + newDirectory);
                 this.fh.reWriteFile("server/users/" + this.user.username + "/.config", config);
 
-                // send empty message for client because it's waiting for a message
-                this.out.writeUTF("");
+                // send server info + directory
+                // System.out.println("==== " + this.serverName + "@" +
+                // this.user.getFullPath());
+                this.out.writeUTF(this.serverName + "@" + this.user.getFullPath());
             } else {
                 this.out.writeUTF("Directory doesn't exist");
             }
@@ -249,15 +249,11 @@ public class Connection implements Runnable {
 
     public void listDirectory() {
         try {
-            // Check if user is logged in first
-            if (this.user == null) {
-                this.out.writeUTF("Login is required");
-                return;
-            }
-
             StringBuilder result = new StringBuilder();
 
-            File folder = new File("server/users/" + this.user.username + "/" + this.user.currentDirectory);
+            //System.out.println("Full path = " + this.user.getFullPath());
+
+            File folder = new File("server/users/" + this.user.getFullPath());
             File[] files = folder.listFiles();
 
             for (File file : files) {
@@ -278,10 +274,10 @@ public class Connection implements Runnable {
         }
     }
 
-    public void sendFile(){
+    public void sendFile() {
         try {
             // send -1 if user not logged in
-            if (this.user == null){
+            if (this.user == null) {
                 this.out.writeUTF(Integer.toString(-1));
                 return;
             }

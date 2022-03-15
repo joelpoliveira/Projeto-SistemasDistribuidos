@@ -32,25 +32,11 @@ public class Client {
             System.exit(1);
         }
 
-        boolean exist = false;
         Scanner sc = new Scanner(System.in);
 
         // Ask for a username. Keep asking for a valid one
-        File[] users = new File("client/users/").listFiles();
-        while (!exist) {
-            System.out.print("username: ");
-            username = sc.nextLine();
-
-            for (File user : users) {
-                if (user.getName().equals(username)) {
-                    exist = true;
-                    break;
-                }
-            }
-
-            if (!exist)
-                System.out.println("User doesn't exist");
-        }
+        username = askUsername(sc);
+        
 
         // Create socket
         try (Socket s = new Socket(args[0], socketPort)) {
@@ -70,27 +56,27 @@ public class Client {
                 // sc = new Scanner(System.in);
 
                 while (true) {
+                    //System.out.println("text = " + text);
+
                     if (!loggedIn)
                         System.out.print("> ");
                     else {
-                        if (!text.equals(""))
-                            serverPath = in.readUTF();
+                        // Only update serverPath on cd and login
+                        // if(/* !text.equals("") && */text.equals("Logged in"))
+                        // serverPath = in.readUTF();
                         System.out.print(serverPath + "> ");
                     }
 
                     text = sc.nextLine();
 
-                    if (!text.equals("")) 
-                        out.writeUTF(text);
-                        // System.out.println("not empty!!!!!!!!!!!!!");
-                    //} // else
-                      // System.out.println("---: " + text);
+                    // if (!text.equals(""))
+                    // out.writeUTF(text);
 
                     temp = text.split(" ");
 
                     switch (temp[0]) {
                         case "login":
-                            //out.writeUTF(text);
+                            out.writeUTF(text);
 
                             // username
                             // System.out.print(in.readUTF());
@@ -102,73 +88,114 @@ public class Client {
 
                             // Server message
                             text = in.readUTF();
-                            if (text.equals("Logged in"))
+                            if (text.equals("Logged in")) {
                                 loggedIn = true;
+                                serverPath = in.readUTF();
+                            }
 
                             System.out.println(text);
                             break;
 
                         case "logout":
-                            //out.writeUTF(text);
-                            
+                            out.writeUTF(text);
+
                             loggedIn = false;
                             System.out.println(in.readUTF());
                             break;
 
                         case "passwd":
-                            // Password 1
-                            // check if server asks for password. If not, user is not logged in
-                            if (!(text = in.readUTF()).equals("New password: ")) {
-                                System.out.println(text);
-                                break;
-                            }
-                            System.out.print(text);
-                            out.writeUTF(sc.nextLine());
-                            // Password 2
-                            System.out.print(in.readUTF());
-                            out.writeUTF(sc.nextLine());
+                            if (loggedIn) {
+                                out.writeUTF(text);
 
-                            // Server message
-                            System.out.println(in.readUTF());
+                                // Password 1
+                                // check if server asks for password. If not, user is not logged in
+                                // if (!(text = in.readUTF()).equals("New password: ")) {
+                                // System.out.println(text);
+                                // break;
+                                // }
+
+                                System.out.print(text);
+                                out.writeUTF(sc.nextLine());
+                                // Password 2
+                                System.out.print(in.readUTF());
+                                out.writeUTF(sc.nextLine());
+
+                                // Server message
+                                System.out.println(in.readUTF());
+
+                            } else {
+                                System.out.println("Login Required!");
+                            }
                             break;
 
                         case "cd":
                             if (loggedIn) {
+                                out.writeUTF(text);
+
                                 // Server message
                                 text = in.readUTF();
-                                if (!text.equals(""))
+                                if (text.equals("Directory doesn't exist"))
                                     System.out.println(text);
+                                else
+                                    serverPath = text;
                             } else {
-                                System.out.println("Local cd");
+                                System.out.println("TODO Local cd");
                             }
                             break;
 
                         case "ls":
-                            // Server message
-                            System.out.println(in.readUTF());
+                            if (loggedIn) {
+                                out.writeUTF(text);
+                                // Server message
+                                text = in.readUTF();
+                                System.out.println(text);
+                            } else {
+                                System.out.println("TODO Local ls");
+                            }
                             break;
 
                         case "send":
-                            // Receive connection port
-                            int downloadPort = Integer.parseInt(in.readUTF());
-                            // System.out.println(downloadPort);
-                            if (downloadPort == -1) {
+                            if (loggedIn) {
+                                out.writeUTF(text);
+
+                                // Receive connection port
+                                int downloadPort = Integer.parseInt(in.readUTF());
+                                // System.out.println(downloadPort);
+
+                                // if (downloadPort == -1) {
+                                // System.out.println("Login is required");
+                                // break;
+                                // }
+
+                                // Create thread to send file
+                                new SendFile(args[0], downloadPort);
+
+                            } else {
                                 System.out.println("Login is required");
-                                break;
                             }
-                            // Create thread to send file
-                            new SendFile(args[0], downloadPort);
+
                             break;
 
                         case "download":
+                            if (loggedIn){
+                                out.writeUTF(text);
+                                System.out.println("TODO download");
+                            } else {
+                                System.out.println("Login is required");
+                            }
                             break;
 
                         case "help":
+                            out.writeUTF(text);
                             System.out.println(in.readUTF());
+                            break;
+                        
+                        case "exit":
+                            username = askUsername(sc);
                             break;
 
                         default:
-                            // System.out.println(in.readUTF());
+                            System.out.println("Unknown command");
                             break;
                     }
                 }
@@ -193,6 +220,29 @@ public class Client {
             System.out.printf("Connection refused to %s:%s\n", args[0], args[1]); // Connection refused. Port not open
                                                                                   // on hostname
         }
+    }
+
+    public static String askUsername(Scanner sc){
+        String username = "";
+        boolean exist = false;
+
+        File[] users = new File("client/users/").listFiles();
+        while (!exist) {
+            System.out.print("username: ");
+            username = sc.nextLine();
+
+            for (File user : users) {
+                if (user.getName().equals(username)) {
+                    exist = true;
+                    break;
+                }
+            }
+
+            if (!exist){
+                System.out.println("User doesn't exist");
+            }
+        }
+        return username;
     }
 
 }

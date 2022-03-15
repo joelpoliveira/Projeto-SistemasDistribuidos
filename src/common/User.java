@@ -36,4 +36,8 @@ public class User {
         return this.username + " " + this.password;
     }
 
+    public String getFullPath(){
+        return this.username + "/" + this.currentDirectory;
+    }
+
 }
