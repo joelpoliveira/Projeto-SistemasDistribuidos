@@ -73,12 +73,14 @@ public class Connection implements Runnable {
                         break;
 
                     case "cd":
-                        try {
-                            System.out.println("Changing to " + temp[1]);
-                            changeDirectory(temp[1]);
-                        } catch (ArrayIndexOutOfBoundsException e) {
-                            System.out.println("Out of Bounds");
-                            changeDirectory("");
+                        if (this.user != null){
+                            try {
+                                System.out.println("Changing to " + temp[1]);
+                                changeDirectory(temp[1]);
+                            } catch (ArrayIndexOutOfBoundsException e) {
+                                System.out.println("Out of Bounds");
+                                changeDirectory("");
+                            }
                         }
                         break;
 
@@ -226,14 +228,12 @@ public class Connection implements Runnable {
                 this.out.writeUTF("Login is required");
                 return;
             }
-
-            if (newDirectory.equals(""))
-                newDirectory = "home";
-
-            if (new File("server/users/" + this.user.username + "/" + newDirectory).exists()) {
-                this.user.currentDirectory = newDirectory;
+            
+            System.out.println("server/users/" + this.user.username + "/home/" + newDirectory);
+            if (new File("server/users/" + this.user.username + "/home/" + newDirectory).exists()) {
+                this.user.currentDirectory = "home/"+newDirectory;
                 config = this.fh.readFile("server/users/" + this.user.username + "/.config");
-                config.set(2, newDirectory);
+                config.set(2, "home/"+newDirectory);
                 this.fh.reWriteFile("server/users/" + this.user.username + "/.config", config);
 
                 // send empty message for client because it's waiting for a message

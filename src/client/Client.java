@@ -80,8 +80,8 @@ public class Client {
 
                     text = sc.nextLine();
 
-                    //if (!text.equals("")) {
-                    //    out.writeUTF(text);
+                    if (!text.equals("")) 
+                        out.writeUTF(text);
                         // System.out.println("not empty!!!!!!!!!!!!!");
                     //} // else
                       // System.out.println("---: " + text);
