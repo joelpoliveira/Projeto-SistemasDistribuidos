@@ -46,8 +46,18 @@ public class Client {
         // Ask for a username. Keep asking for a valid one
         username = askUsername(sc);
 
+        connect(mainHostname, mainPort, username, false);
+
         // Create socket
-        try (Socket s = new Socket(mainHostname, mainPort)) {
+
+    }
+
+    public static void connect(String hostname, int port, String username, boolean isSecondary) {
+        boolean loggedIn = false;
+        // String username = "";
+        Scanner sc = new Scanner(System.in);
+
+        try (Socket s = new Socket(hostname, port)) {
             System.out.println("Created socket: " + s);
 
             // Create input and output DataStreams
@@ -176,7 +186,7 @@ public class Client {
                             out.writeUTF(destination);
 
                             // Create thread to send file
-                            new SendFile(username, mainHostname, downloadPort, source);
+                            new SendFile(username, hostname, downloadPort, source);
                         } else {
                             System.out.println("Login is required");
                         }
@@ -202,7 +212,7 @@ public class Client {
                             // System.out.println(downloadPort);
 
                             // Create thread to send file
-                            new ReceiveFile(username, mainHostname, downloadPort, destination);
+                            new ReceiveFile(username, hostname, downloadPort, destination);
 
                         } else {
                             System.out.println("Login is required");
@@ -230,12 +240,19 @@ public class Client {
         } catch (EOFException e) {
             // Server closed socket
             System.out.println("EOF: " + e.getMessage());
-            System.out.println("Connecting to Secondary server...");
+            if (!isSecondary) {
+                System.out.println("Connecting to Secondary server...");
+                connect("localhost", 8005, username, true);
+            }
         } catch (IOException e) {
             // Connection refused. Broken pipe
             System.out.println("IO: " + e.getMessage());
-            System.out.println("Connecting to Secondary server...");
+            if (!isSecondary) {
+                System.out.println("Connecting to Secondary server...");
+                connect("localhost", 8005, username, true);
+            }
         }
+
     }
 
     public static String askUsername(Scanner sc) {
