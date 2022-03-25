@@ -43,10 +43,7 @@ public class Connection implements Runnable {
         try {
 
             while (true) {
-                // System.out.println("text = " + text);
                 if (this.user != null) {
-                    // this.out.writeUTF(this.serverName + "@" + this.user.username + "/" +
-                    // this.user.currentDirectory);
                     System.out.printf("%s received %s from %d -> %s\n", this.serverName, text, threadNumber, this.user.username);
                 } else {
                     // this.out.writeUTF("");

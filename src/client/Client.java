@@ -67,6 +67,7 @@ public class Client {
             String text = "";
             String[] temp;
             String serverPath = "";
+            String clientPath = "";
             // sc = null;
 
             // try {
@@ -74,7 +75,7 @@ public class Client {
                 // System.out.println("text = " + text);
 
                 if (!loggedIn)
-                    System.out.print("> ");
+                    System.out.print(clientPath + "> ");
                 else {
                     // if(/* !text.equals("") && */text.equals("Logged in"))
                     // serverPath = in.readUTF();
@@ -158,7 +159,7 @@ public class Client {
                             text = in.readUTF();
                             System.out.println(text);
                         } else {
-                            System.out.println("TODO Local ls");
+                            System.out.println(listDirectory(serverPath, username));
                         }
                         break;
 
@@ -278,33 +279,50 @@ public class Client {
         return username;
     }
 
-    public static void listDirectory() {
-        // copy paste da função listDirectory do server
+    public static String listDirectory(String serverPath, String username) {
+        try {
+            StringBuilder result = new StringBuilder();
 
-        // try {
-        // StringBuilder result = new StringBuilder();
+            File folder = new File("client/users/" + username + "/home/" + serverPath);
+            File[] files = folder.listFiles();
 
-        // // System.out.println("Full path = " + this.user.getFullPath());
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    result.append("*" + file.getName() + "*");
+                } else {
+                    result.append(file.getName());
+                }
+                result.append("\t");
+            }
 
-        // File folder = new File("server/users/" + this.user.getFullPath());
-        // File[] files = folder.listFiles();
+            return result.toString();
 
-        // for (File file : files) {
-        // if (file.isDirectory()) {
-        // // System.out.println("*" + file.getName() + "*");
-        // result.append("*" + file.getName() + "*");
-        // } else {
-        // // System.out.println(file.getName());
-        // result.append(file.getName());
-        // }
-        // result.append("\t");
-        // }
-
-        // this.out.writeUTF(result.toString());
-
-        // } catch (IOException e) {
-        // System.out.println("Erro listing directory files");
-        // }
+        } catch (Exception e) {
+            System.out.println("Erro listing directory files");
+            return "";
+        }
     }
+
+    /*
+    public static void changeDirectory(String newDirectory, String username) {
+        try {
+            if (new File("client/users/" + username + "/home/" + newDirectory).exists()) {
+                this.user.currentDirectory = "home/" + newDirectory;
+                config = this.fh.readFile("server/users/" + this.user.username + "/.config");
+                config.set(2, "home/" + newDirectory);
+                this.fh.reWriteFile("server/users/" + this.user.username + "/.config", config);
+
+                // send server info + directory
+                // System.out.println("==== " + this.serverName + "@" +
+                // this.user.getFullPath());
+                this.out.writeUTF(this.serverName + "@" + this.user.getFullPath());
+            } else {
+                this.out.writeUTF("Directory doesn't exist. Please use full path");
+            }
+
+        } catch (IOException e) {
+            System.out.println("Erro changing directory");
+        }
+    }*/
 
 }
