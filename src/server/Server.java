@@ -16,7 +16,7 @@ public class Server implements Runnable {
         this.serverName = name;
         this.clientNumber = 0;
         this.t = new Thread(this, name);
-        // this.t.setDaemon(true);
+
         this.t.start();
     }
 
