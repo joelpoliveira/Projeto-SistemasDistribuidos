@@ -9,16 +9,23 @@ public class HearthBeatSender implements Runnable {
     private int maxFailedHeartBeats;
     private int bufferSize;
     private int failedHeartBeats;
+    private int PORT;
+    private Server caller;
     Thread t;
 
-    public HearthBeatSender() {
-        this.timeout = 5000;
-        this.interval = 100;
-        this.maxFailedHeartBeats = 5;
+    public HearthBeatSender(Server lock) {
+        this.timeout = 1000;
+        this.interval = 500;
+        
         this.bufferSize = 4096;
-        this.failedHeartBeats = 0;
-        this.t = new Thread(this, "HearthBeatSender");
 
+        this.maxFailedHeartBeats = 5;
+        this.failedHeartBeats = 0;
+
+        this.PORT = 8005;
+
+        this.caller = lock;
+        this.t = new Thread(this, "HearthBeatSender");
         this.t.start();
     }
 
@@ -28,9 +35,8 @@ public class HearthBeatSender implements Runnable {
             ds.setSoTimeout(timeout); // Set socket timeout
 
             int count = 0;
-            int failedheartbeats = 0;
-
-            while (failedheartbeats < maxFailedHeartBeats) {
+            
+            while (failedHeartBeats < maxFailedHeartBeats) {
                 InetAddress hostname = InetAddress.getByName("localhost");
 
                 try {
@@ -44,7 +50,7 @@ public class HearthBeatSender implements Runnable {
                     byte[] buf = bos.toByteArray();
 
                     // Create sending UDP packet
-                    DatagramPacket dp = new DatagramPacket(buf, buf.length, hostname, 8000);
+                    DatagramPacket dp = new DatagramPacket(buf, buf.length, hostname, this.PORT);
                     ds.send(dp); // send UDP packet
 
                     // Create receiving UDP packet
@@ -68,11 +74,18 @@ public class HearthBeatSender implements Runnable {
                 }
                 Thread.sleep(interval);
             }
+
+            //release second server;
+            synchronized (this.caller){
+                this.caller.notify();
+            }
+
         } catch (IOException e) {
             System.out.println("ERRRO");
         } catch (InterruptedException e) {
             System.out.println("Thread.sleep error"); // Execption from Thread.sleep
         }
+        System.out.println("Sender Out");
 
     }
 }
