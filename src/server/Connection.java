@@ -79,6 +79,7 @@ public class Connection implements Runnable {
 
                     case "passwd":
                         changePassword();
+                        // TODO Send credentials file to secondary server
                         break;
 
                     case "cd":
