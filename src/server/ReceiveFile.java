@@ -24,6 +24,7 @@ public class ReceiveFile implements Runnable {
     }
 
     public void run() {
+        // int total = 0;
         System.out.println("Receiver thread ready!");
         try {
             byte[] contents = new byte[this.size];
@@ -36,11 +37,15 @@ public class ReceiveFile implements Runnable {
             int bytesRead = 0;
             while ((bytesRead = is.read(contents)) != -1){
                 fos.write(contents, 0, bytesRead);
+                //total += bytesRead;
             }
             
             System.out.println("File saved successfully to" + this.username + "/home/" + this.destinationPath);
             fos.close();
             this.downloadSocket.close();
+
+            // Replicate file on secondary server
+            // new SendFileUDP(this.destinationPath, this.username);
 
         } catch (IOException e) {
             System.out.println("Download" + e.getStackTrace());
