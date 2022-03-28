@@ -11,7 +11,6 @@ public class Server implements Runnable {
     Boolean lock;
     String serverName;
     Thread t;
-    
 
     public Server(int port, String name, boolean isPrimary) {
         // this.hostname = hostname;
@@ -23,7 +22,7 @@ public class Server implements Runnable {
         this.t.start();
     }
 
-    public void run(){
+    public void run() {
 
         try (ServerSocket listenSocket = new ServerSocket(this.port)) {
             System.out.println(this.serverName + " server started");
@@ -32,42 +31,42 @@ public class Server implements Runnable {
             HearthBeatSender sender = null;
             while (true) {
 
-                if (this.isPrimary){
-                    if (receiver == null){
-                        receiver =  new HearthBeatReceiver();
+                if (this.isPrimary) {
+                    if (receiver == null) {
+                        receiver = new HearthBeatReceiver();
                     }
                     Socket clientSocket = listenSocket.accept(); // BLOQUEANTE
                     System.out.println("Client connect to " + this.serverName);
                     this.clientNumber++;
-                    new Connection(clientSocket, this.clientNumber, this.serverName);
-                
-                }else{
-                    if (receiver != null && receiver.t.isAlive()){
+                    new Connection(clientSocket, this.clientNumber, this.serverName, this.isPrimary);
+
+                } else {
+                    if (receiver != null && receiver.t.isAlive()) {
                         receiver.interrupt();
                         receiver = null;
                     }
                     sender = new HearthBeatSender(this);
-                    new ReceiveFileUDP();
-                    
+                    new ReceiveFileUDP("server/secondary");
+
                     synchronized (this) {
-                        try{
+                        try {
                             wait();
-                        } catch (InterruptedException e){
+                        } catch (InterruptedException e) {
                             System.out.println("Interrupted");
                         }
-                    }    
+                    }
 
                     this.isPrimary = true;
                     sender = null;
                     System.out.println("I am primary");
-                    
+
                 }
-            
+
             }
         } catch (IOException e) {
             System.out.println("Listen:" + e.getMessage());
         }
 
     }
-    
+
 }

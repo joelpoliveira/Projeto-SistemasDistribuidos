@@ -9,20 +9,22 @@ import java.net.*;
 public class SendFileUDP implements Runnable {
     String filePath;
     String username;
+    String serverPath;
     //int length;
     int port;
 
-    public SendFileUDP(String filePath, String username) {
+    public SendFileUDP(String filePath, String username, String serverPath) {
         this.filePath = filePath;
         this.port = 8004;
         this.username = username;
+        this.serverPath = serverPath;
         //this.length = length;
 
         new Thread(this, "FileSenderUDP").start();
     }
 
     private File getFile() {
-        File file = new File("server/users/" + this.username + "/home/" + this.filePath);
+        File file = new File(this.serverPath + "users/" + this.username + "/home/" + this.filePath);
         if (file.isFile()) 
             return file;
         else
@@ -53,8 +55,9 @@ public class SendFileUDP implements Runnable {
             filename = f.getName();
             byte[] fileNameBytes = filename.getBytes(); // filename as bytes
 
-            System.out.println("++++++" + filename);
-
+            // System.out.println("++++++" + filename);
+            // System.out.println("++++++" + this.filePath);
+        
             // Create packet
             DatagramPacket filenamePacket = new DatagramPacket(fileNameBytes, fileNameBytes.length, hostname, port);
             socket.send(filenamePacket); // Send the packet

@@ -11,14 +11,16 @@ public class ReceiveFile implements Runnable {
     String destinationPath;
     String username;
     int size;
+    String serverPath;
 
-    public ReceiveFile(Socket downloadSocket, String destinationPath, String username) {
+    public ReceiveFile(Socket downloadSocket, String destinationPath, String username, String serverPath) {
         // this.threadNumber = threadNumber;
         this.downloadSocket = downloadSocket;
         this.destinationPath = destinationPath;
         this.username = username;
         this.t = new Thread(this, "serverFileReceiver");
         this.size = 5;
+        this.serverPath = serverPath;
 
         this.t.start();
     }
@@ -30,7 +32,7 @@ public class ReceiveFile implements Runnable {
             byte[] contents = new byte[this.size];
 
             // Initialize the FileOutputStream to the output file's full path.
-            FileOutputStream fos = new FileOutputStream("server/users/" + this.username + "/home/" + this.destinationPath);
+            FileOutputStream fos = new FileOutputStream(this.serverPath + "users/" + this.username + "/home/" + this.destinationPath);
             InputStream is = this.downloadSocket.getInputStream();
 
             // Number of bytes read in one read() cicle
@@ -40,15 +42,15 @@ public class ReceiveFile implements Runnable {
                 //total += bytesRead;
             }
             
-            System.out.println("File saved successfully to" + this.username + "/home/" + this.destinationPath);
+            System.out.println("File saved successfully to " + this.username + "/home/" + this.destinationPath);
             fos.close();
             this.downloadSocket.close();
             
             // Replicate file on secondary server
-            new SendFileUDP(this.destinationPath, this.username);
+            new SendFileUDP(this.destinationPath, this.username, this.serverPath);
 
         } catch (IOException e) {
-            System.out.println("Download" + e.getStackTrace());
+            System.out.println("Download " + e.getMessage());
         }
 
     }

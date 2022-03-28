@@ -16,11 +16,21 @@ public class Connection implements Runnable {
     User user;
     FileHandler fh;
     int downloadId;
+    boolean isPrimary;
+    String serverPath;
 
-    public Connection(Socket clientSocket, int number, String serverName) {
+    public Connection(Socket clientSocket, int number, String serverName, boolean isPrimary) {
         this.threadNumber = number;
         this.serverName = serverName;
         this.downloadId = 0;
+        this.isPrimary = isPrimary;
+
+        if(this.isPrimary) {
+            this.serverPath = "server/main/";
+        } else {
+            this.serverPath = "server/secondary/";
+        }
+
         try {
             this.clientSocket = clientSocket;
             this.in = new DataInputStream(clientSocket.getInputStream());
@@ -44,7 +54,8 @@ public class Connection implements Runnable {
 
             while (true) {
                 if (this.user != null) {
-                    System.out.printf("%s received %s from %d -> %s\n", this.serverName, text, threadNumber, this.user.username);
+                    System.out.printf("%s received %s from %d -> %s\n", this.serverName, text, threadNumber,
+                            this.user.username);
                 } else {
                     System.out.printf("%s Received %s from %d\n", this.serverName, text, threadNumber);
                 }
@@ -61,7 +72,7 @@ public class Connection implements Runnable {
                         if (this.user != null) {
                             this.user = null;
                             this.out.writeUTF("Logged out");
-                        } else 
+                        } else
                             this.out.writeUTF("Login is required");
 
                         break;
@@ -143,7 +154,7 @@ public class Connection implements Runnable {
             // System.out.println(password);
 
             // Read credentials file and check user
-            credentials = fh.readFile("server/users/.credentials");
+            credentials = fh.readFile(this.serverPath + "users/.credentials");
             if ((index = credentials.indexOf(username)) == -1) {
                 // System.out.println("User doesn't exist");
                 this.out.writeUTF("User doesnt exist");
@@ -160,7 +171,7 @@ public class Connection implements Runnable {
             }
 
             // Associate a user with this connection
-            this.user = new User("server/users/" + username + "/.config");
+            this.user = new User(this.serverPath + "users/" + username + "/.config");
             this.user.loggedIn = true;
 
             // Send directory to client
@@ -173,7 +184,7 @@ public class Connection implements Runnable {
 
     public void changePassword() {
         String password1 = "", password2 = "";
-        ArrayList<String> temp = fh.readFile("server/users/.credentials");
+        ArrayList<String> temp = fh.readFile(this.serverPath + "users/.credentials");
         int index;
 
         try {
@@ -188,11 +199,11 @@ public class Connection implements Runnable {
                     // change password in .credentials file
                     index = temp.indexOf(this.user.username);
                     temp.set(index + 1, password1);
-                    this.fh.reWriteFile("server/users/.credentials", temp);
+                    this.fh.reWriteFile(this.serverPath + "users/.credentials", temp);
                     // change user config file password
-                    temp = this.fh.readFile("server/users/" + this.user.username + "/.config");
+                    temp = this.fh.readFile(this.serverPath + "users/" + this.user.username + "/.config");
                     temp.set(1, password1);
-                    this.fh.reWriteFile("server/users/" + this.user.username + "/.config", temp);
+                    this.fh.reWriteFile(this.serverPath + "users/" + this.user.username + "/.config", temp);
 
                     this.user.password = password1;
                     this.out.writeUTF("Password changed!");
@@ -216,11 +227,11 @@ public class Connection implements Runnable {
         ArrayList<String> config;
 
         try {
-            if (new File("server/users/" + this.user.username + "/home/" + newDirectory).exists()) {
+            if (new File(this.serverPath + "users/" + this.user.username + "/home/" + newDirectory).exists()) {
                 this.user.currentDirectory = "home/" + newDirectory;
-                config = this.fh.readFile("server/users/" + this.user.username + "/.config");
+                config = this.fh.readFile(this.serverPath + "users/" + this.user.username + "/.config");
                 config.set(2, "home/" + newDirectory);
-                this.fh.reWriteFile("server/users/" + this.user.username + "/.config", config);
+                this.fh.reWriteFile(this.serverPath + "users/" + this.user.username + "/.config", config);
 
                 this.out.writeUTF(this.serverName + "@" + this.user.getFullPath());
             } else {
@@ -238,7 +249,7 @@ public class Connection implements Runnable {
 
             // System.out.println("Full path = " + this.user.getFullPath());
 
-            File folder = new File("server/users/" + this.user.getFullPath());
+            File folder = new File(this.serverPath + "users/" + this.user.getFullPath());
             File[] files = folder.listFiles();
 
             for (File file : files) {
@@ -266,7 +277,7 @@ public class Connection implements Runnable {
         // if port set to 0, a random port wil be used
         try (ServerSocket downloadSocket = new ServerSocket(0)) {
             System.out.println("Download socket created: " + downloadSocket);
-            
+
             // Send port to client
             this.out.writeUTF(Integer.toString(downloadSocket.getLocalPort()));
 
@@ -276,8 +287,8 @@ public class Connection implements Runnable {
             Socket soc = downloadSocket.accept(); // BLOQUEANTE
 
             System.out.printf("Client %d connected to download socket\n", this.threadNumber);
-            //this.downloadId++;
-            new ReceiveFile(soc, destination, this.user.username);
+            // this.downloadId++;
+            new ReceiveFile(soc, destination, this.user.username, this.serverPath);
 
         } catch (IOException e) {
             System.out.println("Listen:" + e.getMessage());
@@ -290,7 +301,7 @@ public class Connection implements Runnable {
         // if port set to 0, a random port wil be used
         try (ServerSocket downloadSocket = new ServerSocket(0)) {
             System.out.println("Download socket created: " + downloadSocket);
-            
+
             // Send port to client
             this.out.writeUTF(Integer.toString(downloadSocket.getLocalPort()));
 
