@@ -4,9 +4,10 @@ import java.io.*;
 import java.net.*;
 
 public class ReceiveFileUDP implements Runnable {
-
+    Thread t;
     public ReceiveFileUDP() {
-        new Thread(this, "FileReceiverUDp").start();
+        this.t = new Thread(this, "FileReceiverUDp");
+        this.t.start();
     }
 
     private File createFile(DatagramSocket socket) throws IOException {
@@ -100,7 +101,7 @@ public class ReceiveFileUDP implements Runnable {
     }
 
     public void run() {
-        try (DatagramSocket socket = new DatagramSocket(8005)) {
+        try (DatagramSocket socket = new DatagramSocket(8004)) {
             // Create file
             File f = createFile(socket);
             receiveFile(f, socket);

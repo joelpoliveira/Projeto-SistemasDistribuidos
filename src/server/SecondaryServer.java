@@ -26,7 +26,7 @@ public class SecondaryServer {
 
         // No ReceiveFileUDP Class created yet
 
-        new Server(secondaryPort, "SecondaryServer");
+        new Server(secondaryPort, "SecondaryServer", false);
 
         System.out.println("Secondary server created");
 

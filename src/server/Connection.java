@@ -46,7 +46,6 @@ public class Connection implements Runnable {
                 if (this.user != null) {
                     System.out.printf("%s received %s from %d -> %s\n", this.serverName, text, threadNumber, this.user.username);
                 } else {
-                    // this.out.writeUTF("");
                     System.out.printf("%s Received %s from %d\n", this.serverName, text, threadNumber);
                 }
 
@@ -108,8 +107,6 @@ public class Connection implements Runnable {
 
                     default:
                         System.out.println("Unknown command");
-                        // if (this.user != null)
-                        // this.out.writeUTF("");
                         break;
                 }
             }
@@ -225,9 +222,6 @@ public class Connection implements Runnable {
                 config.set(2, "home/" + newDirectory);
                 this.fh.reWriteFile("server/users/" + this.user.username + "/.config", config);
 
-                // send server info + directory
-                // System.out.println("==== " + this.serverName + "@" +
-                // this.user.getFullPath());
                 this.out.writeUTF(this.serverName + "@" + this.user.getFullPath());
             } else {
                 this.out.writeUTF("Directory doesn't exist. Please use full path");

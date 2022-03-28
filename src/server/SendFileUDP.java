@@ -14,7 +14,7 @@ public class SendFileUDP implements Runnable {
 
     public SendFileUDP(String filePath, String username) {
         this.filePath = filePath;
-        this.port = 8005;
+        this.port = 8004;
         this.username = username;
         //this.length = length;
 

@@ -24,7 +24,7 @@ public class MainServer {
             System.exit(1);
         }
 
-        new Server(mainPort, "MainServer");
+        new Server(mainPort, "MainServer", true);
 
         System.out.println("Main server created");
 

@@ -22,7 +22,7 @@ public class HearthBeatSender implements Runnable {
         this.maxFailedHeartBeats = 5;
         this.failedHeartBeats = 0;
 
-        this.PORT = 8005;
+        this.PORT = 8010;
 
         this.caller = lock;
         this.t = new Thread(this, "HearthBeatSender");
@@ -67,7 +67,7 @@ public class HearthBeatSender implements Runnable {
 
                     int n = dis.readInt();
 
-                    System.out.println("Got: " + n + ".");
+                    //System.out.println("Got: " + n + ".");
                 } catch (SocketTimeoutException ste) {
                     failedHeartBeats++;
                     System.out.println("Failed heartbeats: " + failedHeartBeats);

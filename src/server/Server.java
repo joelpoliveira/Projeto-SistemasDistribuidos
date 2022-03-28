@@ -13,12 +13,12 @@ public class Server implements Runnable {
     Thread t;
     
 
-    public Server(int port, String name) {
+    public Server(int port, String name, boolean isPrimary) {
         // this.hostname = hostname;
         this.port = port;
         this.serverName = name;
         this.clientNumber = 0;
-        this.isPrimary = false;
+        this.isPrimary = isPrimary;
         this.t = new Thread(this, name);
         this.t.start();
     }
@@ -29,20 +29,25 @@ public class Server implements Runnable {
             System.out.println(this.serverName + " server started");
             System.out.println(this.serverName + " listen socket: " + listenSocket);
             HearthBeatReceiver receiver = null;
+            HearthBeatSender sender = null;
             while (true) {
 
                 if (this.isPrimary){
-                    receiver =  new HearthBeatReceiver();
+                    if (receiver == null){
+                        receiver =  new HearthBeatReceiver();
+                    }
                     Socket clientSocket = listenSocket.accept(); // BLOQUEANTE
-                    // System.out.println("Client connect to" + this.serverName + ": " + clientSocket);
                     System.out.println("Client connect to " + this.serverName);
                     this.clientNumber++;
                     new Connection(clientSocket, this.clientNumber, this.serverName);
                 
                 }else{
-                    if (receiver != null && receiver.t.isAlive())
+                    if (receiver != null && receiver.t.isAlive()){
                         receiver.interrupt();
-                    new HearthBeatSender(this);
+                        receiver = null;
+                    }
+                    sender = new HearthBeatSender(this);
+                    new ReceiveFileUDP();
                     
                     synchronized (this) {
                         try{
@@ -51,7 +56,9 @@ public class Server implements Runnable {
                             System.out.println("Interrupted");
                         }
                     }    
+
                     this.isPrimary = true;
+                    sender = null;
                     System.out.println("I am primary");
                     
                 }

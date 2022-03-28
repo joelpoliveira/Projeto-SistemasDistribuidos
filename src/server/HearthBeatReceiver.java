@@ -10,7 +10,7 @@ public class HearthBeatReceiver implements Runnable {
 
     public HearthBeatReceiver() {
         this.bufferSize = 4096;
-        this.PORT = 8005;
+        this.PORT = 8010;
 
         this.t = new Thread(this, "HearthBeatReceiver");
         this.t.start();
@@ -32,13 +32,14 @@ public class HearthBeatReceiver implements Runnable {
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 DataOutputStream dos = new DataOutputStream(baos);
                 dos.writeInt(count);
+
                 byte resp[] = baos.toByteArray();
                 DatagramPacket dpresp = new DatagramPacket(resp, resp.length, dp.getAddress(), dp.getPort());
                 ds.send(dpresp);
             }
 
         } catch (IOException e) {
-            System.out.println("Erro");
+            System.out.println(e.getMessage());
         }
     }
 

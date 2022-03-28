@@ -8,8 +8,8 @@ import java.io.*;
 
 public class Client {
     public static void main(String args[]) {
-        int mainPort = 0;
-        int secondaryPort = 0;
+        int mainPort = 8000;
+        int secondaryPort = 8001;
         String username = "";
         boolean loggedIn = false;
 
@@ -243,14 +243,14 @@ public class Client {
             System.out.println("EOF: " + e.getMessage());
             if (!isSecondary) {
                 System.out.println("Connecting to Secondary server...");
-                connect("localhost", 8005, username, true);
+                connect("localhost", 8001, username, true);
             }
         } catch (IOException e) {
             // Connection refused. Broken pipe
             System.out.println("IO: " + e.getMessage());
             if (!isSecondary) {
                 System.out.println("Connecting to Secondary server...");
-                connect("localhost", 8005, username, true);
+                connect("localhost", 8001, username, true);
             }
         }
 
