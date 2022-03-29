@@ -6,6 +6,7 @@ import java.net.*;
 public class ReceiveFileUDP implements Runnable {
     Thread t;
     int PORT;
+    
     public ReceiveFileUDP(int port) {
         this.PORT = port;
         this.t = new Thread(this, "FileReceiverUDp");
@@ -85,7 +86,13 @@ public class ReceiveFileUDP implements Runnable {
                 System.arraycopy(message, 3, fileByteArray, 0, 1021);
 
                 // Write the retrieved data to the file and print received data sequence number
-                fos.write(fileByteArray);
+                for (byte b: fileByteArray){
+                    if (b != 0)
+                        fos.write(b);
+                    else
+                        break;
+                }
+
                 System.out.println("Received: Sequence number:" + foundLast);
 
                 // Send acknowledgement

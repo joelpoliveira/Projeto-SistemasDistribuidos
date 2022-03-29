@@ -28,7 +28,7 @@ public class Server implements Runnable {
         
     }
 
-    public void run(){
+    public void run() {
 
         
             System.out.println(this.serverName + " server started");
@@ -82,7 +82,7 @@ public class Server implements Runnable {
                         this.update();
                     }                        
                 }
-            
+
             }
         
 
@@ -94,5 +94,5 @@ public class Server implements Runnable {
         else 
             this.port = Integer.parseInt(configs.get("secondaryPort"));
     }
-    
+
 }
