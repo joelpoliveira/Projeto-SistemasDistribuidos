@@ -5,19 +5,23 @@ import java.net.*;
 
 public class ReceiveFileUDP implements Runnable {
     Thread t;
-    public ReceiveFileUDP() {
+    int PORT;
+    public ReceiveFileUDP(int port) {
+        this.PORT = port;
         this.t = new Thread(this, "FileReceiverUDp");
         this.t.start();
     }
 
     private File createFile(DatagramSocket socket) throws IOException {
+        socket.setSoTimeout(1000);
         byte[] filename = new byte[1024];
         File f = null;
 
         // Receive filename from packet
         DatagramPacket filenamePacket = new DatagramPacket(filename, filename.length);
-
+        System.out.println("WAITING");
         socket.receive(filenamePacket);
+        System.out.println("NOT WAITING");
         // System.out.println("Received filename");
 
         byte[] data = filenamePacket.getData(); // Reading the name in bytes
@@ -101,14 +105,26 @@ public class ReceiveFileUDP implements Runnable {
     }
 
     public void run() {
-        try (DatagramSocket socket = new DatagramSocket(8004)) {
-            // Create file
-            File f = createFile(socket);
-            receiveFile(f, socket);
-
+        try (DatagramSocket socket = new DatagramSocket(this.PORT)) {
+            while(!this.t.isInterrupted()){
+                // Create file
+                try{
+                    File f = createFile(socket);
+                }catch(SocketTimeoutException te){
+                    continue;
+                }
+                //receiveFile(f, socket);
+            }
+            socket.close();
         } catch (IOException e) {
-            System.out.println("Erro DatagamSocket receiver");
+            System.out.println(e);
+            System.out.println("Erro DatagramSocket receiver");
         }
     }
 
+    public void interrupt(){
+        System.out.println("Interruption Called");
+        this.t.interrupt();
+        
+    }
 }

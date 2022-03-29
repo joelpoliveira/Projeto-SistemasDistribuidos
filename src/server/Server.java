@@ -1,6 +1,7 @@
 package server;
 
 import java.net.*;
+import java.util.HashMap;
 import java.io.*;
 
 public class Server implements Runnable {
@@ -8,66 +9,90 @@ public class Server implements Runnable {
     int port;
     int clientNumber;
     boolean isPrimary;
-    Boolean lock;
+    PrimaryVerification responder;
     String serverName;
     Thread t;
+    HashMap<String, String> configs;
     
 
-    public Server(int port, String name, boolean isPrimary) {
+    public Server( HashMap<String, String> configs, PrimaryVerification responder, boolean isPrimary) {
         // this.hostname = hostname;
-        this.port = port;
-        this.serverName = name;
-        this.clientNumber = 0;
+        this.configs=configs;
         this.isPrimary = isPrimary;
-        this.t = new Thread(this, name);
+        this.responder = responder;
+        //this.serverName = name;
+        this.clientNumber = 0;
+        this.update();
+        this.t = new Thread(this);
         this.t.start();
+        
     }
 
     public void run(){
 
-        try (ServerSocket listenSocket = new ServerSocket(this.port)) {
+        
             System.out.println(this.serverName + " server started");
-            System.out.println(this.serverName + " listen socket: " + listenSocket);
+            //System.out.println(this.serverName + " listen socket: " + listenSocket);
+            ReceiveFileUDP udp_receiver = null;
             HearthBeatReceiver receiver = null;
             HearthBeatSender sender = null;
-            while (true) {
 
+            while (true) {
+                System.out.println("Primaty = " + this.isPrimary);
                 if (this.isPrimary){
-                    if (receiver == null){
-                        receiver =  new HearthBeatReceiver();
+                    try (ServerSocket listenSocket = new ServerSocket(this.port)) {
+                        if (receiver == null){
+                            receiver =  new HearthBeatReceiver( Integer.parseInt( configs.get("heartBeatPort") ) );
+                        }
+                        if(responder == null){
+                            responder = new PrimaryVerification(configs);
+                        }
+                        Socket clientSocket = listenSocket.accept(); // BLOQUEANTE
+                        System.out.println("Client connect to " + this.serverName);
+                        this.clientNumber++;
+                        new Connection(clientSocket, this.clientNumber, this.serverName);
+
+                    } catch (IOException e) {
+                        System.out.println("Listen:" + e.getMessage());
                     }
-                    Socket clientSocket = listenSocket.accept(); // BLOQUEANTE
-                    System.out.println("Client connect to " + this.serverName);
-                    this.clientNumber++;
-                    new Connection(clientSocket, this.clientNumber, this.serverName);
-                
                 }else{
-                    if (receiver != null && receiver.t.isAlive()){
+                    
+                    if (receiver != null && !receiver.t.isInterrupted()){
                         receiver.interrupt();
                         receiver = null;
                     }
-                    sender = new HearthBeatSender(this);
-                    new ReceiveFileUDP();
+                    if (responder !=null && !responder.t.isInterrupted()){
+                        responder.interrupt();
+                        responder=null;
+                    }
+                    sender = new HearthBeatSender(this, configs);
+                    udp_receiver = new ReceiveFileUDP(Integer.parseInt(configs.get("serverUdpPort")));
                     
                     synchronized (this) {
                         try{
-                            wait();
+                            wait(); 
                         } catch (InterruptedException e){
-                            System.out.println("Interrupted");
+                            System.out.println("Interrupted"); 
                         }
-                    }    
-
-                    this.isPrimary = true;
-                    sender = null;
-                    System.out.println("I am primary");
-                    
+                        this.isPrimary = true;
+                        sender = null;
+                        
+                        udp_receiver.interrupt();
+                        udp_receiver = null;
+                        this.update();
+                    }                        
                 }
             
             }
-        } catch (IOException e) {
-            System.out.println("Listen:" + e.getMessage());
-        }
+        
 
+    }
+
+    public void update(){
+        if (this.isPrimary)
+            this.port = Integer.parseInt(configs.get("mainPort"));
+        else 
+            this.port = Integer.parseInt(configs.get("secondaryPort"));
     }
     
 }

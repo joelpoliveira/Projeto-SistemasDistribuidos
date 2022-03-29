@@ -1,11 +1,12 @@
-# Servers config
-mainHostname: 
-mainPort: 
-secondaryHostname: 
-secondaryPort: 
+mainHostname=localhost
+mainPort=8000 
+secondaryHostname=localhost 
+secondaryPort=8001 
+checkPort=8021
+serverUdpPort=8004
 
-# Hearth beat config
-timeout: 
-interval: 
-maxFailedHeartBeats: 
-packetSize: 
+timeout=1000
+interval=500 
+maxFailedHeartBeats=2
+packetSize=1024
+heartBeatPort=8010

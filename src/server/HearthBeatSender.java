@@ -2,6 +2,7 @@ package server;
 
 import java.io.*;
 import java.net.*;
+import java.util.HashMap;
 
 public class HearthBeatSender implements Runnable {
     private int timeout;
@@ -13,16 +14,16 @@ public class HearthBeatSender implements Runnable {
     private Server caller;
     Thread t;
 
-    public HearthBeatSender(Server lock) {
-        this.timeout = 1000;
-        this.interval = 500;
+    public HearthBeatSender(Server lock, HashMap<String, String> confs) {
+        this.timeout = Integer.parseInt(confs.get("timeout"));
+        this.interval = Integer.parseInt(confs.get("interval"));
         
         this.bufferSize = 4096;
 
-        this.maxFailedHeartBeats = 5;
+        this.maxFailedHeartBeats = Integer.parseInt(confs.get("maxFailedHeartBeats"));
         this.failedHeartBeats = 0;
 
-        this.PORT = 8010;
+        this.PORT = Integer.parseInt(confs.get("heartBeatPort"));
 
         this.caller = lock;
         this.t = new Thread(this, "HearthBeatSender");
@@ -79,12 +80,13 @@ public class HearthBeatSender implements Runnable {
             synchronized (this.caller){
                 this.caller.notify();
             }
-
+            ds.close();
         } catch (IOException e) {
             System.out.println("ERRRO");
         } catch (InterruptedException e) {
             System.out.println("Thread.sleep error"); // Execption from Thread.sleep
         }
+        this.t.interrupt();
         System.out.println("Sender Out");
 
     }
