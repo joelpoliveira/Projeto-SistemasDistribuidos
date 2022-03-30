@@ -67,7 +67,7 @@ public class Client {
             String text = "";
             String[] temp;
             String serverPath = "";
-            String clientPath = "";
+            String clientPath = "home/";
             // sc = null;
 
             // try {
@@ -75,7 +75,7 @@ public class Client {
                 // System.out.println("text = " + text);
 
                 if (!loggedIn)
-                    System.out.print(clientPath + "> ");
+                    System.out.print(username + "/" + clientPath + "> ");
                 else {
                     // if(/* !text.equals("") && */text.equals("Logged in"))
                     // serverPath = in.readUTF();
@@ -149,7 +149,7 @@ public class Client {
                                 serverPath = text;
                         } else {
                             // Local cd
-                            //clientPath = temp[1];
+                            // clientPath = temp[1];
                             System.out.println("--" + clientPath);
                             changeDirectory(clientPath, temp[1], username);
                             System.out.println("++" + clientPath);
@@ -283,19 +283,19 @@ public class Client {
         return username;
     }
 
-    public static String listDirectory(String serverPath, String username) {
+    public static String listDirectory(String clientPath, String username) {
         try {
             StringBuilder result = new StringBuilder();
 
-            File folder = new File("client/users/" + username + "/home/" + serverPath);
+            File folder = new File("client/users/" + username + "/" + clientPath);
             File[] files = folder.listFiles();
 
             for (File file : files) {
-                if (file.isDirectory()) {
+                if (file.isDirectory())
                     result.append("*" + file.getName() + "*");
-                } else {
+                else
                     result.append(file.getName());
-                }
+
                 result.append("\t");
             }
 
@@ -307,27 +307,24 @@ public class Client {
         }
     }
 
-    
-    public static void changeDirectory(String clientPath, String newDirectory, String username) {
-        clientPath = "xD";
-        // try {
-        //     if (new File("client/users/" + username + "/home/" + newDirectory).exists()) {
-        //         clientPath = "home/" + newDirectory;
-        //         config = this.fh.readFile("server/users/" + this.user.username + "/.config");
-        //         config.set(2, "home/" + newDirectory);
-        //         this.fh.reWriteFile("server/users/" + this.user.username + "/.config", config);
+    public static String changeDirectory(String clientPath, String newDirectory, String username) {
 
-        //         // send server info + directory
-        //         // System.out.println("==== " + this.serverName + "@" +
-        //         // this.user.getFullPath());
-        //         this.out.writeUTF(this.serverName + "@" + this.user.getFullPath());
-        //     } else {
-        //         this.out.writeUTF("Directory doesn't exist. Please use full path");
-        //     }
+        if (new File("client/users/" + username + "/home/" + newDirectory).exists()) {
+            clientPath = "home/" + newDirectory;
+            // config = this.fh.readFile("server/users/" + this.user.username + "/.config");
+            // config.set(2, "home/" + newDirectory);
+            // this.fh.reWriteFile("server/users/" + this.user.username + "/.config",
+            // config);
 
-        // } catch (IOException e) {
-        //     System.out.println("Erro changing directory");
-        // }
+            // send server info + directory
+            // System.out.println("==== " + this.serverName + "@" +
+            // this.user.getFullPath());
+            // this.out.writeUTF(this.serverName + "@" + this.user.getFullPath());
+        } else {
+            // this.out.writeUTF("Directory doesn't exist. Please use full path");
+        }
+
+        return clientPath;
     }
 
 }

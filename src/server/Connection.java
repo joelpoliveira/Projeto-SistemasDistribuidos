@@ -230,7 +230,7 @@ public class Connection implements Runnable {
 
         try {
 
-            if (newDirectory.equals("")){
+            if (newDirectory.equals("")) {
                 newDir = "home/";
                 this.user.currentDirectory = newDir;
                 // Write in config file
@@ -241,9 +241,12 @@ public class Connection implements Runnable {
                 this.out.writeUTF(this.serverName + "@" + this.user.getFullPath());
 
             } else {
-                System.out.println("===== " + this.serverPath + "users/" + this.user.username + "/" + this.user.currentDirectory + newDirectory);
-                // new File(this.serverPath + "users/" + this.user.username + "/home/" + newDirectory).exists()
-                File f = new File(this.serverPath + "users/" + this.user.username + "/" + this.user.currentDirectory + newDirectory);
+                System.out.println("===== " + this.serverPath + "users/" + this.user.username + "/"
+                        + this.user.currentDirectory + newDirectory);
+                // new File(this.serverPath + "users/" + this.user.username + "/home/" +
+                // newDirectory).exists()
+                File f = new File(this.serverPath + "users/" + this.user.username + "/" + this.user.currentDirectory
+                        + newDirectory);
                 if (f.exists() && f.isDirectory()) {
                     newDir = this.user.currentDirectory /* + "/" */ + newDirectory + "/";
 
@@ -253,13 +256,13 @@ public class Connection implements Runnable {
                     config = this.fh.readFile(this.serverPath + "users/" + this.user.username + "/.config");
                     config.set(2, newDir);
                     this.fh.reWriteFile(this.serverPath + "users/" + this.user.username + "/.config", config);
-    
+
                     this.out.writeUTF(this.serverName + "@" + this.user.getFullPath());
                 } else if (!f.isDirectory())
                     this.out.writeUTF("Not a directory");
-                 else 
+                else
                     this.out.writeUTF("Directory doesn't exist");
-                
+
             }
         } catch (IOException e) {
             System.out.println("Erro changing directory");
