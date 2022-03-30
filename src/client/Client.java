@@ -8,14 +8,19 @@ import java.util.Scanner;
 import java.io.*;
 
 public class Client {
+    static String mainHostname;
+    static int mainPort;
+    static String secondaryHostname;
+    static int secondaryPort;
+
     public static void main(String args[]) {
         String username = "";
         HashMap<String, String> config = new ConfigurationsParser("client/config.yaml").parse();
 
-        String mainHostname = config.get("mainHostname");
-        int mainPort = Integer.parseInt(config.get("mainPort"));
-        String secondaryHostname = config.get("secondaryHostname");
-        int secondaryPort = Integer.parseInt(config.get("secondaryPort"));
+        mainHostname = config.get("mainHostname");
+        mainPort = Integer.parseInt(config.get("mainPort"));
+        secondaryHostname = config.get("secondaryHostname");
+        secondaryPort = Integer.parseInt(config.get("secondaryPort"));
 
         Scanner sc = new Scanner(System.in);
 
@@ -48,9 +53,9 @@ public class Client {
 
                 if (!loggedIn)
                     System.out.print(username + "/" + clientPath + "> ");
-                else 
+                else
                     System.out.print(serverPath + "> ");
-                
+
                 text = sc.nextLine();
 
                 temp = text.split(" ");
@@ -187,6 +192,31 @@ public class Client {
 
                         } else {
                             System.out.println("Login is required");
+                        }
+                        break;
+
+                    case "config":
+                        try {
+                            switch (temp[1]) {
+                                case "mainHostname":
+                                    mainHostname = temp[2];
+                                    break;
+                                case "secondaryHostname":
+                                    secondaryHostname = temp[2];
+                                    break;
+                                case "mainPort":
+                                    mainPort = Integer.parseInt(temp[2]);
+                                    break;
+                                case "secondaryPort":
+                                    secondaryPort = Integer.parseInt(temp[2]);
+                                    break;
+                                default:
+                                    System.out.println(
+                                            "Can only change mainHostname, secondaryHostname, mainPort, secondaryPort");
+                            }
+                        } catch (ArrayIndexOutOfBoundsException e) {
+                            System.out.println(
+                                    "Command usage: config <option> <value>\n\toptions:\n\t\tmainHostname\n\t\tsecondaryHostname\n\t\tmainPort\n\t\tsecondaryPort");
                         }
                         break;
 
