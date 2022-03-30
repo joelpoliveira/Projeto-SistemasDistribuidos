@@ -316,7 +316,6 @@ public class Client {
         if (newDirectory.equals("")) {
             newDir = "home/";
         } else {
-
             if (f.exists() && f.isDirectory()) {
                 newDir = "home/" + newDirectory;
             } else if (f.exists() && !f.isDirectory()) {
