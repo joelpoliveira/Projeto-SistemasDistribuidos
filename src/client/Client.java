@@ -3,43 +3,19 @@ package client;
 import common.*;
 
 import java.net.*;
+import java.util.HashMap;
 import java.util.Scanner;
 import java.io.*;
 
 public class Client {
     public static void main(String args[]) {
-        int mainPort = 8000;
-        int secondaryPort = 8001;
         String username = "";
-        boolean loggedIn = false;
+        HashMap<String, String> config = new ConfigurationsParser("client/config.yaml").parse();
 
-        // args[0] <- hostname
-        // args[1] <- main server port
-        // args[1] <- secondary server port
-        if (args.length > 3) {
-            System.out.println("Too many arguments. Client.java <hostname> <port> <port>");
-            System.exit(1);
-        }
-
-        if (args.length < 3) {
-            System.out.println("Missing arguments. Client.java <hostname> <port> <port>");
-            System.exit(1);
-        }
-
-        try {
-            mainPort = Integer.parseInt(args[1]);
-            secondaryPort = Integer.parseInt(args[2]);
-        } catch (NumberFormatException e) {
-            // e.printStackTrace();
-            System.out.println("Port must be an integer");
-            System.exit(1);
-        }
-
-        // Main server hostname and port
-        String mainHostname = args[0];
-
-        // Secondary server hostname and port
-        String secondaryHostname = args[0];
+        String mainHostname = config.get("mainHostname");
+        int mainPort = Integer.parseInt(config.get("mainPort"));
+        String secondaryHostname = config.get("secondaryHostname");
+        int secondaryPort = Integer.parseInt(config.get("secondaryPort"));
 
         Scanner sc = new Scanner(System.in);
 
@@ -47,9 +23,6 @@ public class Client {
         username = askUsername(sc);
 
         connect(mainHostname, mainPort, username, false);
-
-        // Create socket
-
     }
 
     public static void connect(String hostname, int port, String username, boolean isSecondary) {
@@ -72,20 +45,13 @@ public class Client {
 
             // try {
             while (true) {
-                // System.out.println("text = " + text);
 
                 if (!loggedIn)
                     System.out.print(username + "/" + clientPath + "> ");
-                else {
-                    // if(/* !text.equals("") && */text.equals("Logged in"))
-                    // serverPath = in.readUTF();
+                else 
                     System.out.print(serverPath + "> ");
-                }
-
+                
                 text = sc.nextLine();
-
-                // if (!text.equals(""))
-                // out.writeUTF(text);
 
                 temp = text.split(" ");
 
@@ -94,8 +60,6 @@ public class Client {
                         out.writeUTF(text);
 
                         // username
-                        // System.out.print(in.readUTF());
-                        // out.writeUTF(sc.nextLine());
                         out.writeUTF(username);
                         // password
                         System.out.print(in.readUTF());

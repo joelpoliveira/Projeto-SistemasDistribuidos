@@ -1,1 +1,1 @@
-java client.Client localhost 8000 8005
+java client.Client

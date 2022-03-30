@@ -1,0 +1,2 @@
+jar cmvf server/META-INF/MANIFEST.MF ucDrive.jar server/*.class common/*.class
+jar cmvf client/META-INF/MANIFEST.MF terminal.jar client/*.class common/*.class

@@ -1,0 +1,4 @@
+mainHostname=localhost
+mainPort=8000
+secondaryHostname=localhost
+secondaryPort=8001
