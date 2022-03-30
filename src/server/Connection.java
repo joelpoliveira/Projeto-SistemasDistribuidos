@@ -25,7 +25,7 @@ public class Connection implements Runnable {
         this.downloadId = 0;
         this.isPrimary = isPrimary;
 
-        if(this.isPrimary) {
+        if (this.isPrimary) {
             this.serverPath = "server/main/";
         } else {
             this.serverPath = "server/secondary/";
@@ -226,19 +226,41 @@ public class Connection implements Runnable {
 
     public void changeDirectory(String newDirectory) {
         ArrayList<String> config;
+        String newDir;
 
         try {
-            if (new File(this.serverPath + "users/" + this.user.username + "/home/" + newDirectory).exists()) {
-                this.user.currentDirectory = "home/" + newDirectory;
+
+            if (newDirectory.equals("")){
+                newDir = "home/";
+                this.user.currentDirectory = newDir;
+                // Write in config file
                 config = this.fh.readFile(this.serverPath + "users/" + this.user.username + "/.config");
-                config.set(2, "home/" + newDirectory);
+                config.set(2, newDir);
                 this.fh.reWriteFile(this.serverPath + "users/" + this.user.username + "/.config", config);
-
+                this.user.currentDirectory = newDir;
                 this.out.writeUTF(this.serverName + "@" + this.user.getFullPath());
-            } else {
-                this.out.writeUTF("Directory doesn't exist. Please use full path");
-            }
 
+            } else {
+                System.out.println("===== " + this.serverPath + "users/" + this.user.username + "/" + this.user.currentDirectory + newDirectory);
+                // new File(this.serverPath + "users/" + this.user.username + "/home/" + newDirectory).exists()
+                File f = new File(this.serverPath + "users/" + this.user.username + "/" + this.user.currentDirectory + newDirectory);
+                if (f.exists() && f.isDirectory()) {
+                    newDir = this.user.currentDirectory /* + "/" */ + newDirectory + "/";
+
+                    System.out.println("newDir = " + newDir);
+                    this.user.currentDirectory = newDir;
+                    // Write in config file
+                    config = this.fh.readFile(this.serverPath + "users/" + this.user.username + "/.config");
+                    config.set(2, newDir);
+                    this.fh.reWriteFile(this.serverPath + "users/" + this.user.username + "/.config", config);
+    
+                    this.out.writeUTF(this.serverName + "@" + this.user.getFullPath());
+                } else if (!f.isDirectory())
+                    this.out.writeUTF("Not a directory");
+                 else 
+                    this.out.writeUTF("Directory doesn't exist");
+                
+            }
         } catch (IOException e) {
             System.out.println("Erro changing directory");
         }

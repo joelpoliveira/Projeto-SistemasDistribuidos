@@ -143,12 +143,16 @@ public class Client {
 
                             // Server message
                             text = in.readUTF();
-                            if (text.equals("Directory doesn't exist"))
+                            if (text.equals("Directory doesn't exist") || text.equals("Not a directory"))
                                 System.out.println(text);
                             else
                                 serverPath = text;
                         } else {
-                            System.out.println("TODO Local cd");
+                            // Local cd
+                            //clientPath = temp[1];
+                            System.out.println("--" + clientPath);
+                            changeDirectory(clientPath, temp[1], username);
+                            System.out.println("++" + clientPath);
                         }
                         break;
 
@@ -159,7 +163,7 @@ public class Client {
                             text = in.readUTF();
                             System.out.println(text);
                         } else {
-                            System.out.println(listDirectory(serverPath, username));
+                            System.out.println(listDirectory(clientPath, username));
                         }
                         break;
 
@@ -303,26 +307,27 @@ public class Client {
         }
     }
 
-    /*
-    public static void changeDirectory(String newDirectory, String username) {
-        try {
-            if (new File("client/users/" + username + "/home/" + newDirectory).exists()) {
-                this.user.currentDirectory = "home/" + newDirectory;
-                config = this.fh.readFile("server/users/" + this.user.username + "/.config");
-                config.set(2, "home/" + newDirectory);
-                this.fh.reWriteFile("server/users/" + this.user.username + "/.config", config);
+    
+    public static void changeDirectory(String clientPath, String newDirectory, String username) {
+        clientPath = "xD";
+        // try {
+        //     if (new File("client/users/" + username + "/home/" + newDirectory).exists()) {
+        //         clientPath = "home/" + newDirectory;
+        //         config = this.fh.readFile("server/users/" + this.user.username + "/.config");
+        //         config.set(2, "home/" + newDirectory);
+        //         this.fh.reWriteFile("server/users/" + this.user.username + "/.config", config);
 
-                // send server info + directory
-                // System.out.println("==== " + this.serverName + "@" +
-                // this.user.getFullPath());
-                this.out.writeUTF(this.serverName + "@" + this.user.getFullPath());
-            } else {
-                this.out.writeUTF("Directory doesn't exist. Please use full path");
-            }
+        //         // send server info + directory
+        //         // System.out.println("==== " + this.serverName + "@" +
+        //         // this.user.getFullPath());
+        //         this.out.writeUTF(this.serverName + "@" + this.user.getFullPath());
+        //     } else {
+        //         this.out.writeUTF("Directory doesn't exist. Please use full path");
+        //     }
 
-        } catch (IOException e) {
-            System.out.println("Erro changing directory");
-        }
-    }*/
+        // } catch (IOException e) {
+        //     System.out.println("Erro changing directory");
+        // }
+    }
 
 }
