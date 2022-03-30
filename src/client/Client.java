@@ -62,22 +62,27 @@ public class Client {
 
                 switch (temp[0]) {
                     case "login":
-                        out.writeUTF(text);
 
-                        // username
-                        out.writeUTF(username);
-                        // password
-                        System.out.print(in.readUTF());
-                        out.writeUTF(sc.nextLine());
+                        if (!loggedIn) {
+                            out.writeUTF(text);
 
-                        // Server message
-                        text = in.readUTF();
-                        if (text.equals("Logged in")) {
-                            loggedIn = true;
-                            serverPath = in.readUTF();
+                            // username
+                            out.writeUTF(username);
+                            // password
+                            System.out.print(in.readUTF());
+                            out.writeUTF(sc.nextLine());
+
+                            // Server message
+                            text = in.readUTF();
+                            if (text.equals("Logged in")) {
+                                loggedIn = true;
+                                serverPath = in.readUTF();
+                            }
+
+                            System.out.println(text);
+                        } else {
+                            System.out.println("Already logged in");
                         }
-
-                        System.out.println(text);
                         break;
 
                     case "logout":

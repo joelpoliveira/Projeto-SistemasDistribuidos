@@ -335,7 +335,7 @@ public class Connection implements Runnable {
 
             System.out.printf("Client %d connected to download socket\n", this.threadNumber);
             // this.downloadId++;
-            new SendFile(soc, source, this.user.username);
+            new SendFile(soc, source, this.user.username, this.serverPath);
 
         } catch (IOException e) {
             System.out.println("Listen:" + e.getMessage());

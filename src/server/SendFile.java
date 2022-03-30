@@ -8,22 +8,19 @@ public class SendFile implements Runnable {
     Socket downloadSocket;
     int threadNumber;
     Thread t;
-    // DataInputStream in;
-    // DataOutputStream out;
-    //String hostname;
-    //int downloadPort;
+    String serverPath;
     String sourcePath;
     // String destinationPath;
     String username;
     int size;
 
-    public SendFile(Socket downloadSocket, String sourcePath, String username) {
-        //this.hostname = hostname;
-        //this.downloadPort = port;
+    public SendFile(Socket downloadSocket, String sourcePath, String username, String serverPath) {
+
         this.downloadSocket = downloadSocket;
         this.sourcePath = sourcePath;
         this.username = username;
         this.size = 5; // Number of bytes to send at once
+        this.serverPath = serverPath;
 
         this.t = new Thread(this, "serverFileSender");
 
@@ -38,7 +35,7 @@ public class SendFile implements Runnable {
 
             OutputStream os = this.downloadSocket.getOutputStream();
 
-            File file = new File("server/users/" + this.username + "/home/" + this.sourcePath);
+            File file = new File(this.serverPath + "users/" + this.username + "/home/" + this.sourcePath);
             FileInputStream fin = new FileInputStream(file);
             BufferedInputStream bis = new BufferedInputStream(fin);
 
