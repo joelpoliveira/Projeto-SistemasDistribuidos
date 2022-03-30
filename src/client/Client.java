@@ -149,10 +149,12 @@ public class Client {
                                 serverPath = text;
                         } else {
                             // Local cd
-                            // clientPath = temp[1];
-                            System.out.println("--" + clientPath);
-                            changeDirectory(clientPath, temp[1], username);
-                            System.out.println("++" + clientPath);
+                            try {
+                                clientPath = changeDirectory(clientPath, temp[1], username);
+                            } catch (ArrayIndexOutOfBoundsException e) {
+                                clientPath = changeDirectory(clientPath, "", username);
+                            }
+
                         }
                         break;
 
@@ -308,23 +310,25 @@ public class Client {
     }
 
     public static String changeDirectory(String clientPath, String newDirectory, String username) {
+        String newDir = "";
+        File f = new File("client/users/" + username + "/" + clientPath + "/" + newDirectory);
 
-        if (new File("client/users/" + username + "/home/" + newDirectory).exists()) {
-            clientPath = "home/" + newDirectory;
-            // config = this.fh.readFile("server/users/" + this.user.username + "/.config");
-            // config.set(2, "home/" + newDirectory);
-            // this.fh.reWriteFile("server/users/" + this.user.username + "/.config",
-            // config);
-
-            // send server info + directory
-            // System.out.println("==== " + this.serverName + "@" +
-            // this.user.getFullPath());
-            // this.out.writeUTF(this.serverName + "@" + this.user.getFullPath());
+        if (newDirectory.equals("")) {
+            newDir = "home/";
         } else {
-            // this.out.writeUTF("Directory doesn't exist. Please use full path");
+
+            if (f.exists() && f.isDirectory()) {
+                newDir = "home/" + newDirectory;
+            } else if (f.exists() && !f.isDirectory()) {
+                System.out.println("Not a directory");
+                newDir = clientPath;
+            } else {
+                System.out.println("Doesn't exist");
+                newDir = clientPath;
+            }
         }
 
-        return clientPath;
+        return newDir;
     }
 
 }
