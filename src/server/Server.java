@@ -11,6 +11,7 @@ public class Server implements Runnable {
     boolean isPrimary;
     PrimaryVerification responder;
     String serverName;
+    String serverPath;
     Thread t;
     HashMap<String, String> configs;
 
@@ -20,6 +21,11 @@ public class Server implements Runnable {
         this.isPrimary = isPrimary;
         this.responder = responder;
         this.serverName = isPrimary ? "Main" : "Secondary";
+        if (this.serverName.equals("Main")) {
+            this.serverPath = "server/main/";
+        } else {
+            this.serverPath = "server/secondary/";
+        }
         this.clientNumber = 0;
         this.update();
         this.t = new Thread(this);
@@ -31,12 +37,13 @@ public class Server implements Runnable {
 
         System.out.println(this.serverName + " server started");
         // System.out.println(this.serverName + " listen socket: " + listenSocket);
-        ReceiveFileUDP udp_receiver = null;
+        ReceiveFileAckUDP udp_receiver = null;
         HearthBeatReceiver receiver = null;
         HearthBeatSender sender = null;
 
         while (true) {
             System.out.println("Primaty = " + this.isPrimary);
+
             if (this.isPrimary) {
                 try (ServerSocket listenSocket = new ServerSocket(this.port)) {
                     if (receiver == null) {
@@ -48,11 +55,12 @@ public class Server implements Runnable {
                     Socket clientSocket = listenSocket.accept(); // BLOQUEANTE
                     System.out.println("Client connect to " + this.serverName);
                     this.clientNumber++;
-                    new Connection(clientSocket, this.clientNumber, this.serverName, this.isPrimary);
+                    new Connection(clientSocket, this.clientNumber, this.serverName, this.serverPath, Integer.parseInt(configs.get("serverUdpPort")));
 
                 } catch (IOException e) {
                     System.out.println("Listen:" + e.getMessage());
                 }
+
             } else {
 
                 if (receiver != null && !receiver.t.isInterrupted()) {
@@ -66,7 +74,7 @@ public class Server implements Runnable {
                 }
 
                 sender = new HearthBeatSender(this, configs);
-                udp_receiver = new ReceiveFileUDP(Integer.parseInt(configs.get("serverUdpPort")));
+                udp_receiver = new ReceiveFileAckUDP(Integer.parseInt(configs.get("serverUdpPort")), this.serverPath);
 
                 synchronized (this) {
                     try {

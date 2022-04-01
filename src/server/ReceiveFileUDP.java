@@ -3,38 +3,17 @@ package server;
 import java.io.*;
 import java.net.*;
 
-public class ReceiveFileUDP implements Runnable {
-    Thread t;
-    int PORT;
-    
-    public ReceiveFileUDP(int port) {
-        this.PORT = port;
-        this.t = new Thread(this, "FileReceiverUDp");
+public class ReceiveFileUDP implements Runnable{
+    private Thread t;
+    private File f;
+    private String path;
+    private int port;
+
+    public ReceiveFileUDP(String serverPath, int port){
+        this.port = port;
+        this.path = serverPath;
+        this.t = new Thread(this, "FileReceiveUDP");
         this.t.start();
-    }
-
-    private File createFile(DatagramSocket socket) throws IOException {
-        socket.setSoTimeout(1000);
-        byte[] filename = new byte[1024];
-        File f = null;
-
-        // Receive filename from packet
-        DatagramPacket filenamePacket = new DatagramPacket(filename, filename.length);
-        System.out.println("WAITING");
-        socket.receive(filenamePacket);
-        System.out.println("NOT WAITING");
-        // System.out.println("Received filename");
-
-        byte[] data = filenamePacket.getData(); // Reading the name in bytes
-        String filenameString = new String(data, 0, filenamePacket.getLength()); // Converting the name to string
-
-        // Create file
-        // System.out.println("Creating file");
-        f = new File(filenameString);
-        // FileOutputStream fos = new FileOutputStream(f); // Creating the stream to
-        // write the file
-
-        return f;
     }
 
     private static void sendAck(int foundLast, DatagramSocket socket, InetAddress hostname, int port)
@@ -47,6 +26,32 @@ public class ReceiveFileUDP implements Runnable {
         DatagramPacket ackPacket = new DatagramPacket(ack, ack.length, hostname, port);
         socket.send(ackPacket);
         System.out.println("Sent ack: Sequence Number = " + foundLast);
+    }
+
+    private File createFile(DatagramSocket socket) throws IOException {
+        socket.setSoTimeout(3000);
+        byte[] filename = new byte[1024];
+        File f = null;
+
+        // Receive filename from packet
+        DatagramPacket filenamePacket = new DatagramPacket(filename, filename.length);
+        //System.out.println("WAITING");
+        socket.receive(filenamePacket);
+        // System.out.println("NOT WAITING");
+        // System.out.println("Received filename");
+
+        byte[] data = filenamePacket.getData(); // Reading the name in bytes
+        String filenameString = new String(data, 0, filenamePacket.getLength()); // Converting the name to string
+
+        // Create file
+        // System.out.println("Creating file");
+        //this.serverPath + "users/" + this.username + "/home/" + this.filePath
+        System.out.println(this.path + filenameString);
+        f = new File(this.path + filenameString);
+        // FileOutputStream fos = new FileOutputStream(f); // Creating the stream to
+        // write the file/
+
+        return f;
     }
 
     private static void receiveFile(File file, DatagramSocket socket) throws IOException {
@@ -111,27 +116,23 @@ public class ReceiveFileUDP implements Runnable {
         }
     }
 
-    public void run() {
-        try (DatagramSocket socket = new DatagramSocket(this.PORT)) {
-            while(!this.t.isInterrupted()){
-                // Create file
-                try{
-                    File f = createFile(socket);
-                }catch(SocketTimeoutException te){
-                    continue;
-                }
-                //receiveFile(f, socket);
-            }
-            socket.close();
-        } catch (IOException e) {
-            System.out.println(e);
-            System.out.println("Erro DatagramSocket receiver");
-        }
-    }
+    public void run(){
+        try(DatagramSocket socket = new DatagramSocket(0)){
+            InetAddress hostname = InetAddress.getByName("localhost");
+            byte this_port[] = Integer.toString(socket.getLocalPort()).getBytes();
+            DatagramPacket port_packet= new DatagramPacket(this_port, this_port.length, hostname, this.port);
+            socket.send(port_packet);
 
-    public void interrupt(){
-        System.out.println("Interruption Called");
-        this.t.interrupt();
-        
+            byte mess[] = "Ok".getBytes();
+            DatagramPacket packet= new DatagramPacket(mess, mess.length, hostname, this.port);
+            socket.send(packet);
+
+            File f = createFile(socket);
+            receiveFile(f, socket);
+
+
+        } catch (IOException e){
+          System.out.println("Temos problemas");  
+        } 
     }
 }

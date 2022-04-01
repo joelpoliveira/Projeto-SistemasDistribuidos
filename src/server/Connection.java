@@ -11,25 +11,20 @@ public class Connection implements Runnable {
     DataOutputStream out;
     Socket clientSocket;
     int threadNumber;
+    int udp_port;
     Thread t;
     String serverName;
     User user;
     FileHandler fh;
     int downloadId;
-    boolean isPrimary;
     String serverPath;
 
-    public Connection(Socket clientSocket, int number, String serverName, boolean isPrimary) {
+    public Connection(Socket clientSocket, int number, String serverName, String serverPath, int udp_port) {
         this.threadNumber = number;
         this.serverName = serverName;
         this.downloadId = 0;
-        this.isPrimary = isPrimary;
-
-        if (this.isPrimary) {
-            this.serverPath = "server/main/";
-        } else {
-            this.serverPath = "server/secondary/";
-        }
+        this.udp_port = udp_port;
+        this.serverPath = serverPath;
 
         try {
             this.clientSocket = clientSocket;
@@ -314,7 +309,7 @@ public class Connection implements Runnable {
 
             System.out.printf("Client %d connected to download socket\n", this.threadNumber);
             // this.downloadId++;
-            new ReceiveFile(soc, destination, this.user.username, this.serverPath);
+            new ReceiveFile(soc, destination, this.user.username, this.serverPath, this.udp_port);
 
         } catch (IOException e) {
             System.out.println("Listen:" + e.getMessage());

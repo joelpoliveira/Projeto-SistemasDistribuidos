@@ -3,6 +3,7 @@ package server;
 import java.io.*;
 import java.net.*;
 // import java.net.*;
+import java.nio.charset.StandardCharsets;
 
 // TODO check if file is not a directory no TCP
 
@@ -11,11 +12,11 @@ public class SendFileUDP implements Runnable {
     String username;
     String serverPath;
     //int length;
-    int port;
+    int udp_port;
 
-    public SendFileUDP(String filePath, String username, String serverPath) {
+    public SendFileUDP(String filePath, String username, String serverPath, int udp_port) {
         this.filePath = filePath;
-        this.port = 8004;
+        this.udp_port = udp_port;
         this.username = username;
         this.serverPath = serverPath;
         //this.length = length;
@@ -53,20 +54,20 @@ public class SendFileUDP implements Runnable {
 
         try {
             filename = f.getName();
-            byte[] fileNameBytes = filename.getBytes(); // filename as bytes
+            byte[] fileNameBytes = ("users/" + this.username + "/home/" + this.filePath).getBytes(); // filename as bytes
 
             // System.out.println("++++++" + filename);
             // System.out.println("++++++" + this.filePath);
         
             // Create packet
-            DatagramPacket filenamePacket = new DatagramPacket(fileNameBytes, fileNameBytes.length, hostname, port);
+            DatagramPacket filenamePacket = new DatagramPacket(fileNameBytes, fileNameBytes.length, hostname, this.udp_port);
             socket.send(filenamePacket); // Send the packet
         } catch (NullPointerException e) { // null if it's not a file
             System.out.println("Can only send files :) ");
         }
     }
 
-    private void sendFile(DatagramSocket socket, byte[] fileByteArray, InetAddress hostname, int port) throws IOException{
+    private void sendFile(DatagramSocket socket, byte[] fileByteArray, InetAddress hostname) throws IOException{
         int packetNumber = 0; // To grantee packet order and not resend wrong packets
         boolean EOF = false; // To check for
         int ackSequence = 0; // To check if the datagram was received sucessfully
@@ -99,7 +100,7 @@ public class SendFileUDP implements Runnable {
             }
 
             // Send the packet number read
-            DatagramPacket sendPacket = new DatagramPacket(message, message.length, hostname, port);
+            DatagramPacket sendPacket = new DatagramPacket(message, message.length, hostname, this.udp_port);
             socket.send(sendPacket); 
 
             System.out.println("Sent: Sequence number = " + packetNumber);
@@ -139,18 +140,34 @@ public class SendFileUDP implements Runnable {
 
         try (DatagramSocket socket = new DatagramSocket()) {
             InetAddress hostname = InetAddress.getByName("localhost");
-            // Get the file
-            File f = getFile();
+            // Get the file~
+            byte port[] = Integer.toString(socket.getLocalPort()).getBytes();
+            DatagramPacket port_packet = new DatagramPacket(port, port.length, hostname, this.udp_port);
+            socket.send(port_packet);
 
+            socket.receive(port_packet);
+            String port_str = new String(port_packet.getData(),
+                                        port_packet.getOffset(),
+                                        port_packet.getLength(),
+                                        StandardCharsets.UTF_8);
+            
+            System.out.println(port_str);
+            this.udp_port = Integer.parseInt(port_str);
+
+            File f = getFile();
+            //wait for receive udp file;
+            
+            byte message[] = new byte[1024];
+            DatagramPacket messPacket = new DatagramPacket(message, message.length, hostname, this.udp_port);
+            socket.receive(messPacket);
             // Send filename to receiver
             sendFilename(socket, hostname, f);
 
-            // Send file
             // Convert file to byte array
             byte[] fileByteArray = fileToByteArray(f); // Array of bytes the file is made of
 
             // Send file
-            sendFile(socket, fileByteArray, hostname, port);
+            sendFile(socket, fileByteArray, hostname);
 
             socket.close();
         } catch (IOException e) {
