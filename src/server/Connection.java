@@ -75,7 +75,7 @@ public class Connection implements Runnable {
                     case "passwd":
                         changePassword();
                         // TODO Send credentials file to secondary server
-
+                        new SendFileUDP(".config", this.user.username, this.serverPath, this.udp_port, true);
                         break;
 
                     case "cd":

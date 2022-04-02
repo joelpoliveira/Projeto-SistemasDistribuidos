@@ -49,7 +49,7 @@ public class ReceiveFile implements Runnable {
             this.downloadSocket.close();
             
             // Replicate file on secondary server
-            new SendFileUDP(this.destinationPath, this.username, this.serverPath, this.udp_port);
+            new SendFileUDP(this.destinationPath, this.username, this.serverPath, this.udp_port, false);
 
         } catch (IOException e) {
             System.out.println("Download " + e.getMessage());

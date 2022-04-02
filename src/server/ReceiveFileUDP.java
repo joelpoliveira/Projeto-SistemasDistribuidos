@@ -35,9 +35,7 @@ public class ReceiveFileUDP implements Runnable{
 
         // Receive filename from packet
         DatagramPacket filenamePacket = new DatagramPacket(filename, filename.length);
-        //System.out.println("WAITING");
         socket.receive(filenamePacket);
-        // System.out.println("NOT WAITING");
         // System.out.println("Received filename");
 
         byte[] data = filenamePacket.getData(); // Reading the name in bytes

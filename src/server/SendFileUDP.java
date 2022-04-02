@@ -13,19 +13,25 @@ public class SendFileUDP implements Runnable {
     String serverPath;
     //int length;
     int udp_port;
+    boolean is_credentials;
 
-    public SendFileUDP(String filePath, String username, String serverPath, int udp_port) {
+    public SendFileUDP(String filePath, String username, String serverPath, int udp_port, boolean is_credentials) {
         this.filePath = filePath;
         this.udp_port = udp_port;
         this.username = username;
         this.serverPath = serverPath;
+        this.is_credentials = is_credentials;
         //this.length = length;
 
         new Thread(this, "FileSenderUDP").start();
     }
 
     private File getFile() {
-        File file = new File(this.serverPath + "users/" + this.username + "/home/" + this.filePath);
+        File file;
+        if (!this.is_credentials)
+            file = new File(this.serverPath + "users/" + this.username + "/home/" + this.filePath);
+        else
+            file = new File(this.serverPath + "users/" + this.username + "/" + this.filePath);
         if (file.isFile()) 
             return file;
         else
@@ -54,8 +60,11 @@ public class SendFileUDP implements Runnable {
 
         try {
             filename = f.getName();
-            byte[] fileNameBytes = ("users/" + this.username + "/home/" + this.filePath).getBytes(); // filename as bytes
-
+            byte[] fileNameBytes;
+            if (!this.is_credentials)
+                fileNameBytes = ("users/" + this.username + "/home/" + this.filePath).getBytes(); // filename as bytes
+            else
+                fileNameBytes = ("users/" + this.username + "/" + this.filePath).getBytes();
             // System.out.println("++++++" + filename);
             // System.out.println("++++++" + this.filePath);
         
