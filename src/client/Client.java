@@ -97,7 +97,7 @@ public class Client {
                             out.writeUTF(text);
 
                             // Password 1
-                            System.out.print(text);
+                            System.out.print(in.readUTF());
                             out.writeUTF(sc.nextLine());
                             // Password 2
                             System.out.print(in.readUTF());
@@ -222,16 +222,38 @@ public class Client {
                         } catch (ArrayIndexOutOfBoundsException e) {
                             System.out.println(
                                     "Command usage: config <option> <value>\n\toptions:\n\t\tmainHostname\n\t\tsecondaryHostname\n\t\tmainPort\n\t\tsecondaryPort");
+                        } catch(NumberFormatException nfe){
+                            System.out.println("Port value must be an integer.");
                         }
                         break;
 
                     case "help":
-                        out.writeUTF(text);
-                        System.out.println(in.readUTF());
+                        if (loggedIn){
+                            out.writeUTF(text);
+                            System.out.println(in.readUTF());
+                        }else{
+                            System.out.println("""
+                                Available commands:
+                                cd <path>               - changes directory to <path>
+                                download <source> <dest>- *copy server file <source> to local <dest>
+                                login                   - login to server
+                                logout                  - *disconects from server
+                                ls                      - lists current directory files and folders
+                                passwd                  - *change password
+                                send <source> <dest>    - *copy local file <source> to server <dest>
+                                config <option> <value> - change configurations
+                                                        - options: mainHostname
+                                                                   secondaryHostname
+                                                                   mainPort
+                                                                   secondaryPort
+                                '*' indicates that for that command, login is required.
+                                """);
+                        }
                         break;
 
                     case "exit":
                         loggedIn = false;
+                        System.exit(0);
                         username = askUsername(sc);
                         break;
 

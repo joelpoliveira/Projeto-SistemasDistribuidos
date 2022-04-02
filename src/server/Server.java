@@ -42,7 +42,7 @@ public class Server implements Runnable {
         HearthBeatSender sender = null;
 
         while (true) {
-            System.out.println("Primaty = " + this.isPrimary);
+            System.out.println("Primary = " + this.isPrimary);
 
             if (this.isPrimary) {
                 try (ServerSocket listenSocket = new ServerSocket(this.port)) {

@@ -138,7 +138,7 @@ public class SendFileUDP implements Runnable {
 
     public void run() {
 
-        try (DatagramSocket socket = new DatagramSocket()) {
+        try (DatagramSocket socket = new DatagramSocket(0)) {
             InetAddress hostname = InetAddress.getByName("localhost");
             // Get the file~
             byte port[] = Integer.toString(socket.getLocalPort()).getBytes();

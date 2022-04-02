@@ -75,6 +75,7 @@ public class Connection implements Runnable {
                     case "passwd":
                         changePassword();
                         // TODO Send credentials file to secondary server
+
                         break;
 
                     case "cd":
@@ -106,9 +107,13 @@ public class Connection implements Runnable {
                     case "help":
                         this.out.writeUTF("""
                                 Available commands:
-                                login - login to server
-                                passwd - change password (requires login)
-                                cd - changes directory. cd [path]
+                                cd <path>               - changes directory to <path>
+                                download <source> <dest>- copy server file <source> to local <dest>
+                                login                   - login to server
+                                logout                  - disconects from server
+                                ls                      - lists current directory files and folders
+                                passwd                  - change password
+                                send <source> <dest>    - copy local file <source> to server <dest>
                                 """);
                         break;
 
@@ -179,6 +184,7 @@ public class Connection implements Runnable {
     }
 
     public void changePassword() {
+        System.out.println("ENTERING PASS CHANGE");
         String password1 = "", password2 = "";
         ArrayList<String> temp = fh.readFile(this.serverPath + "users/.credentials");
         int index;

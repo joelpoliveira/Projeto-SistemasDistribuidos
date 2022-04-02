@@ -18,6 +18,7 @@ public class ReceiveFileAckUDP implements Runnable {
 
     public void run() {
         try (DatagramSocket socket = new DatagramSocket(this.PORT)) {
+            socket.setSoTimeout(1000);
             while(!this.t.isInterrupted()){
                 // Create file
                 try{
@@ -34,6 +35,8 @@ public class ReceiveFileAckUDP implements Runnable {
                 }
                 //receiveFile(f, socket);
             }
+
+            System.out.println("Closed " + this.PORT + " Port");
             socket.close();
         } catch (IOException e) {
             System.out.println(e);
