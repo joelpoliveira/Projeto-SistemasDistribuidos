@@ -9,7 +9,12 @@ Usar os seguintes comandos para correr:
 	$ java -jar ucDrive.jar
 	$ java -jar terminal.jar
 
-Para o funcionamento de ambas as aplicações,  ́e necessário um ficheiro denominado "config.yaml" na pasta
-server, para os servidores, e client para os v ́arios clientes. Ambas as pastas server e client precisam
-de ter uma pasta users, com os v ́arios utilizadores das aplica ̧c ̃oes. A pasta entregue cont ́em j ́a as
-pastas e os ficheiros necess ́arios para o funcionamento das aplica ̧c ̃oes cliente e servidor.
+Para o funcionamento de ambas as aplicações,  ́e necessário um ficheiro denominado "config.yml" na pasta
+"server", para os servidores, e outro na pasta "client" para os clientes. Ambas as pastas server e client precisam
+de ter uma pasta users, com os vários utilizadores da aplicação. 
+
+A pasta entregue já contém as pastas e os ficheiros necessários para o funcionamento das aplicações cliente e servidor.
+
+Aquando da inserção de paths, ter em atenção que a aplicação funciona com uso de paths absolutos (a partir do /home)
+
+O projeto foi desenvolvido e testado com uso do Java 17. Podem existir conflitos com versões anteriores, nomeadamente de sintaxe.
