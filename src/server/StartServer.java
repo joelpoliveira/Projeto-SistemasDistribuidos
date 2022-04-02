@@ -37,17 +37,19 @@ public class StartServer {
                             messagePacket.getLength(),
                             StandardCharsets.UTF_8);
                     // System.out.println(message);
-                    if (message.equals("YES!")) {
-                        System.out.println("I am secundary!");
-                        new Server(confs, null, false);
+                    if (message.equals("1")) {
+                        new Server(confs, null, false, "2");
                         break;
-                    } else
+                    } else if(message.equals("2")){
+                        new Server(confs, null, false, "1");
+                        break;
+                    }else
                         throw new SocketTimeoutException();
                 } catch (SocketTimeoutException e) {
                     if (i == 2) {
-                        PrimaryVerification temp = new PrimaryVerification(confs);
+                        PrimaryVerification temp = new PrimaryVerification(confs, "1");
                         System.out.println("I am primary!");
-                        new Server(confs, temp, true);
+                        new Server(confs, temp, true, "1");
                         break;
                     }
                 }

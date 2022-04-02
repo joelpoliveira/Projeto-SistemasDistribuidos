@@ -12,9 +12,11 @@ import java.util.HashMap;
 
 public class PrimaryVerification implements Runnable{
     private HashMap<String, String> confs;
+    private String strg_info;
     Thread t;
 
-    public PrimaryVerification( HashMap<String, String> confs){
+    public PrimaryVerification( HashMap<String, String> confs, String storage){
+        this.strg_info = storage;
         this.confs = confs;
         this.t = new Thread(this);
         this.t.start();
@@ -37,7 +39,7 @@ public class PrimaryVerification implements Runnable{
                 //System.out.println("[MESSAGE RECEIVED] " + message);
 
                 if (message.equals("MAIN WAKED?")){
-                    byte resp[] = "YES!".getBytes();
+                    byte resp[] = this.strg_info.getBytes();
                     DatagramPacket respPacket = new DatagramPacket(resp, resp.length, packet.getAddress(), packet.getPort());
                     socket.send(respPacket);
                 }                

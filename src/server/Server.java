@@ -15,17 +15,18 @@ public class Server implements Runnable {
     Thread t;
     HashMap<String, String> configs;
 
-    public Server(HashMap<String, String> configs, PrimaryVerification responder, boolean isPrimary) {
+    public Server(HashMap<String, String> configs, PrimaryVerification responder, boolean isPrimary, String strg_info) {
         // this.hostname = hostname;
         this.configs = configs;
         this.isPrimary = isPrimary;
         this.responder = responder;
         this.serverName = isPrimary ? "Main" : "Secondary";
-        if (this.serverName.equals("Main")) {
+        if (strg_info.equals("1")) {
             this.serverPath = "server/main/";
         } else {
             this.serverPath = "server/secondary/";
         }
+        System.out.println("My path is " + this.serverPath);
         this.clientNumber = 0;
         this.update();
         this.t = new Thread(this);
@@ -50,7 +51,10 @@ public class Server implements Runnable {
                         receiver = new HearthBeatReceiver(Integer.parseInt(configs.get("heartBeatPort")));
                     }
                     if (responder == null) {
-                        responder = new PrimaryVerification(configs);
+                        if (this.serverPath.equals("server/main/"))
+                            responder = new PrimaryVerification(configs, "1");
+                        else
+                            responder = new PrimaryVerification(configs, "2");
                     }
                     Socket clientSocket = listenSocket.accept(); // BLOQUEANTE
                     System.out.println("Client connect to " + this.serverName);
