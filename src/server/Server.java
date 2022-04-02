@@ -39,7 +39,7 @@ public class Server implements Runnable {
         // System.out.println(this.serverName + " listen socket: " + listenSocket);
         ReceiveFileAckUDP udp_receiver = null;
         HearthBeatReceiver receiver = null;
-        HearthBeatSender sender = null;
+        //HearthBeatSender sender = null;
 
         while (true) {
             System.out.println("Primary = " + this.isPrimary);
@@ -73,7 +73,7 @@ public class Server implements Runnable {
                     responder = null;
                 }
 
-                sender = new HearthBeatSender(this, configs);
+                /*sender =*/ new HearthBeatSender(this, configs);
                 udp_receiver = new ReceiveFileAckUDP(Integer.parseInt(configs.get("serverUdpPort")), this.serverPath);
 
                 synchronized (this) {
@@ -83,7 +83,7 @@ public class Server implements Runnable {
                         System.out.println("Interrupted");
                     }
                     this.isPrimary = true;
-                    sender = null;
+                    //sender = null;
 
                     udp_receiver.interrupt();
                     udp_receiver = null;

@@ -96,6 +96,7 @@ public class Connection implements Runnable {
 
                     // Client -> Server
                     case "send":
+                        System.out.println("Receiving");
                         receiveFile();
                         break;
 

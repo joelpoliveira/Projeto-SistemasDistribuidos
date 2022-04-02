@@ -28,6 +28,7 @@ public class SendFileUDP implements Runnable {
 
     private File getFile() {
         File file;
+        System.out.println("The path is: " + this.filePath);
         if (!this.is_credentials)
             file = new File(this.serverPath + "users/" + this.username + "/home/" + this.filePath);
         else
@@ -41,7 +42,7 @@ public class SendFileUDP implements Runnable {
     private byte[] fileToByteArray(File f) {
         FileInputStream fis;
         // Creating a byte array using the length of the file
-        System.out.println((int) f.length());
+        System.out.println(">>" + (int) f.length());
         byte[] byteArray = new byte[(int) f.length()];
 
         try {
@@ -112,7 +113,7 @@ public class SendFileUDP implements Runnable {
             DatagramPacket sendPacket = new DatagramPacket(message, message.length, hostname, this.udp_port);
             socket.send(sendPacket); 
 
-            System.out.println("Sent: Sequence number = " + packetNumber);
+            //System.out.println("Sent: Sequence number = " + packetNumber);
 
             // Receive ACK from receiver
             while (true) {
@@ -127,21 +128,22 @@ public class SendFileUDP implements Runnable {
                     ackSequence = ((ack[0] & 0xff) << 8) + (ack[1] & 0xff); // Figuring the sequence number
                     ackRec = true; // ACK was received
                 } catch (SocketTimeoutException e) {
-                    System.out.println("Socket timed out waiting for ack");
+                    //System.out.println("Socket timed out waiting for ack");
                     ackRec = false; // Din't receive an ack in time
                 }
 
                 // If the package was received correctly next packet can be sent
                 if ((ackSequence == packetNumber) && ackRec) {
-                    System.out.println("Ack received: Sequence Number = " + ackSequence);
+                    //System.out.println("Ack received: Sequence Number = " + ackSequence);
                     break;
                 }
                 else {
                     // Packet was not received -> resend it
                     socket.send(sendPacket);
-                    System.out.println("Resending: Sequence Number = " + packetNumber);
+                    //System.out.println("Resending: Sequence Number = " + packetNumber);
                 }
             }
+        
         }
     }
 
@@ -160,7 +162,7 @@ public class SendFileUDP implements Runnable {
                                         port_packet.getLength(),
                                         StandardCharsets.UTF_8);
             
-            System.out.println(port_str);
+            //System.out.println(port_str);
             this.udp_port = Integer.parseInt(port_str);
 
             File f = getFile();
@@ -177,7 +179,7 @@ public class SendFileUDP implements Runnable {
 
             // Send file
             sendFile(socket, fileByteArray, hostname);
-
+            System.out.println("Sending finished");
             socket.close();
         } catch (IOException e) {
             System.out.println("Erro replicating file" + e.getMessage());

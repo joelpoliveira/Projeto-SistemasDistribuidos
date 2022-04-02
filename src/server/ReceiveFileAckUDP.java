@@ -18,14 +18,14 @@ public class ReceiveFileAckUDP implements Runnable {
 
     public void run() {
         try (DatagramSocket socket = new DatagramSocket(this.PORT)) {
-            socket.setSoTimeout(1000);
+            socket.setSoTimeout(3000);
             while(!this.t.isInterrupted()){
                 // Create file
                 try{
                     byte port[] = new byte[1024];
                     DatagramPacket port_packet = new DatagramPacket(port, port.length);
                     socket.receive(port_packet);
-
+                    System.out.println("File request received");
                     new ReceiveFileUDP( this.path, Integer.parseInt(new String( port_packet.getData(),
                                                                      port_packet.getOffset(),
                                                                      port_packet.getLength(),

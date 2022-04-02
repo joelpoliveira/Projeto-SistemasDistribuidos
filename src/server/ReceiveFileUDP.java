@@ -25,11 +25,11 @@ public class ReceiveFileUDP implements Runnable{
 
         DatagramPacket ackPacket = new DatagramPacket(ack, ack.length, hostname, port);
         socket.send(ackPacket);
-        System.out.println("Sent ack: Sequence Number = " + foundLast);
+        //System.out.println("Sent ack: Sequence Number = " + foundLast);
     }
 
     private File createFile(DatagramSocket socket) throws IOException {
-        socket.setSoTimeout(3000);
+        socket.setSoTimeout(10000);
         byte[] filename = new byte[1024];
         File f = null;
 
@@ -96,18 +96,19 @@ public class ReceiveFileUDP implements Runnable{
                         break;
                 }
 
-                System.out.println("Received: Sequence number:" + foundLast);
+                //System.out.println("Received: Sequence number:" + foundLast);
 
                 // Send acknowledgement
                 sendAck(foundLast, socket, hostname, port);
             } else {
-                System.out.println("Expected sequence number: " + (foundLast + 1) + " but received " + sequenceNumber
-                        + ". DISCARDING");
+                //System.out.println("Expected sequence number: " + (foundLast + 1) + " but received " + sequenceNumber
+                //        + ". DISCARDING");
                 // Re send the acknowledgement
                 sendAck(foundLast, socket, hostname, port);
             }
             // Check for last datagram
             if (EOF) {
+                System.out.println("File " + file.getName() + " syncronized");
                 fos.close();
                 break;
             }
@@ -130,7 +131,7 @@ public class ReceiveFileUDP implements Runnable{
 
 
         } catch (IOException e){
-          System.out.println("Temos problemas");  
+          System.out.println("Udp receiver IO:" + e.getMessage());  
         } 
     }
 }
