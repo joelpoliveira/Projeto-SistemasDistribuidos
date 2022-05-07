@@ -1,0 +1,1 @@
+javac -classpath packages/*.jar server/*.java common/*.java client/*.java
