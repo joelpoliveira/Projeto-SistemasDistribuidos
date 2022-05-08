@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import projetosd.backend.models.*;
 import projetosd.backend.repository.*;
 
-@CrossOrigin(origins = "http://localhost:8080")
+
 @RestController
 @RequestMapping("/api")
 public class TutorialController {
