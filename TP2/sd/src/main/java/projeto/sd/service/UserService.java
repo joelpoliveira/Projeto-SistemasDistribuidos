@@ -23,7 +23,7 @@ public class UserService {
         return records;
     }
 
-    private User getUser(User user) {
+    public User getUser(User user) {
         return userRepository.findByUsername(user.getUsername());
     }
 
