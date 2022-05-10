@@ -54,8 +54,13 @@ public class Team {
         this.imageUrl = imageUrl;
     }
 
-    // @Override
-    // public String toString(){
-    // return "";
-    // }
+    @Override
+    public String toString() {
+        return "{" +
+                " id='" + getId() + "'" +
+                ", name='" + getName() + "'" +
+                ", imageUrl='" + getImageUrl() + "'" +
+                "}";
+    }
+
 }

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import org.json.*;
@@ -30,18 +31,10 @@ import projeto.sd.service.*;
 import projeto.sd.model.*;
 
 @Controller
-public class DATAController {
+@RequestMapping("/auth")
+public class AuthController {
     @Autowired
     UserService userService;
-
-    @GetMapping("/")
-    public String homepage(Model model, HttpSession session) {
-        if (session.getAttribute("username") != null)
-            model.addAttribute("username", session.getAttribute("username"));
-        else 
-            model.addAttribute("username", "");
-        return "index";
-    }
 
     @PostMapping("/register")
     public String createUser(@Valid @ModelAttribute User user, HttpSession session) {
@@ -52,7 +45,7 @@ public class DATAController {
             userService.add(user);
             session.setAttribute("username", user.getUsername());
             System.out.println("Created new User: " + user);
-            return "redirect:/";
+            return "redirect:/home";
         } else {
             System.out.println("Username already exists");
             return "redirect:/register";
@@ -77,7 +70,7 @@ public class DATAController {
         if (tempUser != null) {
             if (tempUser.getPassword().equals(user.getPassword())) {
                 session.setAttribute("username", user.getUsername());
-                return "redirect:/";
+                return "redirect:/home";
             } else {
                 System.out.println("Incorrect password");
             }
@@ -91,7 +84,7 @@ public class DATAController {
     @GetMapping("/logout")
     public String logout(Model model, HttpSession session) {
         session.removeAttribute("username");
-        return "redirect:/";
+        return "redirect:/home";
     }
 
 }

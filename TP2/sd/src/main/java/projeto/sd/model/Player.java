@@ -1,11 +1,12 @@
 package projeto.sd.model;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
+import org.springframework.format.annotation.DateTimeFormat;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -26,13 +27,14 @@ public class Player {
 
     @Column(name = "birthDate")
     @NotNull
-    private Date birthDate;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)        
+    private LocalDateTime birthDate;
 
     public Player() {
 
     }
 
-    public Player(String name, String position, Date birthDate) {
+    public Player(String name, String position, LocalDateTime birthDate) {
         this.name = name;
         this.position = position;
         this.birthDate = birthDate;
@@ -62,11 +64,11 @@ public class Player {
         this.position = position;
     }
 
-    public Date getBirthDate() {
+    public LocalDateTime getBirthDate() {
         return this.birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(LocalDateTime birthDate) {
         this.birthDate = birthDate;
     }
 

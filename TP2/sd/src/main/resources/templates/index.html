@@ -8,13 +8,16 @@
         <h1 th:text="'Welcome ' + *{username}">Cenas</h1>
         <h1>Welcome to scoreDei</h1>
         <div>
-            <form th:action="@{/login}" method="get">
+            <form th:action="@{/auth/login}" method="get">
                 <button type="submit">Login</button>
+            </form>
+            <form th:action="@{/auth/register}" method="get">
+                <button type="submit">Register</button>
             </form>
         </div>
         <div>
-            <form th:action="@{/register}" method="get">
-                <button type="submit">Register</button>
+            <form th:action="@{/auth/logout}" method="get">
+                <button type="submit">Logout</button>
             </form>
         </div>
     </body>
