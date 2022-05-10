@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,27 +35,26 @@ public class DATAController {
     UserService userService;
 
     @GetMapping("/")
-    public String redirect() {
-        return "hello";
+    public String homepage(Model model, HttpSession session) {
+        if (session.getAttribute("username") != null)
+            model.addAttribute("username", session.getAttribute("username"));
+        else 
+            model.addAttribute("username", "");
+        return "index";
     }
 
     @PostMapping("/register")
-    public String createUser(@Valid @ModelAttribute User user, BindingResult result, RedirectAttributes ra) {
+    public String createUser(@Valid @ModelAttribute User user, HttpSession session) {
 
-        if (result.hasErrors()) {
-            return "register";
-        }
-    
         User newUser = userService.getUser(user);
         if (newUser == null) {
-            System.out.println("Created new User: " + user);
+            user.setIsAdmin(false);
             userService.add(user);
-            return "hello";
+            session.setAttribute("username", user.getUsername());
+            System.out.println("Created new User: " + user);
+            return "redirect:/";
         } else {
             System.out.println("Username already exists");
-            // errors.rejectValue("username", "Invalid");
-            ra.addFlashAttribute("username", "Invalid");
-            result.addError(new ObjectError("username", "Cenas"));
             return "redirect:/register";
         }
     }
@@ -63,6 +63,35 @@ public class DATAController {
     public String register(Model model) {
         model.addAttribute("user", new User());
         return "register";
+    }
+
+    @GetMapping("/login")
+    public String loginPage(Model model) {
+        model.addAttribute("user", new User());
+        return "login";
+    }
+
+    @PostMapping("/login")
+    public String auth(@Valid @ModelAttribute User user, HttpSession session) {
+        User tempUser = userService.getUser(user);
+        if (tempUser != null) {
+            if (tempUser.getPassword().equals(user.getPassword())) {
+                session.setAttribute("username", user.getUsername());
+                return "redirect:/";
+            } else {
+                System.out.println("Incorrect password");
+            }
+        } else {
+            System.out.println("User doen't exist");
+        }
+
+        return "login";
+    }
+
+    @GetMapping("/logout")
+    public String logout(Model model, HttpSession session) {
+        session.removeAttribute("username");
+        return "redirect:/";
     }
 
 }

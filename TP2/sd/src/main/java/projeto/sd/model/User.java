@@ -21,7 +21,17 @@ public class User {
 
     @Column(name = "password")
     @NotNull
+    @Size(min = 3, max = 50)
     private String password;
+
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "contact")
+    private String contact;
+
+    @Column(name = "isAdmin")
+    private boolean isAdmin;
 
     public User() {
 
@@ -50,6 +60,30 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getContact() {
+        return this.contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
+
+    public boolean getIsAdmin() {
+        return this.isAdmin;
+    }
+
+    public void setIsAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
 
     @Override
