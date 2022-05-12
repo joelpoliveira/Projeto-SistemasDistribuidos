@@ -20,7 +20,7 @@ public class Player {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    
+
     @Column(name = "name")
     @NotNull
     private String name;
@@ -30,8 +30,8 @@ public class Player {
     private String position;
 
     @Column(name = "birthDate")
-    //@NotNull
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)        
+    // @NotNull
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime birthDate;
 
     @OneToOne
@@ -81,15 +81,23 @@ public class Player {
         this.birthDate = birthDate;
     }
 
-    public Team getTeam(){
+    public Team getTeam() {
         return this.team;
     }
 
-    public void setTeam(Team team){
+    public void setTeam(Team team) {
         this.team = team;
     }
 
-
-
+    @Override
+    public String toString() {
+        return "{" +
+                " id='" + getId() + "'" +
+                ", name='" + getName() + "'" +
+                ", position='" + getPosition() + "'" +
+                ", birthDate='" + getBirthDate() + "'" +
+                ", team='" + getTeam() + "'" +
+                "}";
+    }
 
 }

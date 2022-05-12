@@ -36,6 +36,9 @@ public class TeamController {
     @Autowired
     TeamService teamService;
 
+    @Autowired
+    PlayerService playerService;
+
     @GetMapping("/create")
     public String createTeam(Model model, HttpSession session) {
         model.addAttribute("team", new Team());
@@ -56,5 +59,12 @@ public class TeamController {
             return "create-team";
         }
 
+    }
+
+    @GetMapping("/show/all")
+    public String showTeams(Model model, HttpSession session) {
+        model.addAttribute("teams", teamService.getAllTeams());
+        model.addAttribute("players", playerService.getAllPlayers());
+        return "team";
     }
 }
