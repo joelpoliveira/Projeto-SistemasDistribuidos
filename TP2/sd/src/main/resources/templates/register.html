@@ -7,7 +7,7 @@
         <h1>Register</h1>
 
         <div>
-            <h1 th:if="${error}" th:text="${error}">ERROR</h1>
+            <h1 th:if="${error}" th:text="${error}"></h1>
         </div>
 
         <form th:action="@{/auth/register}" th:object="${user}" method="post">

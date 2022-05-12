@@ -18,7 +18,6 @@ public class Event {
     private int id;
 
     @Column(name = "name")
-    @NotNull
     private String name;
 
     @NotNull
@@ -31,9 +30,10 @@ public class Event {
     public Event() {
     }
 
-    public Event(String name, String metadata) {
+    public Event(String name, String metadata, Game game) {
         this.name = name;
         this.metadata = metadata;
+        this.game = game;
     }
 
     public int getId() {
@@ -66,6 +66,24 @@ public class Event {
 
     public void setMetadata(String metadata) {
         this.metadata = metadata;
+    }
+
+    public Game getGame() {
+        return this.game;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                " id='" + getId() + "'" +
+                ", name='" + getName() + "'" +
+                ", game='" + getGame() + "'" +
+                ", metadata='" + getMetadata() + "'" +
+                "}";
     }
 
 }

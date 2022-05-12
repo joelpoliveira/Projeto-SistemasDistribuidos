@@ -14,5 +14,16 @@ import projeto.sd.model.*;
 
 @Service
 public class GameService {
-    
+    @Autowired
+    GameRepository gameRepository;
+
+    public Game add(Game game) {
+        gameRepository.save(game);
+        return game;
+    }
+
+    public List<Game> getAllGames(){
+        return gameRepository.findAll();
+    }
+
 }

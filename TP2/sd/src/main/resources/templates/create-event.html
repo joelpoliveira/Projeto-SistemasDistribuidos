@@ -1,0 +1,34 @@
+<html>
+    <head>
+        <title>Create Event</title>
+        <h1>Create Event</h1>
+    </head>
+    <body>
+        <div>
+            <h1 th:if="${error}" th:text="${error}">ERROR</h1>
+        </div>
+        <form th:action="@{/event/create}" th:object="${event}" method="post">
+            <div>
+                <select th:field="*{game}">
+                    <option value="">Select Game</option>
+                    <option
+                        th:each="option : ${games}"
+                        th:value="${option.id}"
+                        th:text="${option.teamA.name} + ' vs ' + ${option.teamB.name}"
+                    ></option>
+                </select>
+            </div>
+            <div>
+                <input
+                    type="text"
+                    th:field="*{metadata}"
+                    placeholder="metadata"
+                />
+            </div>
+
+            <div>
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </body>
+</html>

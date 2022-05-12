@@ -14,5 +14,11 @@ import projeto.sd.model.*;
 
 @Service
 public class EventService {
-    
+    @Autowired
+    EventRepository eventRepository;
+
+    public Event add(Event event){
+        eventRepository.save(event);
+        return event;
+    }
 }

@@ -1,0 +1,49 @@
+<html>
+    <head>
+        <title>Create Game</title>
+        <h1>Create Game</h1>
+    </head>
+    <body>
+        <div>
+            <h1 th:if="${error}" th:text="${error}">ERROR</h1>
+        </div>
+        <form th:action="@{/game/create}" th:object="${game}" method="post">
+            <div>
+                <select th:field="*{teamA}">
+                    <option value="">Select Team A</option>
+                    <option
+                        th:each="option : ${teams}"
+                        th:value="${option.id}"
+                        th:text="${option.name}"
+                    ></option>
+                </select>
+                <select th:field="*{teamB}">
+                    <option value="">Select Team B</option>
+                    <option
+                        th:each="option : ${teams}"
+                        th:value="${option.id}"
+                        th:text="${option.name}"
+                    ></option>
+                </select>
+            </div>
+            <div>
+                <input
+                    type="text"
+                    th:field="*{location}"
+                    placeholder="Location"
+                />
+            </div>
+            <div>
+                <label>Starting Time</label>
+                <input type="datetime-local" th:field="*{startTime}"/>
+            </div>
+            <div>
+                <label>End Time</label>
+                <input type="datetime-local" th:field="*{endTime}" />
+            </div>
+            <div>
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </body>
+</html>

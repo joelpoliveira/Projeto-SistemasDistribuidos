@@ -1,5 +1,6 @@
 package projeto.sd.model;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.*;
@@ -17,7 +18,7 @@ public class Game {
     private int id;
 
     @Column(name = "location")
-    @NotNull
+    // @NotNull
     private String location;
 
     @NotNull
@@ -29,24 +30,24 @@ public class Game {
     private Team teamB;
 
     @Column(name = "startTime")
-    @NotNull
-    private Date startTime;
+    // @NotNull
+    private LocalDateTime startTime;
 
     @Column(name = "endTime")
-    @NotNull
-    private Date endTime;
+    // @NotNull
+    private LocalDateTime endTime;
 
     public Game() {
 
     }
 
-    public Game(String location, Date startTime, Date endTime) {
+    public Game(String location, LocalDateTime startTime, LocalDateTime endTime, Team teamA, Team teamB) {
         this.location = location;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.teamA = teamA;
+        this.teamB = teamB;
     }
-
-    
 
     public int getId() {
         return this.id;
@@ -80,20 +81,32 @@ public class Game {
         this.teamB = teamB;
     }
 
-    public Date getStartTime() {
+    public LocalDateTime getStartTime() {
         return this.startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
 
-    public Date getEndTime() {
+    public LocalDateTime getEndTime() {
         return this.endTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                " id='" + getId() + "'" +
+                ", location='" + getLocation() + "'" +
+                ", teamA='" + getTeamA() + "'" +
+                ", teamB='" + getTeamB() + "'" +
+                ", startTime='" + getStartTime() + "'" +
+                ", endTime='" + getEndTime() + "'" +
+                "}";
     }
 
 }

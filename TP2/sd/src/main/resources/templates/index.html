@@ -7,6 +7,10 @@
     <body>
         <h1 th:text="'Welcome to scoreDei ' + *{username}"></h1>
         <div>
+            <h1 th:if="${message}" th:text="${message}"></h1>
+        </div>
+
+        <div>
             <h2>Auth</h2>
             <form th:action="@{/auth/login}" method="get">
                 <button type="submit">Login</button>
@@ -32,6 +36,18 @@
         <div>
             <h2>Player</h2>
             <form th:action="@{/player/create}" method="get">
+                <button type="submit">Create</button>
+            </form>
+        </div>
+        <div>
+            <h2>Game</h2>
+            <form th:action="@{/game/create}" method="get">
+                <button type="submit">Create</button>
+            </form>
+        </div>
+        <div>
+            <h2>Event</h2>
+            <form th:action="@{/event/create}" method="get">
                 <button type="submit">Create</button>
             </form>
         </div>
