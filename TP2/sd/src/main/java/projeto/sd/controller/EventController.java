@@ -43,6 +43,7 @@ public class EventController {
     public String createTeam(Model model, HttpSession session) {
         model.addAttribute("event", new Event());
         model.addAttribute("games", gameService.getAllGames());
+        model.addAttribute("events", eventService.getPossibleEvents());
         return "create-event";
     }
 

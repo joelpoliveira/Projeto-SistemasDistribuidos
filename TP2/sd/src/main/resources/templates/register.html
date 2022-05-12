@@ -4,8 +4,12 @@
         <meta charset="utf8" />
     </head>
     <body>
+        <div>
+            <form th:action="@{/home}" method="get">
+                <button type="submit">Homepage</button>
+            </form>
+        </div>
         <h1>Register</h1>
-
         <div>
             <h1 th:if="${error}" th:text="${error}"></h1>
         </div>

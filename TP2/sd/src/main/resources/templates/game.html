@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Game</title>
+        <meta charset="utf8" />
+    </head>
+    <body>
+        <div>
+            <form th:action="@{/home}" method="get">
+                <button type="submit">Homepage</button>
+            </form>
+        </div>
+        <center>
+            <h1 th:text="${game.teamA.name} + ' - ' + ${game.teamB.name}"></h1>
+
+            <div>
+                <form th:action="@{/event/create}" method="get">
+                    <button type="submit">Add event</button>
+                </form>
+            </div>
+            <h1>Eventos</h1>
+            <div th:each="option : ${events}">
+                <h2 th:text="${option.name}">ceas</h2>
+            </div>
+        </center>
+    </body>
+</html>

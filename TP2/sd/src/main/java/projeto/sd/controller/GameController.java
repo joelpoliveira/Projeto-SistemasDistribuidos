@@ -16,6 +16,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -40,6 +41,9 @@ public class GameController {
     @Autowired
     TeamService teamService;
 
+    @Autowired
+    EventService eventService;
+
     @GetMapping("/create")
     public String createTeam(Model model, HttpSession session) {
         model.addAttribute("game", new Game());
@@ -53,5 +57,19 @@ public class GameController {
         gameService.add(game);
         System.out.println("Added game" + game);
         return "redirect:/home";
+    }
+
+    @GetMapping("/show/all")
+    public String showAllGames(Model model) {
+        model.addAttribute("games", gameService.getAllGames());
+        // TODO: page to display all games ?
+        return "redirect:/home";
+    }
+
+    @GetMapping("/show/{gameID}")
+    public String showGame(@PathVariable String gameID, Model model) {
+        model.addAttribute("game", gameService.getById(Integer.parseInt(gameID)));
+        model.addAttribute("events", eventService.getEventsByGameId(Integer.parseInt(gameID)));
+        return "game";
     }
 }

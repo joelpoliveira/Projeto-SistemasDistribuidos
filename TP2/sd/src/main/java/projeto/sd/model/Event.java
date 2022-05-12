@@ -17,22 +17,18 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @Column(name = "name")
+    @Column(name = "event")
     private String name;
 
     @NotNull
     @OneToOne
     private Game game;
 
-    @Column(name = "metadata")
-    private String metadata;
-
     public Event() {
     }
 
-    public Event(String name, String metadata, Game game) {
+    public Event(String name, Game game) {
         this.name = name;
-        this.metadata = metadata;
         this.game = game;
     }
 
@@ -60,14 +56,6 @@ public class Event {
         this.game = game;
     }
 
-    public String getMetadata() {
-        return this.metadata;
-    }
-
-    public void setMetadata(String metadata) {
-        this.metadata = metadata;
-    }
-
     public Game getGame() {
         return this.game;
     }
@@ -82,7 +70,6 @@ public class Event {
                 " id='" + getId() + "'" +
                 ", name='" + getName() + "'" +
                 ", game='" + getGame() + "'" +
-                ", metadata='" + getMetadata() + "'" +
                 "}";
     }
 

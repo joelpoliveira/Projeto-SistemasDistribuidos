@@ -21,4 +21,19 @@ public class EventService {
         eventRepository.save(event);
         return event;
     }
+
+    public List<String> getPossibleEvents(){
+        List<String> events = new ArrayList<String>();
+        events.add("Início");
+        events.add("Fim");
+        events.add("Golo");
+        events.add("Cartão");
+        events.add("Interrupção");
+        events.add("Retoma");
+        return events;
+    }
+
+    public List<Event> getEventsByGameId(int id){
+        return eventRepository.findByGameId(id);
+    }
 }

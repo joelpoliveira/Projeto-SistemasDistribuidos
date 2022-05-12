@@ -11,5 +11,6 @@ import projeto.sd.model.*;
 
 @Repository
 public interface EventRepository extends JpaRepository<Event, Integer>  {
-    
-}
+    @Query("Select e from Event e where e.game.id = ?1")
+    List<Event> findByGameId(Integer id);
+}   

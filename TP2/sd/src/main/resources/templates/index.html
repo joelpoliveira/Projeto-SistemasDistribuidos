@@ -2,12 +2,20 @@
 <html>
     <head>
         <title>Home</title>
-        <meta charset="utf8" />
+        <script type="text/javascript" th:src="@{/js/fillDatabase.js}"></script>
     </head>
     <body>
         <h1 th:text="'Welcome to scoreDei ' + *{username}"></h1>
         <div>
             <h1 th:if="${message}" th:text="${message}"></h1>
+        </div>
+
+        <div>
+            <h2>Fill</h2>
+            <button th:onclick="fillDB();">Some data</button>
+            <form>
+                <button type="submit">Sports API</button>
+            </form>
         </div>
 
         <div>
@@ -50,6 +58,52 @@
             <form th:action="@{/event/create}" method="get">
                 <button type="submit">Create</button>
             </form>
+        </div>
+        <div>
+            <h2>Jogos Ativos</h2>
+            <style type="text/css">
+                .tg {
+                    border-collapse: collapse;
+                    border-spacing: 0;
+                }
+                .tg td {
+                    border-color: black;
+                    border-style: solid;
+                    border-width: 1px;
+                    font-family: Arial, sans-serif;
+                    font-size: 14px;
+                    overflow: hidden;
+                    padding: 10px 5px;
+                    word-break: normal;
+                }
+                .tg th {
+                    border-color: black;
+                    border-style: solid;
+                    border-width: 1px;
+                    font-family: Arial, sans-serif;
+                    font-size: 14px;
+                    font-weight: normal;
+                    overflow: hidden;
+                    padding: 10px 5px;
+                    word-break: normal;
+                }
+                .tg .tg-0lax {
+                    text-align: left;
+                    vertical-align: top;
+                }
+            </style>
+            <table class="tg">
+                <thead>
+                    <tr th:each="game: ${games}" >
+                        <td class="tg-0lax" th:text="${game.teamA.name} + ' - ' + ${game.teamB.name}">Jogo</td>
+                        <td class="tg-0lax">
+                            <form th:action="@{'/game/show/'+${game.id}}" method="get" >
+                                <button type="submit">Selecionar</button>
+                            </form>
+                        </td>
+                    </tr>
+                </thead>
+            </table>
         </div>
     </body>
 </html>

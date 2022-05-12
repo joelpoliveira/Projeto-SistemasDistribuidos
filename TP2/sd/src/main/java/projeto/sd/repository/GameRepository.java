@@ -11,5 +11,5 @@ import projeto.sd.model.*;
 
 @Repository
 public interface GameRepository extends JpaRepository<Game, Integer>  {
-    
+    Game findById(int id);
 }

@@ -4,6 +4,11 @@
         <meta charset="utf8" />
     </head>
     <body>
+        <div>
+            <form th:action="@{/home}" method="get">
+                <button type="submit">Homepage</button>
+            </form>
+        </div>
         <h1>Login</h1>
         <form th:action="@{/auth/login}" th:object="${user}" method="post">
             <div>
