@@ -1,7 +1,11 @@
 <html>
-    <head> </head>
+    <head> 
+        <title>Login</title>
+        <meta charset="utf8" />
+    </head>
     <body>
-        <form th:action="@{/login}" th:object="${user}" method="post">
+        <h1>Login</h1>
+        <form th:action="@{/auth/login}" th:object="${user}" method="post">
             <div>
                 <input
                     type="text"

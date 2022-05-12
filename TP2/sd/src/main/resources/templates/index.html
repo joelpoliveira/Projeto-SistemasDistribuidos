@@ -15,7 +15,7 @@
                 <button type="submit">Register</button>
             </form>
         </div>
-        <div>
+        <div th:if="${username != ''}">
             <form th:action="@{/auth/logout}" method="get">
                 <button type="submit">Logout</button>
             </form>

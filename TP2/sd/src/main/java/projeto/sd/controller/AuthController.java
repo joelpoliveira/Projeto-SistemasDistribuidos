@@ -36,8 +36,14 @@ public class AuthController {
     @Autowired
     UserService userService;
 
+    @GetMapping("/register")
+    public String register(Model model) {
+        model.addAttribute("user", new User());
+        return "register";
+    }
+
     @PostMapping("/register")
-    public String createUser(@Valid @ModelAttribute User user, HttpSession session) {
+    public String createUser(@Valid @ModelAttribute User user, HttpSession session, Model model) {
 
         User newUser = userService.getUser(user);
         if (newUser == null) {
@@ -48,14 +54,9 @@ public class AuthController {
             return "redirect:/home";
         } else {
             System.out.println("Username already exists");
-            return "redirect:/register";
+            model.addAttribute("error", "Username already exists");
+            return "register";
         }
-    }
-
-    @GetMapping("/register")
-    public String register(Model model) {
-        model.addAttribute("user", new User());
-        return "register";
     }
 
     @GetMapping("/login")

@@ -10,6 +10,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+import java.util.Set;
+import java.util.HashSet;
+import java.util.Optional;
+
 @Entity
 @Table(name = "players")
 public class Player {
@@ -26,9 +30,12 @@ public class Player {
     private String position;
 
     @Column(name = "birthDate")
-    @NotNull
+    //@NotNull
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)        
     private LocalDateTime birthDate;
+
+    @OneToOne
+    private Team team;
 
     public Player() {
 
@@ -71,5 +78,16 @@ public class Player {
     public void setBirthDate(LocalDateTime birthDate) {
         this.birthDate = birthDate;
     }
+
+    public Team getTeam(){
+        return this.team;
+    }
+
+    public void setTeam(Team team){
+        this.team = team;
+    }
+
+
+
 
 }

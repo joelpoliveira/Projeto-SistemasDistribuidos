@@ -1,8 +1,6 @@
 package projeto.sd.controller;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -18,43 +16,52 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-import org.json.*;
-import java.net.*;
-import java.io.*;
-
 import projeto.sd.service.*;
 import projeto.sd.model.*;
 
-@Controller
-@RequestMapping("/team")
-public class TeamController {
+@RestController
+@RequestMapping("/test")
+public class TestController {
     @Autowired
     TeamService teamService;
 
-    @GetMapping("/create")
-    public String createTeam(Model model, HttpSession session) {
-        model.addAttribute("team", new Team());
-        return "create-team";
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    PlayerService playerService;
+
+
+
+    @PostMapping("/users")
+    public List<User> createUsers(@Valid @RequestBody List<User> users) {
+        userService.addAll(users);  
+        return users;
     }
 
-    @PostMapping("/create")
-    public String teamView(@Valid @ModelAttribute Team team, HttpSession session, Model model) {
-        Team tempTeam = teamService.getTeam(team.getName());
-        if (tempTeam == null) {
-            teamService.add(team);
-            //model.addAttribute("error", "");
-            System.out.println("Added team:" + team);
-            return "redirect:/home";
-        } else {
-            System.out.println("Team already exists");
-            model.addAttribute("error", "Team already exists");
-            return "create-team";
-        }
-
+    @PostMapping("/players")
+    public List<Player> createPLayers(@Valid @RequestBody List<Player> players) {
+        playerService.addAll(players);  
+        return players;
     }
+
+    @PostMapping("/teams")
+    public List<Team> createTeams(@Valid @RequestBody List<Team> teams) {
+        teamService.addAll(teams);
+        return teams;
+    }
+
+    @PostMapping("/teste")
+    public Team teste() {
+        Team team = teamService.getTeam("Sporting");
+        return team;
+    }
+
+    
 }

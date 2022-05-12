@@ -10,6 +10,6 @@ import org.springframework.data.repository.query.Param;
 import projeto.sd.model.*;
 
 @Repository
-public class GameRepository {
+public interface GameRepository extends JpaRepository<Game, Integer>  {
     
 }

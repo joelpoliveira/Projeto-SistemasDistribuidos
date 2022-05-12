@@ -1,0 +1,41 @@
+<html>
+    <head>
+        <title>Create Player</title>
+        <h1>Create Player</h1>
+    </head>
+    <body>
+        <div>
+            <h1 th:if="${error}" th:text="${error}">ERROR</h1>
+        </div>
+        <form th:action="@{/player/create}" th:object="${player}" method="post">
+            <div>
+                <input
+                    type="text"
+                    th:field="*{name}"
+                    placeholder="Player name"
+                />
+            </div>
+            <div>
+                <input
+                    type="text"
+                    th:field="*{position}"
+                    placeholder="Position"
+                />
+            </div>
+            <div>
+                <label>Birth Date</label>
+                <input type="datetime-local" th:field="*{birthDate}" />
+            </div>
+            <div>
+                <label>Team</label>
+                <select>
+                    <option value="">Select Team</option>
+                    <option th:each="option : ${teams}" th:value="${option}" th:text="${option.name}"></option>
+                </select>
+            </div>
+            <div>
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </body>
+</html>

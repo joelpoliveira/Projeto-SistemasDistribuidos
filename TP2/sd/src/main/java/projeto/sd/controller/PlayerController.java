@@ -31,30 +31,34 @@ import projeto.sd.service.*;
 import projeto.sd.model.*;
 
 @Controller
-@RequestMapping("/team")
-public class TeamController {
+@RequestMapping("/player")
+public class PlayerController {
+    @Autowired
+    PlayerService playerService;
+
     @Autowired
     TeamService teamService;
 
     @GetMapping("/create")
     public String createTeam(Model model, HttpSession session) {
-        model.addAttribute("team", new Team());
-        return "create-team";
+        model.addAttribute("player", new Player());
+        model.addAttribute("teams", teamService.getAllTeams());
+        return "create-player";
     }
 
     @PostMapping("/create")
-    public String teamView(@Valid @ModelAttribute Team team, HttpSession session, Model model) {
-        Team tempTeam = teamService.getTeam(team.getName());
+    public String teamView(@Valid @ModelAttribute Player player, HttpSession session, Model model) {
+        Player tempTeam = playerService.getPlayer(player.getName());
         if (tempTeam == null) {
-            teamService.add(team);
-            //model.addAttribute("error", "");
-            System.out.println("Added team:" + team);
+            playerService.add(player);
+            System.out.println("Added Player:" + player);
             return "redirect:/home";
         } else {
-            System.out.println("Team already exists");
-            model.addAttribute("error", "Team already exists");
-            return "create-team";
+            System.out.println("Player already exists");
+            model.addAttribute("error", "Player already exists");
+            return "create-player";
         }
 
     }
+    
 }

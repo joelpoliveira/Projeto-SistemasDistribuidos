@@ -17,13 +17,28 @@ public class TeamService {
     @Autowired
     TeamRepository teamRepository;
 
-    public Team getTeam(Team team) {
-        return teamRepository.findByName(team.getName());
-    }
-
     public Team add(Team team) {
         teamRepository.save(team);
-        return getTeam(team);
+        return team;
     }
     
+    public List<Team> addAll(List<Team> teams){
+        for (Team team : teams) {
+            teamRepository.save(team);
+        }
+        return teams;
+    }
+
+    public Team getTeam(String name) {
+        return teamRepository.findByName(name);
+    }
+
+    public List<Player> getAllPlayers(Team team){
+        return teamRepository.findPlayersByName(team.getName());
+    }
+
+    public List<Team> getAllTeams(){
+        return teamRepository.findAll();
+    }
+
 }

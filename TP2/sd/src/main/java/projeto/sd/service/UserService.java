@@ -32,4 +32,11 @@ public class UserService {
         return getUser(user);
     }
 
+    public List<User> addAll(List<User> users){
+        for (User player : users) {
+            userRepository.save(player);
+        }
+        return users;
+    }
+
 }

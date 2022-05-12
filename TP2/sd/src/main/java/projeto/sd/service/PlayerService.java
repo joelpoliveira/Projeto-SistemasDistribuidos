@@ -14,5 +14,27 @@ import projeto.sd.model.*;
 
 @Service
 public class PlayerService {
-    
+    @Autowired
+    PlayerRepository playerRepository;
+
+    @Autowired
+    TeamRepository teamRepository;
+
+    public Player getPlayer(String name) {
+        return playerRepository.findByName(name);
+    }
+
+    public Player add(Player player) {
+        playerRepository.save(player);
+        return player;
+    }
+
+    public List<Player> addAll(List<Player> players) {
+        for (Player player : players) {
+            System.out.println(player);
+            add(player);
+        }
+        return players;
+    }
+
 }

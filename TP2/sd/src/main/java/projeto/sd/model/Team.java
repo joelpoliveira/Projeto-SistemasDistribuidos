@@ -1,5 +1,8 @@
 package projeto.sd.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
@@ -21,6 +24,9 @@ public class Team {
 
     @Column(name = "image")
     private String imageUrl;
+
+    @OneToMany(mappedBy = "team")
+    private Set<Player> players = new HashSet<Player>();
 
     public Team() {
     }

@@ -4,15 +4,21 @@
         <h1>Create Team</h1>
     </head>
     <body>
+        <div>
+            <h1 th:if="${error}" th:text="${error}">ERROR</h1>
+        </div>
         <form th:action="@{/team/create}" th:object="${team}" method="post">
             <div>
-                <input type="text" th:field="*{name}" placeholder="Team name"/>
-                <input type="text" th:field="*{imageUrl}" placeholder="Image URL"/>
+                <input type="text" th:field="*{name}" placeholder="Team name" />
+                <input
+                    type="text"
+                    th:field="*{imageUrl}"
+                    placeholder="Image URL"
+                />
             </div>
             <div>
                 <button type="submit">Submit</button>
             </div>
-            
         </form>
     </body>
 </html>

@@ -10,6 +10,6 @@ import org.springframework.data.repository.query.Param;
 import projeto.sd.model.*;
 
 @Repository
-public class PlayerRepository {
-    
+public interface PlayerRepository extends JpaRepository<Player, Integer> {
+    Player findByName(String name);
 }
