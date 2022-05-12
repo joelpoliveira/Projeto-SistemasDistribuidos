@@ -28,9 +28,13 @@
             </div>
             <div>
                 <label>Team</label>
-                <select>
+                <select th:field="*{team}">
                     <option value="">Select Team</option>
-                    <option th:each="option : ${teams}" th:value="${option}" th:text="${option.name}"></option>
+                    <option
+                        th:each="option : ${teams}"
+                        th:value="${option.id}"
+                        th:text="${option.name}"
+                    ></option>
                 </select>
             </div>
             <div>

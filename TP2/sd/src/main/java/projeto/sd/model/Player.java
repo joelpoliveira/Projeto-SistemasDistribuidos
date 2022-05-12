@@ -35,16 +35,18 @@ public class Player {
     private LocalDateTime birthDate;
 
     @OneToOne
+    @NotNull
     private Team team;
 
     public Player() {
 
     }
 
-    public Player(String name, String position, LocalDateTime birthDate) {
+    public Player(String name, String position, LocalDateTime birthDate, Team team) {
         this.name = name;
         this.position = position;
         this.birthDate = birthDate;
+        this.team = team;
     }
 
     public int getId() {
