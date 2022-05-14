@@ -12,7 +12,10 @@
 
         <div>
             <h2>Fill</h2>
-            <button th:onclick="fillDB();">Some data</button>
+            <!-- <button th:onclick="fillDB();">Some data</button> -->
+            <form th:action="@{/fill}" method="get">
+                <button type="submit">Some data</button>
+            </form>
             <form>
                 <button type="submit">Sports API</button>
             </form>
