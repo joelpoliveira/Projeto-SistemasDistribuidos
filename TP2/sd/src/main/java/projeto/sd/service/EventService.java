@@ -17,23 +17,24 @@ public class EventService {
     @Autowired
     EventRepository eventRepository;
 
-    public Event add(Event event){
+    public Event add(Event event) {
         eventRepository.save(event);
         return event;
     }
 
-    public List<String> getPossibleEvents(){
+    public List<String> getPossibleEvents() {
         List<String> events = new ArrayList<String>();
         events.add("Início");
         events.add("Fim");
         events.add("Golo");
-        events.add("Cartão");
+        events.add("Cartão Amarelo");
+        events.add("Cartão Vermelho");
         events.add("Interrupção");
         events.add("Retoma");
         return events;
     }
 
-    public List<Event> getEventsByGameId(int id){
+    public List<Event> getEventsByGameId(int id) {
         return eventRepository.findByGameId(id);
     }
 }
