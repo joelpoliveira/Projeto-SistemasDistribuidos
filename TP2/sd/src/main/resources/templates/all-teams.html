@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Team</title>
+        <meta charset="utf8" />
+    </head>
+    <body>
+        <div>
+            <form th:action="@{/home}" method="get">
+                <button type="submit">Homepage</button>
+            </form>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <td width="20px"><b> ID</b></td>
+                    <td><b>Name</b></td>
+                    <td><b>Players</b></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="option : ${teams}">
+                    <td width="20px" th:text="${option.id}"></td>
+                    <td th:text="${option.name}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>

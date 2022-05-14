@@ -16,6 +16,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -50,7 +51,7 @@ public class TeamController {
         Team tempTeam = teamService.getTeam(team.getName());
         if (tempTeam == null) {
             teamService.add(team);
-            //model.addAttribute("error", "");
+            // model.addAttribute("error", "");
             System.out.println("Added team:" + team);
             return "redirect:/home";
         } else {
@@ -61,10 +62,17 @@ public class TeamController {
 
     }
 
-    @GetMapping("/show/all")
+    @GetMapping("/all")
     public String showTeams(Model model, HttpSession session) {
         model.addAttribute("teams", teamService.getAllTeams());
         model.addAttribute("players", playerService.getAllPlayers());
+        return "all-teams";
+    }
+
+    @GetMapping("/{teamName}")
+    public String showTeam(@PathVariable String teamName, Model model) {
+        model.addAttribute("team", teamService.getTeam(teamName));
+        model.addAttribute("players", teamService.getTeamPlayers(teamName));
         return "team";
     }
 }

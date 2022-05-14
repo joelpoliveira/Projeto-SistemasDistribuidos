@@ -59,14 +59,14 @@ public class GameController {
         return "redirect:/home";
     }
 
-    @GetMapping("/show/all")
+    @GetMapping("/all")
     public String showAllGames(Model model) {
         model.addAttribute("games", gameService.getAllGames());
         // TODO: page to display all games ?
         return "redirect:/home";
     }
 
-    @GetMapping("/show/{gameID}")
+    @GetMapping("/{gameID}")
     public String showGame(@PathVariable String gameID, Model model) {
         model.addAttribute("game", gameService.getById(Integer.parseInt(gameID)));
         model.addAttribute("events", eventService.getEventsByGameId(Integer.parseInt(gameID)));

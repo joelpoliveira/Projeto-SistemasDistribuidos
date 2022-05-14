@@ -21,8 +21,8 @@ public class TeamService {
         teamRepository.save(team);
         return team;
     }
-    
-    public List<Team> addAll(List<Team> teams){
+
+    public List<Team> addAll(List<Team> teams) {
         for (Team team : teams) {
             teamRepository.save(team);
         }
@@ -33,12 +33,16 @@ public class TeamService {
         return teamRepository.findByName(name);
     }
 
-    public List<Player> getAllPlayers(Team team){
+    public List<Player> getAllPlayers(Team team) {
         return teamRepository.findPlayersByName(team.getName());
     }
 
-    public List<Team> getAllTeams(){
+    public List<Team> getAllTeams() {
         return teamRepository.findAll();
+    }
+
+    public List<Player> getTeamPlayers(String teamName) {
+        return teamRepository.findPlayersByTeamID(getTeam(teamName).getId());
     }
 
 }

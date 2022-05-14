@@ -10,20 +10,14 @@
                 <button type="submit">Homepage</button>
             </form>
         </div>
-        <table>
-            <thead>
-                <tr>
-                    <td width="20px"><b> ID</b></td>
-                    <td><b>Name</b></td>
-                    <td><b>Players</b></td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="option : ${teams}">
-                    <td width="20px" th:text="${option.id}"></td>
-                    <td th:text="${option.name}"></td>
-                </tr>
-            </tbody>
-        </table>
+        <center>
+            <h1 th:text="${team.name}"></h1>
+
+
+            <h1>Players</h1>
+            <div th:each="option : ${players}">
+                <h2 th:text="${option.name}">ceas</h2>
+            </div>
+        </center>
     </body>
 </html>

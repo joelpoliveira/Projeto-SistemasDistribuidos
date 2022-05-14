@@ -97,7 +97,7 @@
                     <tr th:each="game: ${games}" >
                         <td class="tg-0lax" th:text="${game.teamA.name} + ' - ' + ${game.teamB.name}">Jogo</td>
                         <td class="tg-0lax">
-                            <form th:action="@{'/game/show/'+${game.id}}" method="get" >
+                            <form th:action="@{'/game/'+${game.id}}" method="get" >
                                 <button type="submit">Selecionar</button>
                             </form>
                         </td>
