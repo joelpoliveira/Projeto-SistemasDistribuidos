@@ -52,7 +52,7 @@ public class HomeController {
     @GetMapping("/fill")
     public String fillDatabase() {
         // Add Admin
-        User admin = new User("admin", "admin");
+        User admin = new User("admin", "admin", "admin@scoredei.pt", null);
         admin.setRoles("ADMIN");
         userService.add(admin);
 

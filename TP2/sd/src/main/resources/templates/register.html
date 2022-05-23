@@ -1,35 +1,30 @@
 <html>
-    <head>
-        <title>Register</title>
-        <meta charset="utf8" />
-    </head>
-    <body>
-        <div>
-            <form th:action="@{/home}" method="get">
-                <button type="submit">Homepage</button>
-            </form>
-        </div>
-        <h1>Register</h1>
-        <div>
-            <h1 th:if="${error}" th:text="${error}"></h1>
-        </div>
 
-        <form th:action="@{/register}" th:object="${user}" method="post">
-            <div>
-                <input
-                    type="text"
-                    th:field="*{username}"
-                    placeholder="Username"
-                />
-                <input
-                    type="text"
-                    th:field="*{password}"
-                    placeholder="Password"
-                />
-            </div>
-            <div>
-                <button type="submit">Submit</button>
-            </div>
+<head>
+    <title>Register</title>
+    <meta charset="utf8" />
+</head>
+
+<body>
+    <div>
+        <form th:action="@{/home}" method="get">
+            <button type="submit">Homepage</button>
         </form>
-    </body>
+    </div>
+    <h1>Register</h1>
+    <div>
+        <h1 th:if="${error}" th:text="${error}"></h1>
+    </div>
+
+    <form th:action="@{/register}" th:object="${user}" method="post">
+        <div>
+            <input type="text" th:field="*{username}" placeholder="Username" />
+            <input type="text" th:field="*{password}" placeholder="Password" />
+        </div>
+        <div>
+            <button type="submit">Submit</button>
+        </div>
+    </form>
+</body>
+
 </html>

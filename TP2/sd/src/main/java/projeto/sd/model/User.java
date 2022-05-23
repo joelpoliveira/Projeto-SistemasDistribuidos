@@ -1,17 +1,11 @@
 package projeto.sd.model;
 
-import java.util.Collection;
-
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "users")
@@ -43,6 +37,13 @@ public class User {
 
     }
 
+    public User(MyUserDetails user) {
+        this.username = user.getUsername();
+        this.password = user.getPassword();
+        this.roles = "USER";
+        this.isActive = true;
+    }
+
     public User(String username, String password) {
         this.username = username;
         this.password = password;
@@ -50,9 +51,11 @@ public class User {
         this.isActive = true;
     }
 
-    public User(MyUserDetails user) {
-        this.username = user.getUsername();
-        this.password = user.getPassword();
+    public User(String username, String password, String email, String contact) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.contact = contact;
         this.roles = "USER";
         this.isActive = true;
     }

@@ -40,13 +40,12 @@ public class AuthController {
     @GetMapping("/register")
     public String register(Model model) {
         model.addAttribute("user", new User());
-        return "register";
+        return "register2";
     }
 
     @PostMapping("/register")
     public String createUser(@Valid @ModelAttribute User user, Model model) {
         Optional<User> newUser = userService.getUser(user);
-        System.out.println(newUser);
 
         if (newUser.isEmpty()) {
             user.setRoles("USER");
@@ -55,8 +54,7 @@ public class AuthController {
             return "redirect:/home";
         } else {
             System.out.println("Username already exists");
-            model.addAttribute("error", "Username already exists");
-            return "register";
+            return "redirect:/register?username";
         }
 
     }
