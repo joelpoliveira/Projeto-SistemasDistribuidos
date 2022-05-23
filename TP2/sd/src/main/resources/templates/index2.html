@@ -79,6 +79,10 @@
                                 </li>
                             </ul>
                         </li>
+                        <li sec:authorize="hasAuthority('ADMIN')" class="w-100">
+                            <a th:href="@{/register}" class="nav-link px-0"> <span
+                                    class="d-none d-sm-inline">Register User</span></a>
+                        </li>
                     </ul>
                     <hr>
                     <div sec:authorize="isAuthenticated()" class="dropdown pb-4">
