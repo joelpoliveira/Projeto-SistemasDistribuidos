@@ -12,7 +12,7 @@
         </div>
         <center>
             <h1 th:text="${game.teamA.name} + ' - ' + ${game.teamB.name}"></h1>
-
+            <h1>0 - 0</h1>
             <div>
                 <form th:action="@{/event/create}" method="get">
                     <button type="submit">Add event</button>

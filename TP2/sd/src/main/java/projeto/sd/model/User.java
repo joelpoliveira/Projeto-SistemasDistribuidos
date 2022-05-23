@@ -1,9 +1,15 @@
 package projeto.sd.model;
 
+import java.util.Collection;
+
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -30,8 +36,8 @@ public class User {
     @Column(name = "contact")
     private String contact;
 
-    @Column(name = "isAdmin")
-    private boolean isAdmin;
+    private boolean isActive;
+    private String roles;
 
     public User() {
 
@@ -40,6 +46,15 @@ public class User {
     public User(String username, String password) {
         this.username = username;
         this.password = password;
+        this.roles = "USER";
+        this.isActive = true;
+    }
+
+    public User(MyUserDetails user) {
+        this.username = user.getUsername();
+        this.password = user.getPassword();
+        this.roles = "USER";
+        this.isActive = true;
     }
 
     public int getId() {
@@ -78,12 +93,28 @@ public class User {
         this.contact = contact;
     }
 
-    public boolean getIsAdmin() {
-        return this.isAdmin;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setIsAdmin(boolean isAdmin) {
-        this.isAdmin = isAdmin;
+    public boolean isIsActive() {
+        return this.isActive;
+    }
+
+    public boolean getIsActive() {
+        return this.isActive;
+    }
+
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
+    }
+
+    public String getRoles() {
+        return this.roles;
+    }
+
+    public void setRoles(String roles) {
+        this.roles = roles;
     }
 
     @Override

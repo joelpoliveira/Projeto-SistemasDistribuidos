@@ -5,8 +5,12 @@ import java.util.Optional;
 import java.util.ArrayList;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import projeto.sd.repository.*;
@@ -23,16 +27,17 @@ public class UserService {
         return records;
     }
 
-    public User getUser(User user) {
+    public Optional<User> getUser(User user) {
         return userRepository.findByUsername(user.getUsername());
     }
 
-    public User add(User user) {
-        userRepository.save(user);
-        return getUser(user);
+    public User add(User newUser) {
+        userRepository.save(newUser);
+        return newUser;
+
     }
 
-    public List<User> addAll(List<User> users){
+    public List<User> addAll(List<User> users) {
         for (User player : users) {
             userRepository.save(player);
         }

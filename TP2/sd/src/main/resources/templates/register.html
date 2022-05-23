@@ -14,7 +14,7 @@
             <h1 th:if="${error}" th:text="${error}"></h1>
         </div>
 
-        <form th:action="@{/auth/register}" th:object="${user}" method="post">
+        <form th:action="@{/register}" th:object="${user}" method="post">
             <div>
                 <input
                     type="text"

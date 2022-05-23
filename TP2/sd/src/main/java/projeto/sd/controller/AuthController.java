@@ -8,6 +8,8 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,7 +33,6 @@ import projeto.sd.service.*;
 import projeto.sd.model.*;
 
 @Controller
-@RequestMapping("/auth")
 public class AuthController {
     @Autowired
     UserService userService;
@@ -43,13 +44,13 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public String createUser(@Valid @ModelAttribute User user, HttpSession session, Model model) {
+    public String createUser(@Valid @ModelAttribute User user, Model model) {
+        Optional<User> newUser = userService.getUser(user);
+        System.out.println(newUser);
 
-        User newUser = userService.getUser(user);
-        if (newUser == null) {
-            user.setIsAdmin(false);
+        if (newUser.isEmpty()) {
+            user.setRoles("USER");
             userService.add(user);
-            session.setAttribute("username", user.getUsername());
             System.out.println("Created new User: " + user);
             return "redirect:/home";
         } else {
@@ -57,35 +58,36 @@ public class AuthController {
             model.addAttribute("error", "Username already exists");
             return "register";
         }
+
     }
 
-    @GetMapping("/login")
-    public String loginPage(Model model) {
-        model.addAttribute("user", new User());
-        return "login";
-    }
+    // @GetMapping("/login")
+    // public String loginPage(Model model) {
+    // model.addAttribute("user", new User());
+    // return "login";
+    // }
 
-    @PostMapping("/login")
-    public String auth(@Valid @ModelAttribute User user, HttpSession session) {
-        User tempUser = userService.getUser(user);
-        if (tempUser != null) {
-            if (tempUser.getPassword().equals(user.getPassword())) {
-                session.setAttribute("username", user.getUsername());
-                return "redirect:/home";
-            } else {
-                System.out.println("Incorrect password");
-            }
-        } else {
-            System.out.println("User doen't exist");
-        }
+    // @PostMapping("/login")
+    // public String auth(@Valid @ModelAttribute User user, HttpSession session) {
+    // Optional<User> tempUser = userService.getUser(user);
+    // if (tempUser != null) {
+    // if (tempUser.getPassword().equals(user.getPassword())) {
+    // session.setAttribute("username", user.getUsername());
+    // return "redirect:/home";
+    // } else {
+    // System.out.println("Incorrect password");
+    // }
+    // } else {
+    // System.out.println("User doen't exist");
+    // }
 
-        return "login";
-    }
+    // return "login";
+    // }
 
-    @GetMapping("/logout")
-    public String logout(Model model, HttpSession session) {
-        session.removeAttribute("username");
-        return "redirect:/home";
-    }
+    // @GetMapping("/logout")
+    // public String logout(Model model, HttpSession session) {
+    // session.removeAttribute("username");
+    // return "redirect:/home";
+    // }
 
 }
