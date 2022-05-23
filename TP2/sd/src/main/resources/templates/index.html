@@ -1,127 +1,27 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-    <head>
-        <title>Home</title>
-        <script type="text/javascript" th:src="@{/js/fillDatabase.js}"></script>
-    </head>
-    <body>
-        <h1 th:inline="text">Welcome [[${#httpServletRequest.remoteUser}]]</h1>
-        <div>
-            <h1 th:if="${message}" th:text="${message}"></h1>
-        </div>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout">
 
-        <div>
-            <form th:action="@{/admin}" method="get">
-                <button type="submit">Admin stuff</button>
-            </form>
-        </div>
+<head>
+    <title>ScoreDei</title>
+</head>
 
-        <div>
-            <h2>Fill</h2>
-            <!-- <button th:onclick="fillDB();">Some data</button> -->
-            <form th:action="@{/fill}" method="get">
-                <button type="submit">Some data</button>
-            </form>
-            <form>
-                <button type="submit">Sports API</button>
-            </form>
-        </div>
+<body>
+    <div layout:fragment="content">
+        <h3 th:text="${#lists.isEmpty(games)} ? 'Não há jogos a decorrer' : 'Jogos a decorrer' "></h3>
+        <table class="table table-sm">
+            <thead>
+                <tr th:each="game: ${games}">
+                    <td th:text="${game.teamA.name} + ' - ' + ${game.teamB.name}">Jogo</td>
+                    <td>
+                        <a th:href="@{'/game/'+${game.id}}">
+                            <button type="button" class="btn btn-outline-secondary">Selecionar</button>
+                        </a>
+                    </td>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</body>
 
-        <div>
-            <h2>Auth</h2>
-            <form th:action="@{/login}" method="get">
-                <button type="submit">Login</button>
-            </form>
-            <form th:action="@{/register}" method="get">
-                <button type="submit">Register</button>
-            </form>
-        </div>
-        <div th:if="${username != ''}">
-            <form th:action="@{/logout}" method="get">
-                <button type="submit">Logout</button>
-            </form>
-        </div>
-        <div>
-            <h2>Team</h2>
-            <form th:action="@{/team/create}" method="get">
-                <button type="submit">Create</button>
-            </form>
-            <form th:action="@{/team/all}" method="get">
-                <button type="submit">Show all</button>
-            </form>
-        </div>
-        <div>
-            <h2>Player</h2>
-            <form th:action="@{/player/create}" method="get">
-                <button type="submit">Create</button>
-            </form>
-        </div>
-        <div>
-            <h2>Game</h2>
-            <form th:action="@{/game/create}" method="get">
-                <button type="submit">Create</button>
-            </form>
-        </div>
-        <div>
-            <h2>Event</h2>
-            <form th:action="@{/event/create}" method="get">
-                <button type="submit">Create</button>
-            </form>
-        </div>
-        <div>
-            <h2>Jogos Ativos</h2>
-            <style type="text/css">
-                .tg {
-                    border-collapse: collapse;
-                    border-spacing: 0;
-                }
-                .tg td {
-                    border-color: black;
-                    border-style: solid;
-                    border-width: 1px;
-                    font-family: Arial, sans-serif;
-                    font-size: 14px;
-                    overflow: hidden;
-                    padding: 10px 5px;
-                    word-break: normal;
-                }
-                .tg th {
-                    border-color: black;
-                    border-style: solid;
-                    border-width: 1px;
-                    font-family: Arial, sans-serif;
-                    font-size: 14px;
-                    font-weight: normal;
-                    overflow: hidden;
-                    padding: 10px 5px;
-                    word-break: normal;
-                }
-                .tg .tg-0lax {
-                    text-align: left;
-                    vertical-align: top;
-                }
-            </style>
-            <table class="tg">
-                <thead>
-                    <tr th:each="game: ${games}">
-                        <td
-                            class="tg-0lax"
-                            th:text="${game.teamA.name} + ' - ' + ${game.teamB.name}"
-                        >
-                            Jogo
-                        </td>
-                        <td class="tg-0lax">
-                            <form
-                                th:action="@{'/game/'+${game.id}}"
-                                method="get"
-                            >
-                                <button type="submit">Selecionar</button>
-                            </form>
-                        </td>
-                    </tr>
-                </thead>
-            </table>
-        </div>
-    </body>
 </html>

@@ -41,7 +41,7 @@ public class HomeController {
             model.addAttribute("username", session.getAttribute("username"));
         else
             model.addAttribute("username", "");
-        return "index2";
+        return "index";
     }
 
     @GetMapping("/403")

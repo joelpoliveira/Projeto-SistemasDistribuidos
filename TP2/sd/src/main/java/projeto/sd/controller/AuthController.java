@@ -40,7 +40,7 @@ public class AuthController {
     @GetMapping("/register")
     public String register(Model model) {
         model.addAttribute("user", new User());
-        return "register2";
+        return "register";
     }
 
     @PostMapping("/register")
@@ -62,7 +62,7 @@ public class AuthController {
     @GetMapping("/login")
     public String loginPage(Model model) {
         model.addAttribute("user", new User());
-        return "login2";
+        return "login";
     }
 
     // @PostMapping("/login")

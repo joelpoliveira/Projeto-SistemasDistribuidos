@@ -1,27 +1,85 @@
-<html xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <title>Login</title>
-  </head>
-  <body>
-    <div tiles:fragment="content">
-        <form name="f" th:action="@{/login}" method="post">               
-            <fieldset>
-                <legend>Please Login</legend>
-                <div th:if="${param.error}" class="alert alert-error">    
-                    Invalid username and password.
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+    <head>
+        <title>Login</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    </head>
+
+    <body>
+        <style type="text/css">
+            .divider:after,
+            .divider:before {
+                content: "";
+                flex: 1;
+                height: 1px;
+                background: #eee;
+            }
+            .h-custom {
+                height: calc(100% - 73px);
+            }
+            @media (max-width: 450px) {
+                .h-custom {
+                height: 100%;
+                }
+            }
+        </style>
+
+        <a th:href="@{/}" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-black text-decoration-none">
+            <span class="fs-5 d-none d-sm-inline">Home</span>
+        </a>
+
+        <section class="vh-100">
+            <div class="container-fluid h-custom">
+              <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-md-9 col-lg-6 col-xl-5">
+                  <img src="https://images.pexels.com/photos/46798/the-ball-stadion-football-the-pitch-46798.jpeg"
+                    class="img-fluid" alt="Sample image">
                 </div>
-                <div th:if="${param.logout}" class="alert alert-success"> 
-                    You have been logged out.
+                <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+                  <form name="f" th:action="@{/login}" method="post">
+                    <div th:if="${param.error}" class="alert alert-danger" role="alert">
+                        Bad credentials!
+                    </div>
+
+                    <div th:if="${param.logout}" class="alert alert-info" role="alert">
+                        You have been logged out!    
+                    </div>
+                    
+                    <div class="divider d-flex align-items-center my-4">
+                      <p class="text-center fw-bold mx-3 mb-0">Login</p>
+                    </div>
+          
+                    <!-- Email input -->
+                    <div class="form-outline mb-4">
+                      <input type="username" id="username" name="username" class="form-control form-control-lg"
+                        placeholder="Enter a valid username"/>
+                      <label class="form-label" for="form3Example3">Username</label>
+                    </div>
+          
+                    <!-- Password input -->
+                    <div class="form-outline mb-3">
+                      <input type="password" id="password" name="password" class="form-control form-control-lg"
+                        placeholder="Enter password" />
+                      <label class="form-label" for="form3Example4">Password</label>
+                    </div>
+          
+                   
+                    <div class="text-center text-lg-start mt-4 pt-2">
+                      <button type="submit" class="btn btn-outline-primary"
+                        style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
+
+                        <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? 
+                          <a th:href="@{/register}" class="link">Register</a>
+                        </p>
+                    </div>
+          
+                  </form>
                 </div>
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username"/>        
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password"/>    
-                <div class="form-actions">
-                    <button type="submit" class="btn">Log in</button>
-                </div>
-            </fieldset>
-        </form>
-    </div>
-  </body>
+              </div>
+            </div>
+          </section>
+    </body>
 </html>
