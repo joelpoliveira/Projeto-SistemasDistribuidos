@@ -25,6 +25,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+                .antMatchers("/register").hasAuthority("ADMIN")
                 .antMatchers("/game/create/**").hasAuthority("ADMIN")
                 .antMatchers("/team/create/**").hasAuthority("ADMIN")
                 .antMatchers("/player/create/**").hasAuthority("ADMIN")
