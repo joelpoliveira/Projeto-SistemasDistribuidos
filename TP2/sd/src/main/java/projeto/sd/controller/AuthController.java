@@ -61,33 +61,27 @@ public class AuthController {
 
     }
 
-    // @GetMapping("/login")
-    // public String loginPage(Model model) {
-    // model.addAttribute("user", new User());
-    // return "login";
-    // }
+    @GetMapping("/login")
+    public String loginPage(Model model) {
+        model.addAttribute("user", new User());
+        return "login2";
+    }
 
     // @PostMapping("/login")
     // public String auth(@Valid @ModelAttribute User user, HttpSession session) {
-    // Optional<User> tempUser = userService.getUser(user);
-    // if (tempUser != null) {
-    // if (tempUser.getPassword().equals(user.getPassword())) {
-    // session.setAttribute("username", user.getUsername());
-    // return "redirect:/home";
-    // } else {
-    // System.out.println("Incorrect password");
-    // }
-    // } else {
-    // System.out.println("User doen't exist");
-    // }
+    //     Optional<User> tempUser = userService.getUser(user);
+    //     if (tempUser != null) {
+    //         if (tempUser.getPassword().equals(user.getPassword())) {
+    //             session.setAttribute("username", user.getUsername());
+    //             return "redirect:/home";
+    //         } else {
+    //             System.out.println("Incorrect password");
+    //         }
+    //     } else {
+    //         System.out.println("User doen't exist");
+    //     }
 
-    // return "login";
-    // }
-
-    // @GetMapping("/logout")
-    // public String logout(Model model, HttpSession session) {
-    // session.removeAttribute("username");
-    // return "redirect:/home";
+    //     return "login";
     // }
 
 }

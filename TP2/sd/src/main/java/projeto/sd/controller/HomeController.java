@@ -44,11 +44,6 @@ public class HomeController {
         return "index2";
     }
 
-    @GetMapping("/admin/teste")
-    public String adminPage() {
-       return "admin";
-    }
-
     @GetMapping("/403")
     public String AcessDenied() {
        return "403";
