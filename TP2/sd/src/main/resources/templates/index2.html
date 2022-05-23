@@ -96,7 +96,7 @@
                 </div>
                 <div class="col py-3">
                     <!-- Conteudo aqui, dentro desta div-->
-                    <h3>Jogos ativos</h3>
+                    <h3 th:text="${#lists.isEmpty(games)} ? 'Não há jogos a decorrer' : 'Jogos a decorrer' "></h3>
                     <table class="table table-sm">
                         <thead>
                             <tr th:each="game: ${games}">
