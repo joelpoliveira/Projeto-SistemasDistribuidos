@@ -48,27 +48,20 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li>
+                            <li sec:authorize="hasAuthority('ADMIN')">
                                 <a href="#submenu3" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                                    <i class="fs-4 bi-grid"></i> <span class="ms-1 d-none d-sm-inline">TODO 3</span> </a>
+                                    <i class="fs-4 bi-grid"></i> <span class="ms-1 d-none d-sm-inline">Admin panel</span> </a>
                                     <ul class="collapse nav flex-column ms-1" id="submenu3" data-bs-parent="#menu">
                                     <li class="w-100">
-                                        <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 1</a>
+                                        <a th:href="@{team/create}" class="nav-link px-0"> <span class="d-none d-sm-inline">Create Team</span></a>
                                     </li>
                                     <li>
-                                        <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 2</a>
+                                        <a th:href="@{player/create}" class="nav-link px-0"> <span class="d-none d-sm-inline">Create Player</span></a>
                                     </li>
                                     <li>
-                                        <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 3</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 4</a>
+                                        <a th:href="@{game/create}" class="nav-link px-0"> <span class="d-none d-sm-inline">Create Game</span></a>
                                     </li>
                                 </ul>
-                            </li>
-                            <li>
-                                <a href="#" class="nav-link px-0 align-middle">
-                                    <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline">TODO 4</span> </a>
                             </li>
                         </ul>
                         <hr>
@@ -84,7 +77,7 @@
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a th:href="@{logout}" th:method="post" class="dropdown-item">Sign out</a></li>
+                                <li><a th:href="@{logout}" class="dropdown-item">Sign out</a></li>
                             </ul>
                         </div>
                         <div sec:authorize="isAnonymous()" class="dropdown pb-4">
