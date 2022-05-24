@@ -177,14 +177,6 @@ public class HomeController {
 
                 newPlayer.setPosition(
                         statistics.getAsJsonObject().get("games").getAsJsonObject().get("position").getAsString());
-                // try {
-                // newPlayer.setTeam(teamService
-                // .getTeam(statistics.getAsJsonObject().get("team").getAsJsonObject().get("name")
-                // .getAsString())
-                // .get());
-                // } catch (NotFoundException | NoSuchElementException e) {
-                // System.out.println("No team Found");
-                // }
 
                 newPlayer.setTeam(allTeams
                         .get(statistics.getAsJsonObject().get("team").getAsJsonObject().get("name").getAsString()));
@@ -198,7 +190,7 @@ public class HomeController {
                 System.out.println("Failed to sleep");
             }
 
-            System.out.println("Done page" + page + "of " + total_pages);
+            System.out.println("Done page " + page + "of " + total_pages);
 
             page++;
             response = Unirest.get("https://v3.football.api-sports.io/players?league=94&season=2021&page="
