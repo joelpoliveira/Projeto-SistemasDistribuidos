@@ -2,13 +2,32 @@
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout">
 
 <head>
+    <script type="text/javascript">
+        function dropdown_options(){
+            console.debug("DEFINED\n");
+            var dropdown = document.getElementById("option_list");
+            var option = dropdown.options[dropdown.selectedIndex].value;
+
+            if ( (option === "Golo")
+                || (option === "Cartão Amarelo")
+                || (option === "Cartão Vermelho")
+            ){
+                document.getElementById("player_option").style.visibility = "visible";
+            }else{
+                player_option = document.getElementById("player_option");
+                player_option.style.visibility = "hidden";
+                player_option.selectedIndex = 0;
+            }
+        }
+    </script>
+
     <div layout:fragment="header">
         <title>Create event</title>
     </div>
 </head>
 
 <body>
-    <div layout:fragment="content">
+<div layout:fragment="content">
 
         <div th:if="${param.error}" class="alert alert-danger" role="alert">
             Erro a criar evento!
@@ -23,9 +42,22 @@
                 </select>
             </div>
             <div>
-                <select th:field="*{name}">
+                <select th:field="*{name}" id="option_list" onchange="dropdown_options()">
                     <option value="">Select Event</option>
                     <option th:each="option : ${events}" th:value="${option}" th:text="${option}"></option>
+                </select>
+            </div>
+            <div>
+                <input type="datetime-local" id="datetime">
+            </div>
+            <div>
+                <select th:field="*{game}" style="visibility: hidden" id="player_option">
+                    <option value="">Select Player</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <!--<option th:each="option: ${game}" th:value="${option.players}">
+                        th:text="${option.teamA}
+                    </option>-->
                 </select>
             </div>
             <div>
