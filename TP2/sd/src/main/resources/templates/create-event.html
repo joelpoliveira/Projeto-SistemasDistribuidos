@@ -4,19 +4,29 @@
 <head>
     <script type="text/javascript">
         function dropdown_options() {
-            console.debug("DEFINED\n");
             var dropdown = document.getElementById("option_list");
             var option = dropdown.options[dropdown.selectedIndex].value;
 
-            if ((option === "Golo")
-                || (option === "Cartão Amarelo")
-                || (option === "Cartão Vermelho")
-            ) {
-                document.getElementById("player_option").style.visibility = "visible";
-            } else {
-                player_option = document.getElementById("player_option");
-                player_option.style.visibility = "hidden";
-                player_option.selectedIndex = 0;
+            
+            
+        }
+
+        function get_game_id(){
+            return document.getElementById("game_id").value;
+        }
+
+        function update_teams(){
+            value = document.getElementById("game_id").value;
+            var teams_list = document.getElementById("game"), idk, i;
+            //console.debug(teams_list.options);
+            
+            for (let i = 0; i < teams_list.length; i++){
+                team = teams_list[i];
+                if (team.value === value){
+                    team.removeAttribute("hidden");
+                }else{
+                    team.setAttribute("hidden", "hidden");
+                }
             }
             
         }
@@ -36,34 +46,31 @@
 
         <form th:action="@{/event/create}" th:object="${event}" method="post">
             <div>
-                <select class="form-select form-select-lg mb-2" th:field="*{game}">
+                <select class="form-select form-select-lg mb-2" th:field="*{game}" id="game_id" onchange="update_teams()">
                     <option value="">Select Game</option>
                     <option th:each="option : ${games}" th:value="${option.id}"
                         th:text="${option.teamA.name} + ' vs ' + ${option.teamB.name}"></option>
                 </select>
             </div>
             <div>
-                <select class="form-select form-select-lg mb-2" th:field="*{name}" id="option_list"
-                    onchange="dropdown_options()">
+                <select class="form-select form-select-lg mb-2" th:field="*{name}" id="option_list">
                     <option value="">Select Event</option>
                     <option th:each="option : ${events}" th:value="${option}" th:text="${option}"></option>
                 </select>
             </div>
 
             <div>
-                <select class="form-select form-select-lg mb-2" style="visibility: hidden" id="game">
+                <select class="form-select form-select-lg mb-2" style="visibility: visible" id="game">
                     <option value="">Select Team</option>
-                    <option th:text="A">Equipa 1</option>
-                    <option th:text="B">Eqipa 2</option>
+                    <option th:each="option: ${games}" th:value="${option.id}" th:text="${option.teamA.name}" hidden></option>
+                    <option th:each="option: ${games}" th:value="${option.id}" th:text="${option.teamB.name}" hidden></option>
                 </select>
             </div>
 
             <div>
-                <select class="form-select form-select-lg mb-2" th:field="*{game}" style="visibility: hidden"
-                    id="player_option">
+                <select class="form-select form-select-lg mb-2" th:field="*{game}" id="player_option">
                     <option value="">Select Player</option>
-                    <option value="A">A</option>
-                    <option value="B">B</option>
+                    <!--<option th:each="option: ${games}" th:value="${option.teamA.id}" th:text="${option.teamA.pl}" hidden></option>-->
                 </select>
             </div>
 
