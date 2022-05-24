@@ -2,7 +2,9 @@ package projeto.sd.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.transaction.Transactional;
 
@@ -16,6 +18,9 @@ import projeto.sd.model.*;
 public class EventService {
     @Autowired
     EventRepository eventRepository;
+
+    @Autowired
+    TeamService teamService;
 
     public Event add(Event event) {
         eventRepository.save(event);
@@ -36,5 +41,15 @@ public class EventService {
 
     public List<Event> getEventsByGameId(int id) {
         return eventRepository.findByGameId(id);
+    }
+
+    public HashMap<String, Set<Player>> getPlayersByTeam() {
+        HashMap<String, Set<Player>> response = new HashMap<>();
+
+        for (Team t : teamService.getAllTeams()) {
+            response.put(t.getName(), t.getPlayers());
+        }
+
+        return response;
     }
 }

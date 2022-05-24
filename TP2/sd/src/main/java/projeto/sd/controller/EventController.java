@@ -43,6 +43,7 @@ public class EventController {
         model.addAttribute("event", new Event());
         model.addAttribute("games", gameService.getAllGames());
         model.addAttribute("events", eventService.getPossibleEvents());
+        model.addAttribute("teams", eventService.getPlayersByTeam());
         return "create-event";
     }
 
