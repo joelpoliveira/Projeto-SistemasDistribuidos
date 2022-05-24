@@ -40,7 +40,8 @@
                                             class="d-none d-sm-inline">Random</span></a>
                                 </li>
                                 <li>
-                                    <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Sports
+                                    <a th:href="@{/fill-API}" class="nav-link px-0"> <span
+                                            class="d-none d-sm-inline">Sports
                                             API</span></a>
                                 </li>
                             </ul>
@@ -93,8 +94,8 @@
                     <div sec:authorize="isAuthenticated()" class="dropdown pb-4">
                         <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
                             id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="https://www.pngitem.com/pimgs/m/24-248366_profile-clipart-generic-user-generic-profile-picture-gender.png" alt="hugenerd" width="30" height="30"
-                                class="rounded-circle">
+                            <img src="https://www.pngitem.com/pimgs/m/24-248366_profile-clipart-generic-user-generic-profile-picture-gender.png"
+                                alt="hugenerd" width="30" height="30" class="rounded-circle">
                             <span sec:authentication="name" class="d-none d-sm-inline mx-1">username</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark text-small shadow">

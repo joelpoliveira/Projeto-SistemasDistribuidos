@@ -28,12 +28,15 @@ public class Team {
     @OneToMany(mappedBy = "team")
     private Set<Player> players = new HashSet<Player>();
 
+    private String location;
+
     public Team() {
     }
 
-    public Team(String name, String imageUrl) {
+    public Team(String name, String imageUrl, String location) {
         this.name = name;
         this.imageUrl = imageUrl;
+        this.location = location;
     }
 
     public int getId() {
@@ -58,6 +61,22 @@ public class Team {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public Set<Player> getPlayers() {
+        return this.players;
+    }
+
+    public void setPlayers(Set<Player> players) {
+        this.players = players;
+    }
+
+    public String getLocation() {
+        return this.location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     @Override

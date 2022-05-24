@@ -30,8 +30,12 @@ public class TeamService {
         return teams;
     }
 
-    public Optional<Team> getTeam(int id) throws NotFoundException{
+    public Optional<Team> getTeam(int id) throws NotFoundException {
         return teamRepository.findById(id);
+    }
+
+    public Optional<Team> getTeam(String teamName) throws NotFoundException {
+        return teamRepository.findByName(teamName);
     }
 
     public List<Player> getAllPlayers(Team team) {

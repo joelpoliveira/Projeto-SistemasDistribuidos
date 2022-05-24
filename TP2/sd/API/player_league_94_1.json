@@ -1,0 +1,1915 @@
+{
+    "get": "players",
+    "parameters": {
+        "league": "94",
+        "season": "2021"
+    },
+    "errors": [],
+    "results": 20,
+    "paging": {
+        "current": 1,
+        "total": 36
+    },
+    "response": [
+        {
+            "player": {
+                "id": 9295,
+                "name": "Miullen",
+                "firstname": "Miullen Nathã",
+                "lastname": "Felício Carvalho",
+                "age": 23,
+                "birth": {
+                    "date": "1998-05-19",
+                    "place": "Uberlândia",
+                    "country": "Brazil"
+                },
+                "nationality": "Brazil",
+                "height": "180 cm",
+                "weight": "72 kg",
+                "injured": false,
+                "photo": "https://media.api-sports.io/football/players/9295.png"
+            },
+            "statistics": [
+                {
+                    "team": {
+                        "id": 762,
+                        "name": "GIL Vicente",
+                        "logo": "https://media.api-sports.io/football/teams/762.png"
+                    },
+                    "league": {
+                        "id": 94,
+                        "name": "Primeira Liga",
+                        "country": "Portugal",
+                        "logo": "https://media.api-sports.io/football/leagues/94.png",
+                        "flag": "https://media.api-sports.io/flags/pt.svg",
+                        "season": 2021
+                    },
+                    "games": {
+                        "appearences": null,
+                        "lineups": null,
+                        "minutes": null,
+                        "number": null,
+                        "position": "Attacker",
+                        "rating": null,
+                        "captain": false
+                    },
+                    "substitutes": {
+                        "in": null,
+                        "out": null,
+                        "bench": null
+                    },
+                    "shots": {
+                        "total": null,
+                        "on": null
+                    },
+                    "goals": {
+                        "total": null,
+                        "conceded": null,
+                        "assists": null,
+                        "saves": null
+                    },
+                    "passes": {
+                        "total": null,
+                        "key": null,
+                        "accuracy": null
+                    },
+                    "tackles": {
+                        "total": null,
+                        "blocks": null,
+                        "interceptions": null
+                    },
+                    "duels": {
+                        "total": null,
+                        "won": null
+                    },
+                    "dribbles": {
+                        "attempts": null,
+                        "success": null,
+                        "past": null
+                    },
+                    "fouls": {
+                        "drawn": null,
+                        "committed": null
+                    },
+                    "cards": {
+                        "yellow": null,
+                        "yellowred": null,
+                        "red": null
+                    },
+                    "penalty": {
+                        "won": null,
+                        "commited": null,
+                        "scored": null,
+                        "missed": null,
+                        "saved": null
+                    }
+                }
+            ]
+        },
+        {
+            "player": {
+                "id": 25152,
+                "name": "E. Abouchabaka",
+                "firstname": "Elias",
+                "lastname": "Abouchabaka",
+                "age": 21,
+                "birth": {
+                    "date": "2000-03-31",
+                    "place": "Berlin",
+                    "country": "Germany"
+                },
+                "nationality": "Germany",
+                "height": "183 cm",
+                "weight": "73 kg",
+                "injured": false,
+                "photo": "https://media.api-sports.io/football/players/25152.png"
+            },
+            "statistics": [
+                {
+                    "team": {
+                        "id": 224,
+                        "name": "Guimaraes",
+                        "logo": "https://media.api-sports.io/football/teams/224.png"
+                    },
+                    "league": {
+                        "id": 94,
+                        "name": "Primeira Liga",
+                        "country": "Portugal",
+                        "logo": "https://media.api-sports.io/football/leagues/94.png",
+                        "flag": "https://media.api-sports.io/flags/pt.svg",
+                        "season": 2021
+                    },
+                    "games": {
+                        "appearences": null,
+                        "lineups": null,
+                        "minutes": null,
+                        "number": null,
+                        "position": "Midfielder",
+                        "rating": null,
+                        "captain": false
+                    },
+                    "substitutes": {
+                        "in": null,
+                        "out": null,
+                        "bench": null
+                    },
+                    "shots": {
+                        "total": null,
+                        "on": null
+                    },
+                    "goals": {
+                        "total": null,
+                        "conceded": null,
+                        "assists": null,
+                        "saves": null
+                    },
+                    "passes": {
+                        "total": null,
+                        "key": null,
+                        "accuracy": null
+                    },
+                    "tackles": {
+                        "total": null,
+                        "blocks": null,
+                        "interceptions": null
+                    },
+                    "duels": {
+                        "total": null,
+                        "won": null
+                    },
+                    "dribbles": {
+                        "attempts": null,
+                        "success": null,
+                        "past": null
+                    },
+                    "fouls": {
+                        "drawn": null,
+                        "committed": null
+                    },
+                    "cards": {
+                        "yellow": null,
+                        "yellowred": null,
+                        "red": null
+                    },
+                    "penalty": {
+                        "won": null,
+                        "commited": null,
+                        "scored": null,
+                        "missed": null,
+                        "saved": null
+                    }
+                }
+            ]
+        },
+        {
+            "player": {
+                "id": 49871,
+                "name": "João Pereira",
+                "firstname": "João Pedro",
+                "lastname": "da Silva Pereira",
+                "age": 37,
+                "birth": {
+                    "date": "1984-02-25",
+                    "place": "Lisboa",
+                    "country": "Portugal"
+                },
+                "nationality": "Portugal",
+                "height": "172 cm",
+                "weight": "70 kg",
+                "injured": false,
+                "photo": "https://media.api-sports.io/football/players/49871.png"
+            },
+            "statistics": [
+                {
+                    "team": {
+                        "id": 228,
+                        "name": "Sporting CP",
+                        "logo": "https://media.api-sports.io/football/teams/228.png"
+                    },
+                    "league": {
+                        "id": 94,
+                        "name": "Primeira Liga",
+                        "country": "Portugal",
+                        "logo": "https://media.api-sports.io/football/leagues/94.png",
+                        "flag": "https://media.api-sports.io/flags/pt.svg",
+                        "season": 2021
+                    },
+                    "games": {
+                        "appearences": null,
+                        "lineups": null,
+                        "minutes": null,
+                        "number": null,
+                        "position": "Defender",
+                        "rating": null,
+                        "captain": false
+                    },
+                    "substitutes": {
+                        "in": null,
+                        "out": null,
+                        "bench": null
+                    },
+                    "shots": {
+                        "total": null,
+                        "on": null
+                    },
+                    "goals": {
+                        "total": null,
+                        "conceded": null,
+                        "assists": null,
+                        "saves": null
+                    },
+                    "passes": {
+                        "total": null,
+                        "key": null,
+                        "accuracy": null
+                    },
+                    "tackles": {
+                        "total": null,
+                        "blocks": null,
+                        "interceptions": null
+                    },
+                    "duels": {
+                        "total": null,
+                        "won": null
+                    },
+                    "dribbles": {
+                        "attempts": null,
+                        "success": null,
+                        "past": null
+                    },
+                    "fouls": {
+                        "drawn": null,
+                        "committed": null
+                    },
+                    "cards": {
+                        "yellow": null,
+                        "yellowred": null,
+                        "red": null
+                    },
+                    "penalty": {
+                        "won": null,
+                        "commited": null,
+                        "scored": null,
+                        "missed": null,
+                        "saved": null
+                    }
+                }
+            ]
+        },
+        {
+            "player": {
+                "id": 59661,
+                "name": "J. Guerrero",
+                "firstname": "Jhonnys de Jesús",
+                "lastname": "Guerrero Castro",
+                "age": 22,
+                "birth": {
+                    "date": "1999-02-05",
+                    "place": "Barranquilla",
+                    "country": "Colombia"
+                },
+                "nationality": "Colombia",
+                "height": null,
+                "weight": null,
+                "injured": false,
+                "photo": "https://media.api-sports.io/football/players/59661.png"
+            },
+            "statistics": [
+                {
+                    "team": {
+                        "id": 214,
+                        "name": "Maritimo",
+                        "logo": "https://media.api-sports.io/football/teams/214.png"
+                    },
+                    "league": {
+                        "id": 94,
+                        "name": "Primeira Liga",
+                        "country": "Portugal",
+                        "logo": "https://media.api-sports.io/football/leagues/94.png",
+                        "flag": "https://media.api-sports.io/flags/pt.svg",
+                        "season": 2021
+                    },
+                    "games": {
+                        "appearences": null,
+                        "lineups": null,
+                        "minutes": null,
+                        "number": null,
+                        "position": "Midfielder",
+                        "rating": null,
+                        "captain": false
+                    },
+                    "substitutes": {
+                        "in": null,
+                        "out": null,
+                        "bench": null
+                    },
+                    "shots": {
+                        "total": null,
+                        "on": null
+                    },
+                    "goals": {
+                        "total": null,
+                        "conceded": null,
+                        "assists": null,
+                        "saves": null
+                    },
+                    "passes": {
+                        "total": null,
+                        "key": null,
+                        "accuracy": null
+                    },
+                    "tackles": {
+                        "total": null,
+                        "blocks": null,
+                        "interceptions": null
+                    },
+                    "duels": {
+                        "total": null,
+                        "won": null
+                    },
+                    "dribbles": {
+                        "attempts": null,
+                        "success": null,
+                        "past": null
+                    },
+                    "fouls": {
+                        "drawn": null,
+                        "committed": null
+                    },
+                    "cards": {
+                        "yellow": null,
+                        "yellowred": null,
+                        "red": null
+                    },
+                    "penalty": {
+                        "won": null,
+                        "commited": null,
+                        "scored": null,
+                        "missed": null,
+                        "saved": null
+                    }
+                }
+            ]
+        },
+        {
+            "player": {
+                "id": 76569,
+                "name": "S. Aw",
+                "firstname": "Souleymane",
+                "lastname": "Aw",
+                "age": 22,
+                "birth": {
+                    "date": "1999-04-05",
+                    "place": "Guinguinéo",
+                    "country": "Senegal"
+                },
+                "nationality": "Senegal",
+                "height": "175 cm",
+                "weight": null,
+                "injured": false,
+                "photo": "https://media.api-sports.io/football/players/76569.png"
+            },
+            "statistics": [
+                {
+                    "team": {
+                        "id": 762,
+                        "name": "GIL Vicente",
+                        "logo": "https://media.api-sports.io/football/teams/762.png"
+                    },
+                    "league": {
+                        "id": 94,
+                        "name": "Primeira Liga",
+                        "country": "Portugal",
+                        "logo": "https://media.api-sports.io/football/leagues/94.png",
+                        "flag": "https://media.api-sports.io/flags/pt.svg",
+                        "season": 2021
+                    },
+                    "games": {
+                        "appearences": 0,
+                        "lineups": 0,
+                        "minutes": 0,
+                        "number": null,
+                        "position": "Defender",
+                        "rating": null,
+                        "captain": false
+                    },
+                    "substitutes": {
+                        "in": 0,
+                        "out": 0,
+                        "bench": 0
+                    },
+                    "shots": {
+                        "total": null,
+                        "on": null
+                    },
+                    "goals": {
+                        "total": 0,
+                        "conceded": null,
+                        "assists": null,
+                        "saves": null
+                    },
+                    "passes": {
+                        "total": null,
+                        "key": null,
+                        "accuracy": null
+                    },
+                    "tackles": {
+                        "total": null,
+                        "blocks": null,
+                        "interceptions": null
+                    },
+                    "duels": {
+                        "total": null,
+                        "won": null
+                    },
+                    "dribbles": {
+                        "attempts": null,
+                        "success": null,
+                        "past": null
+                    },
+                    "fouls": {
+                        "drawn": null,
+                        "committed": null
+                    },
+                    "cards": {
+                        "yellow": 0,
+                        "yellowred": 0,
+                        "red": 0
+                    },
+                    "penalty": {
+                        "won": null,
+                        "commited": null,
+                        "scored": null,
+                        "missed": null,
+                        "saved": null
+                    }
+                }
+            ]
+        },
+        {
+            "player": {
+                "id": 78738,
+                "name": "Ricardo Vaz Tê",
+                "firstname": "Ricardo Jorge",
+                "lastname": "Vaz Tê",
+                "age": 35,
+                "birth": {
+                    "date": "1986-10-01",
+                    "place": "Lisboa",
+                    "country": "Portugal"
+                },
+                "nationality": "Portugal",
+                "height": "188 cm",
+                "weight": "79 kg",
+                "injured": false,
+                "photo": "https://media.api-sports.io/football/players/78738.png"
+            },
+            "statistics": [
+                {
+                    "team": {
+                        "id": 216,
+                        "name": "Portimonense",
+                        "logo": "https://media.api-sports.io/football/teams/216.png"
+                    },
+                    "league": {
+                        "id": 94,
+                        "name": "Primeira Liga",
+                        "country": "Portugal",
+                        "logo": "https://media.api-sports.io/football/leagues/94.png",
+                        "flag": "https://media.api-sports.io/flags/pt.svg",
+                        "season": 2021
+                    },
+                    "games": {
+                        "appearences": null,
+                        "lineups": null,
+                        "minutes": null,
+                        "number": null,
+                        "position": "Attacker",
+                        "rating": null,
+                        "captain": false
+                    },
+                    "substitutes": {
+                        "in": null,
+                        "out": null,
+                        "bench": null
+                    },
+                    "shots": {
+                        "total": null,
+                        "on": null
+                    },
+                    "goals": {
+                        "total": null,
+                        "conceded": null,
+                        "assists": null,
+                        "saves": null
+                    },
+                    "passes": {
+                        "total": null,
+                        "key": null,
+                        "accuracy": null
+                    },
+                    "tackles": {
+                        "total": null,
+                        "blocks": null,
+                        "interceptions": null
+                    },
+                    "duels": {
+                        "total": null,
+                        "won": null
+                    },
+                    "dribbles": {
+                        "attempts": null,
+                        "success": null,
+                        "past": null
+                    },
+                    "fouls": {
+                        "drawn": null,
+                        "committed": null
+                    },
+                    "cards": {
+                        "yellow": null,
+                        "yellowred": null,
+                        "red": null
+                    },
+                    "penalty": {
+                        "won": null,
+                        "commited": null,
+                        "scored": null,
+                        "missed": null,
+                        "saved": null
+                    }
+                }
+            ]
+        },
+        {
+            "player": {
+                "id": 96613,
+                "name": "João Pedro",
+                "firstname": "João Pedro",
+                "lastname": "Mendes Silva",
+                "age": 32,
+                "birth": {
+                    "date": "1989-07-27",
+                    "place": "Vizela",
+                    "country": "Portugal"
+                },
+                "nationality": "Portugal",
+                "height": "176 cm",
+                "weight": "66 kg",
+                "injured": false,
+                "photo": "https://media.api-sports.io/football/players/96613.png"
+            },
+            "statistics": [
+                {
+                    "team": {
+                        "id": 810,
+                        "name": "Vizela",
+                        "logo": "https://media.api-sports.io/football/teams/810.png"
+                    },
+                    "league": {
+                        "id": 94,
+                        "name": "Primeira Liga",
+                        "country": "Portugal",
+                        "logo": "https://media.api-sports.io/football/leagues/94.png",
+                        "flag": "https://media.api-sports.io/flags/pt.svg",
+                        "season": 2021
+                    },
+                    "games": {
+                        "appearences": null,
+                        "lineups": null,
+                        "minutes": null,
+                        "number": null,
+                        "position": "Midfielder",
+                        "rating": null,
+                        "captain": false
+                    },
+                    "substitutes": {
+                        "in": null,
+                        "out": null,
+                        "bench": null
+                    },
+                    "shots": {
+                        "total": null,
+                        "on": null
+                    },
+                    "goals": {
+                        "total": null,
+                        "conceded": null,
+                        "assists": null,
+                        "saves": null
+                    },
+                    "passes": {
+                        "total": null,
+                        "key": null,
+                        "accuracy": null
+                    },
+                    "tackles": {
+                        "total": null,
+                        "blocks": null,
+                        "interceptions": null
+                    },
+                    "duels": {
+                        "total": null,
+                        "won": null
+                    },
+                    "dribbles": {
+                        "attempts": null,
+                        "success": null,
+                        "past": null
+                    },
+                    "fouls": {
+                        "drawn": null,
+                        "committed": null
+                    },
+                    "cards": {
+                        "yellow": null,
+                        "yellowred": null,
+                        "red": null
+                    },
+                    "penalty": {
+                        "won": null,
+                        "commited": null,
+                        "scored": null,
+                        "missed": null,
+                        "saved": null
+                    }
+                }
+            ]
+        },
+        {
+            "player": {
+                "id": 196940,
+                "name": "F. Takyi",
+                "firstname": "Frederick",
+                "lastname": "Takyi",
+                "age": 21,
+                "birth": {
+                    "date": "2000-03-16",
+                    "place": null,
+                    "country": "Ghana"
+                },
+                "nationality": "Ghana",
+                "height": null,
+                "weight": null,
+                "injured": false,
+                "photo": "https://media.api-sports.io/football/players/196940.png"
+            },
+            "statistics": [
+                {
+                    "team": {
+                        "id": 240,
+                        "name": "Arouca",
+                        "logo": "https://media.api-sports.io/football/teams/240.png"
+                    },
+                    "league": {
+                        "id": 94,
+                        "name": "Primeira Liga",
+                        "country": "Portugal",
+                        "logo": "https://media.api-sports.io/football/leagues/94.png",
+                        "flag": "https://media.api-sports.io/flags/pt.svg",
+                        "season": 2021
+                    },
+                    "games": {
+                        "appearences": null,
+                        "lineups": null,
+                        "minutes": null,
+                        "number": null,
+                        "position": "Defender",
+                        "rating": null,
+                        "captain": false
+                    },
+                    "substitutes": {
+                        "in": null,
+                        "out": null,
+                        "bench": null
+                    },
+                    "shots": {
+                        "total": null,
+                        "on": null
+                    },
+                    "goals": {
+                        "total": null,
+                        "conceded": null,
+                        "assists": null,
+                        "saves": null
+                    },
+                    "passes": {
+                        "total": null,
+                        "key": null,
+                        "accuracy": null
+                    },
+                    "tackles": {
+                        "total": null,
+                        "blocks": null,
+                        "interceptions": null
+                    },
+                    "duels": {
+                        "total": null,
+                        "won": null
+                    },
+                    "dribbles": {
+                        "attempts": null,
+                        "success": null,
+                        "past": null
+                    },
+                    "fouls": {
+                        "drawn": null,
+                        "committed": null
+                    },
+                    "cards": {
+                        "yellow": null,
+                        "yellowred": null,
+                        "red": null
+                    },
+                    "penalty": {
+                        "won": null,
+                        "commited": null,
+                        "scored": null,
+                        "missed": null,
+                        "saved": null
+                    }
+                }
+            ]
+        },
+        {
+            "player": {
+                "id": 237259,
+                "name": "Cristian",
+                "firstname": "Cristian",
+                "lastname": "de Lima",
+                "age": 19,
+                "birth": {
+                    "date": "2002-02-25",
+                    "place": null,
+                    "country": "Brazil"
+                },
+                "nationality": "Brazil",
+                "height": null,
+                "weight": null,
+                "injured": false,
+                "photo": "https://media.api-sports.io/football/players/237259.png"
+            },
+            "statistics": [
+                {
+                    "team": {
+                        "id": 222,
+                        "name": "Boavista",
+                        "logo": "https://media.api-sports.io/football/teams/222.png"
+                    },
+                    "league": {
+                        "id": 94,
+                        "name": "Primeira Liga",
+                        "country": "Portugal",
+                        "logo": "https://media.api-sports.io/football/leagues/94.png",
+                        "flag": "https://media.api-sports.io/flags/pt.svg",
+                        "season": 2021
+                    },
+                    "games": {
+                        "appearences": null,
+                        "lineups": null,
+                        "minutes": null,
+                        "number": null,
+                        "position": "Goalkeeper",
+                        "rating": null,
+                        "captain": false
+                    },
+                    "substitutes": {
+                        "in": null,
+                        "out": null,
+                        "bench": null
+                    },
+                    "shots": {
+                        "total": null,
+                        "on": null
+                    },
+                    "goals": {
+                        "total": null,
+                        "conceded": null,
+                        "assists": null,
+                        "saves": null
+                    },
+                    "passes": {
+                        "total": null,
+                        "key": null,
+                        "accuracy": null
+                    },
+                    "tackles": {
+                        "total": null,
+                        "blocks": null,
+                        "interceptions": null
+                    },
+                    "duels": {
+                        "total": null,
+                        "won": null
+                    },
+                    "dribbles": {
+                        "attempts": null,
+                        "success": null,
+                        "past": null
+                    },
+                    "fouls": {
+                        "drawn": null,
+                        "committed": null
+                    },
+                    "cards": {
+                        "yellow": null,
+                        "yellowred": null,
+                        "red": null
+                    },
+                    "penalty": {
+                        "won": null,
+                        "commited": null,
+                        "scored": null,
+                        "missed": null,
+                        "saved": null
+                    }
+                }
+            ]
+        },
+        {
+            "player": {
+                "id": 278782,
+                "name": "Kalani Almeida",
+                "firstname": "Kalani Carrilho",
+                "lastname": "dos Santos Almeida",
+                "age": 19,
+                "birth": {
+                    "date": "2002-02-04",
+                    "place": null,
+                    "country": "Brazil"
+                },
+                "nationality": "Brazil",
+                "height": "176 cm",
+                "weight": "72 kg",
+                "injured": false,
+                "photo": "https://media.api-sports.io/football/players/278782.png"
+            },
+            "statistics": [
+                {
+                    "team": {
+                        "id": 222,
+                        "name": "Boavista",
+                        "logo": "https://media.api-sports.io/football/teams/222.png"
+                    },
+                    "league": {
+                        "id": 94,
+                        "name": "Primeira Liga",
+                        "country": "Portugal",
+                        "logo": "https://media.api-sports.io/football/leagues/94.png",
+                        "flag": "https://media.api-sports.io/flags/pt.svg",
+                        "season": 2021
+                    },
+                    "games": {
+                        "appearences": null,
+                        "lineups": null,
+                        "minutes": null,
+                        "number": null,
+                        "position": "Attacker",
+                        "rating": null,
+                        "captain": false
+                    },
+                    "substitutes": {
+                        "in": null,
+                        "out": null,
+                        "bench": null
+                    },
+                    "shots": {
+                        "total": null,
+                        "on": null
+                    },
+                    "goals": {
+                        "total": null,
+                        "conceded": null,
+                        "assists": null,
+                        "saves": null
+                    },
+                    "passes": {
+                        "total": null,
+                        "key": null,
+                        "accuracy": null
+                    },
+                    "tackles": {
+                        "total": null,
+                        "blocks": null,
+                        "interceptions": null
+                    },
+                    "duels": {
+                        "total": null,
+                        "won": null
+                    },
+                    "dribbles": {
+                        "attempts": null,
+                        "success": null,
+                        "past": null
+                    },
+                    "fouls": {
+                        "drawn": null,
+                        "committed": null
+                    },
+                    "cards": {
+                        "yellow": null,
+                        "yellowred": null,
+                        "red": null
+                    },
+                    "penalty": {
+                        "won": null,
+                        "commited": null,
+                        "scored": null,
+                        "missed": null,
+                        "saved": null
+                    }
+                }
+            ]
+        },
+        {
+            "player": {
+                "id": 279203,
+                "name": "S. Abdulfatai",
+                "firstname": "Sadiq",
+                "lastname": "Abdulfatai",
+                "age": 20,
+                "birth": {
+                    "date": "2001-03-12",
+                    "place": null,
+                    "country": "Nigeria"
+                },
+                "nationality": "Nigeria",
+                "height": null,
+                "weight": null,
+                "injured": false,
+                "photo": "https://media.api-sports.io/football/players/279203.png"
+            },
+            "statistics": [
+                {
+                    "team": {
+                        "id": 214,
+                        "name": "Maritimo",
+                        "logo": "https://media.api-sports.io/football/teams/214.png"
+                    },
+                    "league": {
+                        "id": 94,
+                        "name": "Primeira Liga",
+                        "country": "Portugal",
+                        "logo": "https://media.api-sports.io/football/leagues/94.png",
+                        "flag": "https://media.api-sports.io/flags/pt.svg",
+                        "season": 2021
+                    },
+                    "games": {
+                        "appearences": null,
+                        "lineups": null,
+                        "minutes": null,
+                        "number": null,
+                        "position": "Midfielder",
+                        "rating": null,
+                        "captain": false
+                    },
+                    "substitutes": {
+                        "in": null,
+                        "out": null,
+                        "bench": null
+                    },
+                    "shots": {
+                        "total": null,
+                        "on": null
+                    },
+                    "goals": {
+                        "total": null,
+                        "conceded": null,
+                        "assists": null,
+                        "saves": null
+                    },
+                    "passes": {
+                        "total": null,
+                        "key": null,
+                        "accuracy": null
+                    },
+                    "tackles": {
+                        "total": null,
+                        "blocks": null,
+                        "interceptions": null
+                    },
+                    "duels": {
+                        "total": null,
+                        "won": null
+                    },
+                    "dribbles": {
+                        "attempts": null,
+                        "success": null,
+                        "past": null
+                    },
+                    "fouls": {
+                        "drawn": null,
+                        "committed": null
+                    },
+                    "cards": {
+                        "yellow": null,
+                        "yellowred": null,
+                        "red": null
+                    },
+                    "penalty": {
+                        "won": null,
+                        "commited": null,
+                        "scored": null,
+                        "missed": null,
+                        "saved": null
+                    }
+                }
+            ]
+        },
+        {
+            "player": {
+                "id": 281413,
+                "name": "Gonçalo Rodrigues",
+                "firstname": "Gonçalo Luís",
+                "lastname": "Caldeira Rodrigues",
+                "age": 19,
+                "birth": {
+                    "date": "2002-09-26",
+                    "place": null,
+                    "country": "Portugal"
+                },
+                "nationality": "Portugal",
+                "height": null,
+                "weight": null,
+                "injured": false,
+                "photo": "https://media.api-sports.io/football/players/281413.png"
+            },
+            "statistics": [
+                {
+                    "team": {
+                        "id": 214,
+                        "name": "Maritimo",
+                        "logo": "https://media.api-sports.io/football/teams/214.png"
+                    },
+                    "league": {
+                        "id": 94,
+                        "name": "Primeira Liga",
+                        "country": "Portugal",
+                        "logo": "https://media.api-sports.io/football/leagues/94.png",
+                        "flag": "https://media.api-sports.io/flags/pt.svg",
+                        "season": 2021
+                    },
+                    "games": {
+                        "appearences": null,
+                        "lineups": null,
+                        "minutes": null,
+                        "number": null,
+                        "position": "Attacker",
+                        "rating": null,
+                        "captain": false
+                    },
+                    "substitutes": {
+                        "in": null,
+                        "out": null,
+                        "bench": null
+                    },
+                    "shots": {
+                        "total": null,
+                        "on": null
+                    },
+                    "goals": {
+                        "total": null,
+                        "conceded": null,
+                        "assists": null,
+                        "saves": null
+                    },
+                    "passes": {
+                        "total": null,
+                        "key": null,
+                        "accuracy": null
+                    },
+                    "tackles": {
+                        "total": null,
+                        "blocks": null,
+                        "interceptions": null
+                    },
+                    "duels": {
+                        "total": null,
+                        "won": null
+                    },
+                    "dribbles": {
+                        "attempts": null,
+                        "success": null,
+                        "past": null
+                    },
+                    "fouls": {
+                        "drawn": null,
+                        "committed": null
+                    },
+                    "cards": {
+                        "yellow": null,
+                        "yellowred": null,
+                        "red": null
+                    },
+                    "penalty": {
+                        "won": null,
+                        "commited": null,
+                        "scored": null,
+                        "missed": null,
+                        "saved": null
+                    }
+                }
+            ]
+        },
+        {
+            "player": {
+                "id": 294554,
+                "name": "Jorge Ferreira",
+                "firstname": "Jorge Nuno",
+                "lastname": "Rocha Ferreira",
+                "age": 20,
+                "birth": {
+                    "date": "2001-09-06",
+                    "place": null,
+                    "country": "Portugal"
+                },
+                "nationality": "Portugal",
+                "height": "185 cm",
+                "weight": null,
+                "injured": false,
+                "photo": "https://media.api-sports.io/football/players/294554.png"
+            },
+            "statistics": [
+                {
+                    "team": {
+                        "id": 242,
+                        "name": "Famalicao",
+                        "logo": "https://media.api-sports.io/football/teams/242.png"
+                    },
+                    "league": {
+                        "id": 94,
+                        "name": "Primeira Liga",
+                        "country": "Portugal",
+                        "logo": "https://media.api-sports.io/football/leagues/94.png",
+                        "flag": "https://media.api-sports.io/flags/pt.svg",
+                        "season": 2021
+                    },
+                    "games": {
+                        "appearences": null,
+                        "lineups": null,
+                        "minutes": null,
+                        "number": null,
+                        "position": "Attacker",
+                        "rating": null,
+                        "captain": false
+                    },
+                    "substitutes": {
+                        "in": null,
+                        "out": null,
+                        "bench": null
+                    },
+                    "shots": {
+                        "total": null,
+                        "on": null
+                    },
+                    "goals": {
+                        "total": null,
+                        "conceded": null,
+                        "assists": null,
+                        "saves": null
+                    },
+                    "passes": {
+                        "total": null,
+                        "key": null,
+                        "accuracy": null
+                    },
+                    "tackles": {
+                        "total": null,
+                        "blocks": null,
+                        "interceptions": null
+                    },
+                    "duels": {
+                        "total": null,
+                        "won": null
+                    },
+                    "dribbles": {
+                        "attempts": null,
+                        "success": null,
+                        "past": null
+                    },
+                    "fouls": {
+                        "drawn": null,
+                        "committed": null
+                    },
+                    "cards": {
+                        "yellow": null,
+                        "yellowred": null,
+                        "red": null
+                    },
+                    "penalty": {
+                        "won": null,
+                        "commited": null,
+                        "scored": null,
+                        "missed": null,
+                        "saved": null
+                    }
+                }
+            ]
+        },
+        {
+            "player": {
+                "id": 296146,
+                "name": "Tiago Nunes",
+                "firstname": "Tiago",
+                "lastname": "Pereira Nunes",
+                "age": 19,
+                "birth": {
+                    "date": "2002-01-15",
+                    "place": "Mortágua",
+                    "country": "Portugal"
+                },
+                "nationality": "Portugal",
+                "height": "180 cm",
+                "weight": "66 kg",
+                "injured": false,
+                "photo": "https://media.api-sports.io/football/players/296146.png"
+            },
+            "statistics": [
+                {
+                    "team": {
+                        "id": 218,
+                        "name": "Tondela",
+                        "logo": "https://media.api-sports.io/football/teams/218.png"
+                    },
+                    "league": {
+                        "id": 94,
+                        "name": "Primeira Liga",
+                        "country": "Portugal",
+                        "logo": "https://media.api-sports.io/football/leagues/94.png",
+                        "flag": "https://media.api-sports.io/flags/pt.svg",
+                        "season": 2021
+                    },
+                    "games": {
+                        "appearences": null,
+                        "lineups": null,
+                        "minutes": null,
+                        "number": null,
+                        "position": "Midfielder",
+                        "rating": null,
+                        "captain": false
+                    },
+                    "substitutes": {
+                        "in": null,
+                        "out": null,
+                        "bench": null
+                    },
+                    "shots": {
+                        "total": null,
+                        "on": null
+                    },
+                    "goals": {
+                        "total": null,
+                        "conceded": null,
+                        "assists": null,
+                        "saves": null
+                    },
+                    "passes": {
+                        "total": null,
+                        "key": null,
+                        "accuracy": null
+                    },
+                    "tackles": {
+                        "total": null,
+                        "blocks": null,
+                        "interceptions": null
+                    },
+                    "duels": {
+                        "total": null,
+                        "won": null
+                    },
+                    "dribbles": {
+                        "attempts": null,
+                        "success": null,
+                        "past": null
+                    },
+                    "fouls": {
+                        "drawn": null,
+                        "committed": null
+                    },
+                    "cards": {
+                        "yellow": null,
+                        "yellowred": null,
+                        "red": null
+                    },
+                    "penalty": {
+                        "won": null,
+                        "commited": null,
+                        "scored": null,
+                        "missed": null,
+                        "saved": null
+                    }
+                }
+            ]
+        },
+        {
+            "player": {
+                "id": 312112,
+                "name": "Tomás Fontes",
+                "firstname": "Tomás",
+                "lastname": "Lages Fontes",
+                "age": 20,
+                "birth": {
+                    "date": "2002-12-10",
+                    "place": null,
+                    "country": "Portugal"
+                },
+                "nationality": "Portugal",
+                "height": null,
+                "weight": null,
+                "injured": false,
+                "photo": "https://media.api-sports.io/football/players/312112.png"
+            },
+            "statistics": [
+                {
+                    "team": {
+                        "id": 240,
+                        "name": "Arouca",
+                        "logo": "https://media.api-sports.io/football/teams/240.png"
+                    },
+                    "league": {
+                        "id": 94,
+                        "name": "Primeira Liga",
+                        "country": "Portugal",
+                        "logo": "https://media.api-sports.io/football/leagues/94.png",
+                        "flag": "https://media.api-sports.io/flags/pt.svg",
+                        "season": 2021
+                    },
+                    "games": {
+                        "appearences": 0,
+                        "lineups": 0,
+                        "minutes": 0,
+                        "number": null,
+                        "position": "Goalkeeper",
+                        "rating": null,
+                        "captain": false
+                    },
+                    "substitutes": {
+                        "in": 0,
+                        "out": 0,
+                        "bench": 0
+                    },
+                    "shots": {
+                        "total": null,
+                        "on": null
+                    },
+                    "goals": {
+                        "total": 0,
+                        "conceded": null,
+                        "assists": null,
+                        "saves": null
+                    },
+                    "passes": {
+                        "total": null,
+                        "key": null,
+                        "accuracy": null
+                    },
+                    "tackles": {
+                        "total": null,
+                        "blocks": null,
+                        "interceptions": null
+                    },
+                    "duels": {
+                        "total": null,
+                        "won": null
+                    },
+                    "dribbles": {
+                        "attempts": null,
+                        "success": null,
+                        "past": null
+                    },
+                    "fouls": {
+                        "drawn": null,
+                        "committed": null
+                    },
+                    "cards": {
+                        "yellow": 0,
+                        "yellowred": 0,
+                        "red": 0
+                    },
+                    "penalty": {
+                        "won": null,
+                        "commited": null,
+                        "scored": null,
+                        "missed": null,
+                        "saved": null
+                    }
+                }
+            ]
+        },
+        {
+            "player": {
+                "id": 315560,
+                "name": "Raí Pinto",
+                "firstname": "Raí Marcelo",
+                "lastname": "Teixeira Pinto",
+                "age": 20,
+                "birth": {
+                    "date": "2001-04-13",
+                    "place": null,
+                    "country": "Portugal"
+                },
+                "nationality": "Portugal",
+                "height": "174 cm",
+                "weight": null,
+                "injured": false,
+                "photo": "https://media.api-sports.io/football/players/315560.png"
+            },
+            "statistics": [
+                {
+                    "team": {
+                        "id": 242,
+                        "name": "Famalicao",
+                        "logo": "https://media.api-sports.io/football/teams/242.png"
+                    },
+                    "league": {
+                        "id": 94,
+                        "name": "Primeira Liga",
+                        "country": "Portugal",
+                        "logo": "https://media.api-sports.io/football/leagues/94.png",
+                        "flag": "https://media.api-sports.io/flags/pt.svg",
+                        "season": 2021
+                    },
+                    "games": {
+                        "appearences": null,
+                        "lineups": null,
+                        "minutes": null,
+                        "number": null,
+                        "position": "Defender",
+                        "rating": null,
+                        "captain": false
+                    },
+                    "substitutes": {
+                        "in": null,
+                        "out": null,
+                        "bench": null
+                    },
+                    "shots": {
+                        "total": null,
+                        "on": null
+                    },
+                    "goals": {
+                        "total": null,
+                        "conceded": null,
+                        "assists": null,
+                        "saves": null
+                    },
+                    "passes": {
+                        "total": null,
+                        "key": null,
+                        "accuracy": null
+                    },
+                    "tackles": {
+                        "total": null,
+                        "blocks": null,
+                        "interceptions": null
+                    },
+                    "duels": {
+                        "total": null,
+                        "won": null
+                    },
+                    "dribbles": {
+                        "attempts": null,
+                        "success": null,
+                        "past": null
+                    },
+                    "fouls": {
+                        "drawn": null,
+                        "committed": null
+                    },
+                    "cards": {
+                        "yellow": null,
+                        "yellowred": null,
+                        "red": null
+                    },
+                    "penalty": {
+                        "won": null,
+                        "commited": null,
+                        "scored": null,
+                        "missed": null,
+                        "saved": null
+                    }
+                }
+            ]
+        },
+        {
+            "player": {
+                "id": 323948,
+                "name": "A. Sánchez",
+                "firstname": "Alejandro",
+                "lastname": "Sánchez López",
+                "age": 19,
+                "birth": {
+                    "date": "2002-05-05",
+                    "place": null,
+                    "country": "Colombia"
+                },
+                "nationality": "Colombia",
+                "height": null,
+                "weight": null,
+                "injured": false,
+                "photo": "https://media.api-sports.io/football/players/323948.png"
+            },
+            "statistics": [
+                {
+                    "team": {
+                        "id": 214,
+                        "name": "Maritimo",
+                        "logo": "https://media.api-sports.io/football/teams/214.png"
+                    },
+                    "league": {
+                        "id": 94,
+                        "name": "Primeira Liga",
+                        "country": "Portugal",
+                        "logo": "https://media.api-sports.io/football/leagues/94.png",
+                        "flag": "https://media.api-sports.io/flags/pt.svg",
+                        "season": 2021
+                    },
+                    "games": {
+                        "appearences": null,
+                        "lineups": null,
+                        "minutes": null,
+                        "number": null,
+                        "position": "Midfielder",
+                        "rating": null,
+                        "captain": false
+                    },
+                    "substitutes": {
+                        "in": null,
+                        "out": null,
+                        "bench": null
+                    },
+                    "shots": {
+                        "total": null,
+                        "on": null
+                    },
+                    "goals": {
+                        "total": null,
+                        "conceded": null,
+                        "assists": null,
+                        "saves": null
+                    },
+                    "passes": {
+                        "total": null,
+                        "key": null,
+                        "accuracy": null
+                    },
+                    "tackles": {
+                        "total": null,
+                        "blocks": null,
+                        "interceptions": null
+                    },
+                    "duels": {
+                        "total": null,
+                        "won": null
+                    },
+                    "dribbles": {
+                        "attempts": null,
+                        "success": null,
+                        "past": null
+                    },
+                    "fouls": {
+                        "drawn": null,
+                        "committed": null
+                    },
+                    "cards": {
+                        "yellow": null,
+                        "yellowred": null,
+                        "red": null
+                    },
+                    "penalty": {
+                        "won": null,
+                        "commited": null,
+                        "scored": null,
+                        "missed": null,
+                        "saved": null
+                    }
+                }
+            ]
+        },
+        {
+            "player": {
+                "id": 324663,
+                "name": "Alexandre Moutinho",
+                "firstname": "Alexandre",
+                "lastname": "Iria Santos Moutinho",
+                "age": 20,
+                "birth": {
+                    "date": "2001-08-07",
+                    "place": null,
+                    "country": "Portugal"
+                },
+                "nationality": "Portugal",
+                "height": null,
+                "weight": null,
+                "injured": false,
+                "photo": "https://media.api-sports.io/football/players/324663.png"
+            },
+            "statistics": [
+                {
+                    "team": {
+                        "id": 222,
+                        "name": "Boavista",
+                        "logo": "https://media.api-sports.io/football/teams/222.png"
+                    },
+                    "league": {
+                        "id": 94,
+                        "name": "Primeira Liga",
+                        "country": "Portugal",
+                        "logo": "https://media.api-sports.io/football/leagues/94.png",
+                        "flag": "https://media.api-sports.io/flags/pt.svg",
+                        "season": 2021
+                    },
+                    "games": {
+                        "appearences": null,
+                        "lineups": null,
+                        "minutes": null,
+                        "number": null,
+                        "position": "Midfielder",
+                        "rating": null,
+                        "captain": false
+                    },
+                    "substitutes": {
+                        "in": null,
+                        "out": null,
+                        "bench": null
+                    },
+                    "shots": {
+                        "total": null,
+                        "on": null
+                    },
+                    "goals": {
+                        "total": null,
+                        "conceded": null,
+                        "assists": null,
+                        "saves": null
+                    },
+                    "passes": {
+                        "total": null,
+                        "key": null,
+                        "accuracy": null
+                    },
+                    "tackles": {
+                        "total": null,
+                        "blocks": null,
+                        "interceptions": null
+                    },
+                    "duels": {
+                        "total": null,
+                        "won": null
+                    },
+                    "dribbles": {
+                        "attempts": null,
+                        "success": null,
+                        "past": null
+                    },
+                    "fouls": {
+                        "drawn": null,
+                        "committed": null
+                    },
+                    "cards": {
+                        "yellow": null,
+                        "yellowred": null,
+                        "red": null
+                    },
+                    "penalty": {
+                        "won": null,
+                        "commited": null,
+                        "scored": null,
+                        "missed": null,
+                        "saved": null
+                    }
+                }
+            ]
+        },
+        {
+            "player": {
+                "id": 325763,
+                "name": "Rafael Lopes",
+                "firstname": "Rafael",
+                "lastname": "Lopes",
+                "age": null,
+                "birth": {
+                    "date": null,
+                    "place": null,
+                    "country": "Portugal"
+                },
+                "nationality": "Portugal",
+                "height": null,
+                "weight": null,
+                "injured": false,
+                "photo": "https://media.api-sports.io/football/players/325763.png"
+            },
+            "statistics": [
+                {
+                    "team": {
+                        "id": 221,
+                        "name": "Belenenses",
+                        "logo": "https://media.api-sports.io/football/teams/221.png"
+                    },
+                    "league": {
+                        "id": 94,
+                        "name": "Primeira Liga",
+                        "country": "Portugal",
+                        "logo": "https://media.api-sports.io/football/leagues/94.png",
+                        "flag": "https://media.api-sports.io/flags/pt.svg",
+                        "season": 2021
+                    },
+                    "games": {
+                        "appearences": null,
+                        "lineups": null,
+                        "minutes": null,
+                        "number": null,
+                        "position": "Midfielder",
+                        "rating": null,
+                        "captain": false
+                    },
+                    "substitutes": {
+                        "in": null,
+                        "out": null,
+                        "bench": null
+                    },
+                    "shots": {
+                        "total": null,
+                        "on": null
+                    },
+                    "goals": {
+                        "total": null,
+                        "conceded": null,
+                        "assists": null,
+                        "saves": null
+                    },
+                    "passes": {
+                        "total": null,
+                        "key": null,
+                        "accuracy": null
+                    },
+                    "tackles": {
+                        "total": null,
+                        "blocks": null,
+                        "interceptions": null
+                    },
+                    "duels": {
+                        "total": null,
+                        "won": null
+                    },
+                    "dribbles": {
+                        "attempts": null,
+                        "success": null,
+                        "past": null
+                    },
+                    "fouls": {
+                        "drawn": null,
+                        "committed": null
+                    },
+                    "cards": {
+                        "yellow": null,
+                        "yellowred": null,
+                        "red": null
+                    },
+                    "penalty": {
+                        "won": null,
+                        "commited": null,
+                        "scored": null,
+                        "missed": null,
+                        "saved": null
+                    }
+                }
+            ]
+        },
+        {
+            "player": {
+                "id": 330722,
+                "name": "J. Gorby",
+                "firstname": "Jean-Baptiste",
+                "lastname": "Gorby",
+                "age": 19,
+                "birth": {
+                    "date": "2002-07-25",
+                    "place": null,
+                    "country": "France"
+                },
+                "nationality": "France",
+                "height": "181 cm",
+                "weight": null,
+                "injured": false,
+                "photo": "https://media.api-sports.io/football/players/330722.png"
+            },
+            "statistics": [
+                {
+                    "team": {
+                        "id": 217,
+                        "name": "SC Braga",
+                        "logo": "https://media.api-sports.io/football/teams/217.png"
+                    },
+                    "league": {
+                        "id": 94,
+                        "name": "Primeira Liga",
+                        "country": "Portugal",
+                        "logo": "https://media.api-sports.io/football/leagues/94.png",
+                        "flag": "https://media.api-sports.io/flags/pt.svg",
+                        "season": 2021
+                    },
+                    "games": {
+                        "appearences": 0,
+                        "lineups": 0,
+                        "minutes": 0,
+                        "number": null,
+                        "position": "Midfielder",
+                        "rating": null,
+                        "captain": false
+                    },
+                    "substitutes": {
+                        "in": 0,
+                        "out": 0,
+                        "bench": 2
+                    },
+                    "shots": {
+                        "total": null,
+                        "on": null
+                    },
+                    "goals": {
+                        "total": 0,
+                        "conceded": 0,
+                        "assists": null,
+                        "saves": null
+                    },
+                    "passes": {
+                        "total": null,
+                        "key": null,
+                        "accuracy": null
+                    },
+                    "tackles": {
+                        "total": null,
+                        "blocks": null,
+                        "interceptions": null
+                    },
+                    "duels": {
+                        "total": null,
+                        "won": null
+                    },
+                    "dribbles": {
+                        "attempts": null,
+                        "success": null,
+                        "past": null
+                    },
+                    "fouls": {
+                        "drawn": null,
+                        "committed": null
+                    },
+                    "cards": {
+                        "yellow": 0,
+                        "yellowred": 0,
+                        "red": 0
+                    },
+                    "penalty": {
+                        "won": null,
+                        "commited": null,
+                        "scored": 0,
+                        "missed": 0,
+                        "saved": null
+                    }
+                }
+            ]
+        }
+    ]
+}

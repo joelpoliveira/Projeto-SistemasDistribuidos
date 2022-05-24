@@ -13,7 +13,7 @@ import projeto.sd.model.*;
 @Repository
 public interface TeamRepository extends JpaRepository<Team, Integer> {
     @Query("Select t from Team t where t.name = ?1")
-    Team findByName(String name);
+    Optional<Team> findByName(String name);
 
     List<Player> findPlayersByName(String name);
 
