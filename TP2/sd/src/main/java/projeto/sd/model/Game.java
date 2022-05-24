@@ -7,6 +7,9 @@ import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -31,6 +34,7 @@ public class Game {
 
     @Column(name = "startTime")
     // @NotNull
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)    
     private LocalDateTime startTime;
 
     private int teamAScore;
