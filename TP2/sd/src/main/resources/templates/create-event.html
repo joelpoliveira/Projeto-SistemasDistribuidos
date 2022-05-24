@@ -3,6 +3,17 @@
         <title>Create Event</title>
         <h1>Create Event</h1>
     </head>
+    <script>
+        function dropdown_options(){
+            var options = document.getElementById("option_list")
+
+            var dropdown = document.getElementById("dropdown_event")
+            var option = dropdown.options[dropdown.selectedIndex].value
+            if (option === "Fim"){
+                options.appendChild(document.createTextNode("OPTION FIM"));
+            }
+        }
+    </script>
     <body>
         <div>
             <form th:action="@{/home}" method="get">
@@ -12,7 +23,7 @@
         <div>
             <h1 th:if="${error}" th:text="${error}">ERROR</h1>
         </div>
-        <form th:action="@{/event/create}" th:object="${event}" method="post">
+        <form th:action="@{/event/create}" th:object="${event}" method="post" id="option_list">
             <div>
                 <select th:field="*{game}">
                     <option value="">Select Game</option>
@@ -24,7 +35,7 @@
                 </select>
             </div>
             <div>
-                <select th:field="*{name}">
+                <select th:field="*{name}" id="dropdown_event" onchange="dropdown_options()">
                     <option value="">Select Event</option>
                     <option
                         th:each="option : ${events}"
@@ -33,6 +44,7 @@
                     ></option>
                 </select>
             </div>
+
             <div>
                 <button type="submit">Submit</button>
             </div>
