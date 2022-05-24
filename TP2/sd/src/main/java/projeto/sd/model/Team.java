@@ -29,6 +29,13 @@ public class Team {
     private Set<Player> players = new HashSet<Player>();
 
     private String location;
+    private int wins;
+    private int losses;
+    private int ties;
+    private int goals;
+
+    @OneToOne
+    private Player bestScorer;
 
     public Team() {
     }
@@ -78,6 +85,52 @@ public class Team {
     public void setLocation(String location) {
         this.location = location;
     }
+
+    public int getGoals() {
+        return this.goals;
+    }
+
+    public void setGoals(int goals) {
+        this.goals = goals;
+    }
+
+    public int getWins() {
+        return this.wins;
+    }
+
+    public void setWins(int wins) {
+        this.wins = wins;
+    }
+
+    public int getLosses() {
+        return this.losses;
+    }
+
+    public void setLosses(int losses) {
+        this.losses = losses;
+    }
+
+    public int getTies() {
+        return this.ties;
+    }
+
+    public void setTies(int ties) {
+        this.ties = ties;
+    }
+
+    public int getNumberGames() {
+        return this.wins + this.losses + this.ties;
+    }
+
+
+    public Player getBestScorer() {
+        return this.bestScorer;
+    }
+
+    public void setBestScorer(Player bestScorer) {
+        this.bestScorer = bestScorer;
+    }
+
 
     @Override
     public String toString() {

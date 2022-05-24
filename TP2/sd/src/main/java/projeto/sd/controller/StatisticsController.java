@@ -23,41 +23,28 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-import java.net.*;
-import java.io.*;
-
 import projeto.sd.service.*;
 import projeto.sd.model.*;
 
 @Controller
-@RequestMapping("/event")
-public class EventController {
+@RequestMapping("/statistics")
+public class StatisticsController {
     @Autowired
     EventService eventService;
 
     @Autowired
-    GameService gameService;
+    TeamService teamService;
 
-    @GetMapping("/create")
+    @Autowired
+    PlayerService playerService;
+
+
+    @GetMapping("/")
     public String createTeam(Model model, HttpSession session) {
-        model.addAttribute("event", new Event());
-        model.addAttribute("games", gameService.getAllGames());
-        model.addAttribute("events", eventService.getPossibleEvents());
-        return "create-event";
+        teamService.updateBestScorer();
+        model.addAttribute("teams", teamService.getAllTeams());
+        return "statistics";
     }
 
-    @PostMapping("/create")
-    public String teamView(@Valid @ModelAttribute Event event, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            // TODO check qual o erro em event, em vez de ser genérico
-            System.out.println("Erro a criar evento");
-            return "redirect:/event/create?error";
-        }
-
-        eventService.add(event);
-        System.out.println("Added Event" + event);
-
-        return "redirect:/home";
-    }
 
 }

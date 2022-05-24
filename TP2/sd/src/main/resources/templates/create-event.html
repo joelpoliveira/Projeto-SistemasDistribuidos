@@ -3,17 +3,17 @@
 
 <head>
     <script type="text/javascript">
-        function dropdown_options(){
+        function dropdown_options() {
             console.debug("DEFINED\n");
             var dropdown = document.getElementById("option_list");
             var option = dropdown.options[dropdown.selectedIndex].value;
 
-            if ( (option === "Golo")
+            if ((option === "Golo")
                 || (option === "Cartão Amarelo")
                 || (option === "Cartão Vermelho")
-            ){
+            ) {
                 document.getElementById("player_option").style.visibility = "visible";
-            }else{
+            } else {
                 player_option = document.getElementById("player_option");
                 player_option.style.visibility = "hidden";
                 player_option.selectedIndex = 0;
@@ -27,7 +27,7 @@
 </head>
 
 <body>
-<div layout:fragment="content">
+    <div layout:fragment="content">
 
         <div th:if="${param.error}" class="alert alert-danger" role="alert">
             Erro a criar evento!
@@ -35,23 +35,25 @@
 
         <form th:action="@{/event/create}" th:object="${event}" method="post">
             <div>
-                <select th:field="*{game}">
+                <select class="form-select form-select-lg mb-2" th:field="*{game}">
                     <option value="">Select Game</option>
                     <option th:each="option : ${games}" th:value="${option.id}"
                         th:text="${option.teamA.name} + ' vs ' + ${option.teamB.name}"></option>
                 </select>
             </div>
             <div>
-                <select th:field="*{name}" id="option_list" onchange="dropdown_options()">
+                <select class="form-select form-select-lg mb-2" th:field="*{name}" id="option_list"
+                    onchange="dropdown_options()">
                     <option value="">Select Event</option>
                     <option th:each="option : ${events}" th:value="${option}" th:text="${option}"></option>
                 </select>
             </div>
-            <div>
+            <!-- <div>
                 <input type="datetime-local" id="datetime">
-            </div>
+            </div> -->
             <div>
-                <select th:field="*{game}" style="visibility: hidden" id="player_option">
+                <select class="form-select form-select-lg mb-2" th:field="*{game}" style="visibility: hidden"
+                    id="player_option">
                     <option value="">Select Player</option>
                     <option value="A">A</option>
                     <option value="B">B</option>
@@ -61,7 +63,8 @@
                 </select>
             </div>
             <div>
-                <button type="submit">Submit</button>
+                <button type="submit" class="btn btn-outline-primary"
+                    style="padding-left: 2.5rem; padding-right: 2.5rem;">Criar evento</button>
             </div>
         </form>
 

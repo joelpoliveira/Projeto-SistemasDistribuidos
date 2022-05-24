@@ -30,16 +30,12 @@ public class TeamService {
         return teams;
     }
 
-    public Optional<Team> getTeam(int id) throws NotFoundException {
-        return teamRepository.findById(id);
+    public Optional<Team> getTeam(int teamID) throws NotFoundException {
+        return teamRepository.findById(teamID);
     }
 
     public Optional<Team> getTeam(String teamName) throws NotFoundException {
         return teamRepository.findByName(teamName);
-    }
-
-    public List<Player> getAllPlayers(Team team) {
-        return teamRepository.findPlayersByName(team.getName());
     }
 
     public List<Team> getAllTeams() {
@@ -48,6 +44,21 @@ public class TeamService {
 
     public List<Player> getTeamPlayers(int teamID) {
         return teamRepository.findPlayersByTeamID(teamID);
+    }
+
+    public void updateBestScorer() {
+        List<Player> players;
+        int best;
+
+        for (Team t : getAllTeams()) {
+            best = 0;
+            players = getTeamPlayers(t.getId());
+            for (Player p : players) {
+                if (p.getGoals() > best) {
+                    t.setBestScorer(p);
+                }
+            }
+        }
     }
 
 }

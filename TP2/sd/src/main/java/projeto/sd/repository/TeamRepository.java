@@ -15,7 +15,7 @@ public interface TeamRepository extends JpaRepository<Team, Integer> {
     @Query("Select t from Team t where t.name = ?1")
     Optional<Team> findByName(String name);
 
-    List<Player> findPlayersByName(String name);
+    List<Player> findPlayersById(int teamID);
 
     Optional<Team> findById(int teamID);
 

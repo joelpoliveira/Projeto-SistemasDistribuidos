@@ -39,6 +39,8 @@ public class Player {
     @NotNull
     private Team team;
 
+    private int goals;
+
     public Player() {
 
     }
@@ -88,6 +90,14 @@ public class Player {
 
     public void setTeam(Team team) {
         this.team = team;
+    }
+
+    public int getGoals() {
+        return this.goals;
+    }
+
+    public void setGoals(int goals) {
+        this.goals = goals;
     }
 
     @Override

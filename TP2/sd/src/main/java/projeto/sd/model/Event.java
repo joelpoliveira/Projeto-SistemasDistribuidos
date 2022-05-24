@@ -1,6 +1,7 @@
 package projeto.sd.model;
 
 import java.util.Map;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 
 import javax.persistence.*;
@@ -24,12 +25,15 @@ public class Event {
     @OneToOne
     private Game game;
 
+    private LocalDateTime created_at;
+
     public Event() {
     }
 
     public Event(String name, Game game) {
         this.name = name;
         this.game = game;
+        this.created_at = LocalDateTime.now();
     }
 
     public int getId() {
@@ -63,6 +67,16 @@ public class Event {
     public void setGame(Game game) {
         this.game = game;
     }
+
+
+    public LocalDateTime getCreated_at() {
+        return this.created_at;
+    }
+
+    public void setCreated_at(LocalDateTime created_at) {
+        this.created_at = created_at;
+    }
+
 
     @Override
     public String toString() {
