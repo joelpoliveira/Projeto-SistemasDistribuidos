@@ -1,32 +1,35 @@
+</html>
+
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout">
 
 <head>
-    <title>Team</title>
-    <meta charset="utf8" />
+    <div layout:fragment="head">
+        <title>Teams</title>
+    </div>
 </head>
 
 <body>
-    <div>
-        <form th:action="@{/home}" method="get">
-            <button type="submit">Homepage</button>
-        </form>
+    <div layout:fragment="content">
+
+        <div th:if="${param.noTeam}" class="alert alert-danger" role="alert">
+            Equipa não existe!
+        </div>
+
+        <table>
+            
+            <tbody>
+                <tr th:each="option : ${teams}">
+                    <td th:text="${option.name}"></td>
+                    <td>
+                        <a th:href="@{'/team/'+${option.id}}">
+                            <button type="button" class="btn btn-outline-secondary">Selecionar</button>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-    <table>
-        <thead>
-            <tr>
-                <td width="20px"><b> ID</b></td>
-                <td><b>Name</b></td>
-                <td><b>Players</b></td>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="option : ${teams}">
-                <td width="20px" th:text="${option.id}"></td>
-                <td th:text="${option.name}"></td>
-            </tr>
-        </tbody>
-    </table>
-</body>
 
 </html>

@@ -2,31 +2,21 @@ package projeto.sd.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-
-import org.json.*;
-import java.net.*;
-import java.io.*;
 
 import projeto.sd.service.*;
 import projeto.sd.model.*;
@@ -48,16 +38,20 @@ public class TeamController {
 
     @PostMapping("/create")
     public String teamView(@Valid @ModelAttribute Team team, HttpSession session, Model model) {
-        Team tempTeam = teamService.getTeam(team.getName());
-        if (tempTeam == null) {
+        Optional<Team> tempTeam = null;
+        try {
+            tempTeam = teamService.getTeam(team.getId());
+        } catch (NotFoundException e) {
+            e.printStackTrace();
+        }
+        if (tempTeam.isEmpty()) {
             teamService.add(team);
-            // model.addAttribute("error", "");
             System.out.println("Added team:" + team);
             return "redirect:/home";
         } else {
             System.out.println("Team already exists");
             model.addAttribute("error", "Team already exists");
-            return "create-team";
+            return "redirect:/create-team?error";
         }
 
     }
@@ -69,10 +63,15 @@ public class TeamController {
         return "all-teams";
     }
 
-    @GetMapping("/{teamName}")
-    public String showTeam(@PathVariable String teamName, Model model) {
-        model.addAttribute("team", teamService.getTeam(teamName));
-        model.addAttribute("players", teamService.getTeamPlayers(teamName));
+    @GetMapping("/{teamID}")
+    public String showTeam(@PathVariable String teamID, Model model) {
+        try {
+            model.addAttribute("team", teamService.getTeam(Integer.parseInt(teamID)).get());
+        } catch (NumberFormatException | NotFoundException | NoSuchElementException e) {
+            System.out.println("Team not Found: " + teamID);
+            return "redirect:/team/all?noTeam";
+        }
+        model.addAttribute("players", teamService.getTeamPlayers(Integer.parseInt(teamID)));
         return "team";
     }
 }

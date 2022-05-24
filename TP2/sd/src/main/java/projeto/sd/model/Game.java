@@ -7,6 +7,9 @@ import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -31,22 +34,23 @@ public class Game {
 
     @Column(name = "startTime")
     // @NotNull
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)    
     private LocalDateTime startTime;
 
-    @Column(name = "endTime")
-    // @NotNull
-    private LocalDateTime endTime;
+    private int teamAScore;
+    private int teamBScore;
 
     public Game() {
 
     }
 
-    public Game(String location, LocalDateTime startTime, LocalDateTime endTime, Team teamA, Team teamB) {
+    public Game(String location, LocalDateTime startTime, Team teamA, Team teamB) {
         this.location = location;
         this.startTime = startTime;
-        this.endTime = endTime;
         this.teamA = teamA;
         this.teamB = teamB;
+        this.teamAScore = 0;
+        this.teamBScore = 0;
     }
 
     public int getId() {
@@ -89,12 +93,20 @@ public class Game {
         this.startTime = startTime;
     }
 
-    public LocalDateTime getEndTime() {
-        return this.endTime;
+    public int getTeamAScore() {
+        return this.teamAScore;
     }
 
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
+    public void setTeamAScore(int teamAScore) {
+        this.teamAScore = teamAScore;
+    }
+
+    public int getTeamBScore() {
+        return this.teamBScore;
+    }
+
+    public void setTeamBScore(int teamBScore) {
+        this.teamBScore = teamBScore;
     }
 
     @Override
@@ -105,7 +117,6 @@ public class Game {
                 ", teamA='" + getTeamA() + "'" +
                 ", teamB='" + getTeamB() + "'" +
                 ", startTime='" + getStartTime() + "'" +
-                ", endTime='" + getEndTime() + "'" +
                 "}";
     }
 

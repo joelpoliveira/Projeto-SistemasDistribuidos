@@ -25,9 +25,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-import org.json.*;
-import java.net.*;
-import java.io.*;
 
 import projeto.sd.service.*;
 import projeto.sd.model.*;

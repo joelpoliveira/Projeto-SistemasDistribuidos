@@ -11,6 +11,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import java.util.Set;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Optional;
 
@@ -32,7 +33,7 @@ public class Player {
     @Column(name = "birthDate")
     // @NotNull
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private LocalDateTime birthDate;
+    private Date birthDate;
 
     @OneToOne
     @NotNull
@@ -42,7 +43,7 @@ public class Player {
 
     }
 
-    public Player(String name, String position, LocalDateTime birthDate, Team team) {
+    public Player(String name, String position, Date birthDate, Team team) {
         this.name = name;
         this.position = position;
         this.birthDate = birthDate;
@@ -73,11 +74,11 @@ public class Player {
         this.position = position;
     }
 
-    public LocalDateTime getBirthDate() {
+    public Date getBirthDate() {
         return this.birthDate;
     }
 
-    public void setBirthDate(LocalDateTime birthDate) {
+    public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
     }
 

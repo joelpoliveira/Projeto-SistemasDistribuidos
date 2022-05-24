@@ -57,11 +57,11 @@ public class TestController {
         return teams;
     }
 
-    @PostMapping("/teste")
-    public Team teste() {
-        Team team = teamService.getTeam("Sporting");
-        return team;
-    }
+    // @PostMapping("/teste")
+    // public Team teste() {
+    //     Team team = teamService.getTeam("Sporting");
+    //     return team;
+    // }
 
     
 }
