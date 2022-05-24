@@ -64,12 +64,21 @@ public class HomeController {
         equipas.add("Boavista");
         equipas.add("Maritimo");
         equipas.add("Rio Ave");
+        equipas.add("Portimonense");
 
         for (String e : equipas) {
             Team t = new Team(e, "");
             teamService.add(t);
             teams.add(t);
         }
+        
+        teams.get(0).setImageUrl("https://upload.wikimedia.org/wikipedia/en/thumb/e/e1/Sporting_Clube_de_Portugal_%28Logo%29.svg/1200px-Sporting_Clube_de_Portugal_%28Logo%29.svg.png");
+        teams.get(1).setImageUrl("https://upload.wikimedia.org/wikipedia/en/thumb/a/a2/SL_Benfica_logo.svg/1200px-SL_Benfica_logo.svg.png");
+        teams.get(2).setImageUrl("https://upload.wikimedia.org/wikipedia/pt/c/c5/F.C._Porto_logo.png");
+        teams.get(3).setImageUrl("https://upload.wikimedia.org/wikipedia/pt/5/5c/Logo_Boavista_FC.png");
+        teams.get(4).setImageUrl("https://upload.wikimedia.org/wikipedia/pt/a/a2/Logo_CS_Maritimo.png");
+        teams.get(5).setImageUrl("https://upload.wikimedia.org/wikipedia/pt/f/f5/Logo_Rio_Ave.png");
+        teams.get(6).setImageUrl("https://upload.wikimedia.org/wikipedia/en/thumb/c/c0/Portimonense_Sporting_Clube_logo.svg/1200px-Portimonense_Sporting_Clube_logo.svg.png");
 
         for (Team t : teams) {
             playerService.add(new Player("A", "Striker", null, t));
