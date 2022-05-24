@@ -70,21 +70,21 @@
                             </a>
                             <ul class="collapse nav flex-column ms-1" id="submenu3" data-bs-parent="#menu">
                                 <li class="w-100">
-                                    <a th:href="@{team/create}" class="nav-link px-0"> <span
+                                    <a th:href="@{/team/create}" class="nav-link px-0"> <span
                                             class="d-none d-sm-inline">Create Team</span></a>
                                 </li>
                                 <li>
-                                    <a th:href="@{player/create}" class="nav-link px-0"> <span
+                                    <a th:href="@{/player/create}" class="nav-link px-0"> <span
                                             class="d-none d-sm-inline">Create Player</span></a>
                                 </li>
                                 <li>
-                                    <a th:href="@{game/create}" class="nav-link px-0"> <span
+                                    <a th:href="@{/game/create}" class="nav-link px-0"> <span
                                             class="d-none d-sm-inline">Create Game</span></a>
                                 </li>
                             </ul>
                         </li>
                         <li sec:authorize="hasAuthority('ADMIN')">
-                            <a th:href="@{register}" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                            <a th:href="@{/register}" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
                                 <i class="fs-4 bi-grid"></i> <span class="ms-1 d-none d-sm-inline">Register user</span>
                             </a>
                         </li>
@@ -93,7 +93,7 @@
                     <div sec:authorize="isAuthenticated()" class="dropdown pb-4">
                         <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
                             id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="https://github.com/tomasbm07.png" alt="hugenerd" width="30" height="30"
+                            <img src="https://www.pngitem.com/pimgs/m/24-248366_profile-clipart-generic-user-generic-profile-picture-gender.png" alt="hugenerd" width="30" height="30"
                                 class="rounded-circle">
                             <span sec:authentication="name" class="d-none d-sm-inline mx-1">username</span>
                         </a>

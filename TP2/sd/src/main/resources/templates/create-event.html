@@ -1,41 +1,40 @@
-<html>
-    <head>
-        <title>Create Event</title>
-        <h1>Create Event</h1>
-    </head>
-    <body>
-        <div>
-            <form th:action="@{/home}" method="get">
-                <button type="submit">Homepage</button>
-            </form>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout">
+
+<head>
+    <div layout:fragment="header">
+        <title>Create event</title>
+    </div>
+</head>
+
+<body>
+    <div layout:fragment="content">
+
+        <div th:if="${param.error}" class="alert alert-danger" role="alert">
+            Erro a criar evento!
         </div>
-        <div>
-            <h1 th:if="${error}" th:text="${error}">ERROR</h1>
-        </div>
+
         <form th:action="@{/event/create}" th:object="${event}" method="post">
             <div>
                 <select th:field="*{game}">
                     <option value="">Select Game</option>
-                    <option
-                        th:each="option : ${games}"
-                        th:value="${option.id}"
-                        th:text="${option.teamA.name} + ' vs ' + ${option.teamB.name}"
-                    ></option>
+                    <option th:each="option : ${games}" th:value="${option.id}"
+                        th:text="${option.teamA.name} + ' vs ' + ${option.teamB.name}"></option>
                 </select>
             </div>
             <div>
                 <select th:field="*{name}">
                     <option value="">Select Event</option>
-                    <option
-                        th:each="option : ${events}"
-                        th:value="${option}"
-                        th:text="${option}"
-                    ></option>
+                    <option th:each="option : ${events}" th:value="${option}" th:text="${option}"></option>
                 </select>
             </div>
             <div>
                 <button type="submit">Submit</button>
             </div>
         </form>
-    </body>
+
+    </div>
+
+</body>
+
 </html>
