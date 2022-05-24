@@ -12,8 +12,8 @@
     <div layout:fragment="content">
         <center>
             <h1 th:text="${game.teamA.name} + ' - ' + ${game.teamB.name}"></h1>
-            <h1>0 - 0</h1>
-            <div>
+            <h1 th:text="${game.teamAScore} + ' - ' + ${game.teamBScore}">Score</h1>
+            <div sec:authorize="isAuthenticated()">
                 <form th:action="@{/event/create}" method="get">
                     <button type="submit">Add event</button>
                 </form>

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import projeto.sd.repository.*;
@@ -29,8 +30,8 @@ public class TeamService {
         return teams;
     }
 
-    public Team getTeam(String name) {
-        return teamRepository.findByName(name);
+    public Optional<Team> getTeam(int id) throws NotFoundException{
+        return teamRepository.findById(id);
     }
 
     public List<Player> getAllPlayers(Team team) {
@@ -41,8 +42,8 @@ public class TeamService {
         return teamRepository.findAll();
     }
 
-    public List<Player> getTeamPlayers(String teamName) {
-        return teamRepository.findPlayersByTeamID(getTeam(teamName).getId());
+    public List<Player> getTeamPlayers(int teamID) {
+        return teamRepository.findPlayersByTeamID(teamID);
     }
 
 }

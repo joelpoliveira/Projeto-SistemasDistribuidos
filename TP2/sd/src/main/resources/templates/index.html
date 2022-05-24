@@ -14,7 +14,9 @@
         <table class="table table-sm">
             <thead>
                 <tr th:each="game: ${games}">
-                    <td th:text="${game.teamA.name} + ' - ' + ${game.teamB.name}">Jogo</td>
+                    <td
+                        th:text="${game.teamA.name} + ' - ' + ${game.teamB.name} + ' (' + ${game.teamAScore} + ' - ' + ${game.teamBScore} + ')' ">
+                        Jogo</td>
                     <td>
                         <a th:href="@{'/game/'+${game.id}}">
                             <button type="button" class="btn btn-outline-secondary">Selecionar</button>
