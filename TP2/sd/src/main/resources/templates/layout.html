@@ -31,7 +31,7 @@
                                 <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Home</span>
                             </a>
                         </li>
-                        <li sec:authorize="isAuthenticated()">
+                        <li sec:authorize="hasAuthority('ADMIN')">
                             <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
                                 <i class="fs-4 bi-speedometer2"></i> <span class="ms-1 d-none d-sm-inline">Fill</span>
                             </a>
@@ -96,9 +96,8 @@
                             </ul>
                         </li>
                         <li sec:authorize="hasAuthority('ADMIN')">
-                            <a th:href="@{/register}" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                                <i class="fs-4 bi-grid"></i> <span class="ms-1 d-none d-sm-inline">Register user</span>
-                            </a>
+                            <a th:href="@{/register}" class="nav-link px-0"> <span
+                                class="d-none d-sm-inline">Register user</span></a>
                         </li>
                     </ul>
                     <hr>
@@ -110,12 +109,12 @@
                             <span sec:authentication="name" class="d-none d-sm-inline mx-1">username</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-                            <li><a class="dropdown-item" href="#">New project...</a></li>
+                            <!-- <li><a class="dropdown-item" href="#">New project...</a></li>
                             <li><a class="dropdown-item" href="#">Settings</a></li>
                             <li><a class="dropdown-item" href="#">Profile</a></li>
                             <li>
                                 <hr class="dropdown-divider">
-                            </li>
+                            </li> -->
                             <li>
                                 <form th:action="@{/logout}" method="post">
                                     <button type="submit" class="dropdown-item">Sign out</button>

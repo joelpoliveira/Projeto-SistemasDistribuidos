@@ -82,11 +82,6 @@ public class HomeController {
 
     @GetMapping("/fill")
     public String fillDatabase() {
-        // Add Admin
-        User admin = new User("admin", "admin", "admin@scoredei.pt", null);
-        admin.setRoles("ADMIN");
-        userService.add(admin);
-
         ArrayList<Team> teams = new ArrayList<>();
         ArrayList<String> equipas = new ArrayList<>();
         equipas.add("Sporting");
