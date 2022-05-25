@@ -18,6 +18,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,16 +39,19 @@ import projeto.sd.service.UserService;
 @Controller
 public class HomeController {
     @Autowired
-    GameService gameService;
+    private GameService gameService;
 
     @Autowired
-    TeamService teamService;
+    private TeamService teamService;
 
     @Autowired
-    PlayerService playerService;
+    private PlayerService playerService;
 
     @Autowired
-    UserService userService;
+    private UserService userService;
+
+    @Autowired
+    private Environment env;
 
     @GetMapping("/home")
     public String home() {
@@ -56,10 +60,9 @@ public class HomeController {
 
     @GetMapping("/")
     public String homepage(Model model, HttpSession session) {
-        //model.addAttribute("games", gameService.getAllGames());
+        // model.addAttribute("games", gameService.getAllGames());
         model.addAttribute("games", gameService.getAllActiveGames());
         model.addAttribute("past_games", gameService.getAllNonActiveGames());
-
 
         if (session.getAttribute("username") != null)
             model.addAttribute("username", session.getAttribute("username"));
@@ -74,7 +77,7 @@ public class HomeController {
     }
 
     @GetMapping("/fillAdmin")
-    public String addAdmin(){
+    public String addAdmin() {
         // Add Admin
         User admin = new User("admin", "admin", "admin@scoredei.pt", null);
         admin.setRoles("ADMIN");
@@ -120,14 +123,14 @@ public class HomeController {
 
         gameService.add(new Game("Lisboa", LocalDateTime.now(), teams.get(0), teams.get(1)));
         gameService.add(new Game("Lisboa", LocalDateTime.now(), teams.get(0), teams.get(2)));
-        gameService.add(new Game("Lisboa", LocalDateTime.now()  , teams.get(3), teams.get(1)));
+        gameService.add(new Game("Lisboa", LocalDateTime.now(), teams.get(3), teams.get(1)));
 
         return "redirect:/";
     }
 
     @GetMapping("/fill-API")
     public String fillDatabaseFromAPI() {
-        String APIKey = "0d277b56911c64405b959d8fb5688549";
+        String APIKey = env.getProperty("spring.datasource.api-key");
         Map<String, Team> allTeams = new HashMap<String, Team>();
 
         // Teams
