@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.net.*;
+import java.time.LocalDateTime;
 import java.io.*;
 
 import projeto.sd.service.*;
@@ -84,23 +85,22 @@ public class EventController {
             Player p = event.getPlayer();
 
             if (t == null) {
+                System.out.println(t);
                 return "redirect:/event/create?noTeamDefined";
             }
 
-            // if (p == null) {
-            //     return "redirect:/event/create?noPlayerDefined";
-            // }
-
-            // update game score
-            if (A == t) {
-                game.setTeamAScore(game.getTeamAScore() + 1);
-            } else {
-                game.setTeamBScore(game.getTeamBScore() + 1);
+            if (p == null) {
+                return "redirect:/event/create?noPlayerDefined";
             }
 
-            // update teams total goals
-            A.setGoals(A.getGoals() + 1);
-            B.setGoals(B.getGoals() + 1);
+            // update game score and team goals
+            if (A == t) {
+                game.setTeamAScore(game.getTeamAScore() + 1);
+                A.setGoals(A.getGoals() + 1);
+            } else {
+                game.setTeamBScore(game.getTeamBScore() + 1);
+                B.setGoals(B.getGoals() + 1);
+            }
 
             // update player goals
             if (p != null) {
@@ -109,6 +109,7 @@ public class EventController {
 
         }
 
+        event.setCreated_at(LocalDateTime.now());   
         eventService.add(event);
         System.out.println("Added Event" + event);
 

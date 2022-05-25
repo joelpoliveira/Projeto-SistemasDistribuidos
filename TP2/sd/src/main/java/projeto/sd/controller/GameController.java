@@ -65,7 +65,6 @@ public class GameController {
     @GetMapping("/all")
     public String showAllGames(Model model) {
         model.addAttribute("games", gameService.getAllGames());
-        // TODO: page to display all games ?
         return "redirect:/home";
     }
 

@@ -31,7 +31,7 @@
                     <td th:text="${option.losses}"></td>
                     <td th:text="${option.ties}"></td>
                     <td th:text="${option.goals}"></td>
-                    <td th:text="${option.bestScorer}"></td>
+                    <td th:text="${option.bestScorer?.name}"></td>
                 </tr>
             </tbody>
         </table>

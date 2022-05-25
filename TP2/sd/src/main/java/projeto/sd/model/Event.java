@@ -43,7 +43,6 @@ public class Event {
     public Event(String name, Game game, Team team, Player player) {
         this.name = name;
         this.game = game;
-        this.created_at = LocalDateTime.now();
         this.team = team;
         this.player = player;
     }

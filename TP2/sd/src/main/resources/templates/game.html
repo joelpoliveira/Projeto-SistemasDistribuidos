@@ -22,8 +22,25 @@
                 </form>
             </div>
             <h2>Lista de eventos</h1>
-                <div th:each="option : ${events}">
-                    <h2 th:text="${option.name}">cenas</h2>
+                <div class="table-responsive-sm" style="height:600px;overflow:auto;">
+                    <table class="table sortable table-active table-responsive">
+                        <thead>
+                            <tr>
+                                <th>Timestamp</th>
+                                <th>Evento</th>
+                                <th>Equipa</th>
+                                <th>Jogador</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="item" th:each="option : ${events}">
+                                <td th:text="${option.created_at}"></td>
+                                <td th:text="${option.name}"></td>
+                                <td th:text="${option.team?.name}"></td>
+                                <td th:text="${option.player?.name}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
         </center>
     </div>
