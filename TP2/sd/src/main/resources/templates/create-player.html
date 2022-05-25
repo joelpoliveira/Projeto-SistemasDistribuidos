@@ -18,10 +18,10 @@
 
         <form th:action="@{/player/create}" th:object="${player}" method="post">
             <div>
-                <input type="text" th:field="*{name}" placeholder="Player name" />
+                <input class="input-group input-group-lg" type="text" th:field="*{name}" placeholder="Player name" />
             </div>
             <div>
-                <input type="text" th:field="*{position}" placeholder="Position" />
+                <input class="input-group input-group-lg" type="text" th:field="*{position}" placeholder="Position" />
             </div>
             <div>
                 <label>Birth Date</label>
@@ -29,13 +29,14 @@
             </div>
             <div>
                 <label>Team</label>
-                <select th:field="*{team}">
+                <select th:field="*{team}" class="form-select form-select-lg mb-1">
                     <option value="">Select Team</option>
                     <option th:each="option : ${teams}" th:value="${option.id}" th:text="${option.name}"></option>
                 </select>
             </div>
             <div>
-                <button type="submit">Submit</button>
+                <button type="submit" class="btn btn-outline-primary"
+                style="padding-left: 2.5rem; padding-right: 2.5rem;">Criar jogador</button>
             </div>
         </form>
     </div>

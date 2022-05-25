@@ -2,6 +2,7 @@ package projeto.sd.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import javax.transaction.Transactional;
@@ -22,11 +23,29 @@ public class GameService {
         return game;
     }
 
-    public List<Game> getAllGames(){
+    public List<Game> getAllGames() {
         return gameRepository.findAll();
     }
 
-    public Game getById(int id){
+    public List<Game> getAllActiveGames() {
+        List<Game> games = new ArrayList<>();
+        LocalDateTime now = LocalDateTime.now();
+
+        for (Game game : gameRepository.findAll()) {
+            try {
+                if (!now.isBefore(game.getStartTime()) && !game.getHasEnded()) {
+                    games.add(game);
+                }
+            } catch (NullPointerException e) {
+                // game with null date
+                // System.out.println("Showing game with null date");
+            }
+        }
+
+        return games;
+    }
+
+    public Game getById(int id) {
         return gameRepository.findById(id);
     }
 

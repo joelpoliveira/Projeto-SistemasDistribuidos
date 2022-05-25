@@ -39,6 +39,7 @@ public class Game {
 
     private int teamAScore;
     private int teamBScore;
+    private boolean hasEnded;
 
     public Game() {
 
@@ -49,8 +50,7 @@ public class Game {
         this.startTime = startTime;
         this.teamA = teamA;
         this.teamB = teamB;
-        this.teamAScore = 0;
-        this.teamBScore = 0;
+        this.hasEnded = false;
     }
 
     public int getId() {
@@ -108,6 +108,15 @@ public class Game {
     public void setTeamBScore(int teamBScore) {
         this.teamBScore = teamBScore;
     }
+
+    public boolean getHasEnded() {
+        return this.hasEnded;
+    }
+
+    public void setHasEnded(boolean hasEnded) {
+        this.hasEnded = hasEnded;
+    }
+
 
     @Override
     public String toString() {

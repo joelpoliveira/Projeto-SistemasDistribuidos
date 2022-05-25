@@ -17,24 +17,25 @@
 
         <form th:action="@{/game/create}" th:object="${game}" method="post">
             <div>
-                <select th:field="*{teamA}">
+                <select class="form-select form-select-lg mb-2" th:field="*{teamA}">
                     <option value="">Select Team A</option>
                     <option th:each="option : ${teams}" th:value="${option.id}" th:text="${option.name}"></option>
                 </select>
-                <select th:field="*{teamB}">
+                <select class="form-select form-select-lg mb-2" th:field="*{teamB}">
                     <option value="">Select Team B</option>
                     <option th:each="option : ${teams}" th:value="${option.id}" th:text="${option.name}"></option>
                 </select>
             </div>
             <div>
-                <input type="text" th:field="*{location}" placeholder="Location" />
+                <input class="input-group input-group-lg" type="text" th:field="*{location}" placeholder="Location" />
             </div>
             <div>
                 <label>Starting Time</label>
-                <input type="datetime-local" th:field="*{startTime}" />
+                <input class="input-group input-group-lg" type="datetime-local" th:field="*{startTime}" />
             </div>
             <div>
-                <button type="submit">Submit</button>
+                <button type="submit" class="btn btn-outline-primary"
+                    style="padding-left: 2.5rem; padding-right: 2.5rem;">Criar jogo</button>
             </div>
         </form>
     </div>

@@ -51,7 +51,11 @@ public class GameController {
     }
 
     @PostMapping("/create")
-    public String teamView(@Valid @ModelAttribute Game game, HttpSession session, Model model) {
+    public String teamView(@Valid @ModelAttribute Game game, BindingResult result, Model model) {
+
+        if (result.hasErrors()){
+            return "redirect:/game/create?error";
+        }
         
         gameService.add(game);
         System.out.println("Added game" + game);

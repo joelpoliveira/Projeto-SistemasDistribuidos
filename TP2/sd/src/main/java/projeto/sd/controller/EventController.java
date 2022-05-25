@@ -41,7 +41,7 @@ public class EventController {
     @GetMapping("/create")
     public String createTeam(Model model, HttpSession session) {
         model.addAttribute("event", new Event());
-        model.addAttribute("games", gameService.getAllGames());
+        model.addAttribute("games", gameService.getAllActiveGames());
         model.addAttribute("events", eventService.getPossibleEvents());
         model.addAttribute("teams", eventService.getPlayersByTeam());
         return "create-event";
@@ -49,10 +49,14 @@ public class EventController {
 
     @PostMapping("/create")
     public String teamView(@Valid @ModelAttribute Event event, BindingResult result, Model model) {
+        
         if (result.hasErrors()) {
-            // TODO check qual o erro em event, em vez de ser genérico
             System.out.println("Erro a criar evento");
             return "redirect:/event/create?error";
+        }
+
+        if(event.getName().equals("Fim")){
+            event.getGame().setHasEnded(true);
         }
 
         eventService.add(event);

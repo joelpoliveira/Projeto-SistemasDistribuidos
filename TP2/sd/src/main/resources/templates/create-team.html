@@ -17,11 +17,12 @@
 
         <form th:action="@{/team/create}" th:object="${team}" method="post">
             <div>
-                <input type="text" th:field="*{name}" placeholder="Team name" />
-                <input type="text" th:field="*{imageUrl}" placeholder="Image URL" />
+                <input class="input-group input-group-lg" type="text" th:field="*{name}" placeholder="Team name" />
+                <input class="input-group input-group-lg" type="text" th:field="*{imageUrl}" placeholder="Image URL" />
             </div>
             <div>
-                <button type="submit">Submit</button>
+                <button type="submit" class="btn btn-outline-primary"
+                    style="padding-left: 2.5rem; padding-right: 2.5rem;">Criar equipa</button>
             </div>
         </form>
     </div>

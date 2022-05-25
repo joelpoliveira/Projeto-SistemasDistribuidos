@@ -8,6 +8,9 @@ import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -25,15 +28,24 @@ public class Event {
     @OneToOne
     private Game game;
 
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime created_at;
+
+    @OneToOne
+    private Team team;
+
+    @OneToOne
+    private Player player;
 
     public Event() {
     }
 
-    public Event(String name, Game game) {
+    public Event(String name, Game game, Team team, Player player) {
         this.name = name;
         this.game = game;
         this.created_at = LocalDateTime.now();
+        this.team = team;
+        this.player = player;
     }
 
     public int getId() {
@@ -68,7 +80,6 @@ public class Event {
         this.game = game;
     }
 
-
     public LocalDateTime getCreated_at() {
         return this.created_at;
     }
@@ -77,6 +88,21 @@ public class Event {
         this.created_at = created_at;
     }
 
+    public Team getTeam() {
+        return this.team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
+
+    public Player getPlayer() {
+        return this.player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
 
     @Override
     public String toString() {

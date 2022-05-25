@@ -39,14 +39,19 @@ public class PlayerController {
     TeamService teamService;
 
     @GetMapping("/create")
-    public String createTeam(Model model, HttpSession session) {
+    public String createTeam(Model model) {
         model.addAttribute("player", new Player());
         model.addAttribute("teams", teamService.getAllTeams());
         return "create-player";
     }
 
     @PostMapping("/create")
-    public String teamView(@Valid @ModelAttribute Player player, HttpSession session, Model model) {
+    public String teamView(@Valid @ModelAttribute Player player, BindingResult result, Model model) {
+
+        if (result.hasErrors()){
+            return "redirect:/game/create?error";
+        }
+
         Player tempTeam = playerService.getPlayer(player.getName());
         if (tempTeam == null) {
             playerService.add(player);
