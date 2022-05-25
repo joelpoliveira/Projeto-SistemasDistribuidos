@@ -70,6 +70,15 @@ public class HomeController {
         return "403";
     }
 
+    @GetMapping("/fillAdmin")
+    public String addAdmin(){
+        // Add Admin
+        User admin = new User("admin", "admin", "admin@scoredei.pt", null);
+        admin.setRoles("ADMIN");
+        userService.add(admin);
+        return "redirect:/";
+    }
+
     @GetMapping("/fill")
     public String fillDatabase() {
         // Add Admin
