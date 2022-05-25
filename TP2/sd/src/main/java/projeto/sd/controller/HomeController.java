@@ -9,6 +9,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
+import java.time.LocalDateTime;
 
 import javax.servlet.http.HttpSession;
 
@@ -111,9 +112,9 @@ public class HomeController {
             playerService.add(new Player("D", "Striker", null, t));
         }
 
-        gameService.add(new Game("Lisboa", null, teams.get(0), teams.get(1)));
-        gameService.add(new Game("Lisboa", null, teams.get(0), teams.get(2)));
-        gameService.add(new Game("Lisboa", null, teams.get(3), teams.get(1)));
+        gameService.add(new Game("Lisboa", LocalDateTime.now(), teams.get(0), teams.get(1)));
+        gameService.add(new Game("Lisboa", LocalDateTime.now(), teams.get(0), teams.get(2)));
+        gameService.add(new Game("Lisboa", LocalDateTime.now()  , teams.get(3), teams.get(1)));
 
         return "redirect:/";
     }
