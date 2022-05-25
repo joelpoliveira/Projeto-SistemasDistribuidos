@@ -104,7 +104,13 @@
                     <th:block th:each="option: ${games}">
                         <td:block th:each="option2: ${option.teamA}">
                             <option th:each="option3: ${option2.players}"
-                                th:value="'{&quot;game_id&quot;:' + ${option.id} + ', &quot;team_id&quot;:' + ${option2.id} + ',&quot;player_id&quot;:' + ${option3.id} + '}'" 
+                                th:value="'{&quot;team_id&quot;:' + ${option2.id} + ',&quot;player_id&quot;:' + ${option3.id} + '}'" 
+                                th:text="${option3.name}">
+                            </option>
+                        </td:block>
+                        <td:block th:each="option2: ${option.teamB}">
+                            <option th:each="option3: ${option2.players}"
+                                th:value="'{&quot;team_id&quot;:' + ${option2.id} + ',&quot;player_id&quot;:' + ${option3.id} + '}'" 
                                 th:text="${option3.name}">
                             </option>
                         </td:block>
