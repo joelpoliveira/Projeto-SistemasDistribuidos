@@ -46,13 +46,19 @@
                                 </li>
                             </ul>
                         </li>
+                        <li sec:authorize="isAuthenticated()">
+                            <a th:href="@{/event/create}" class="nav-link px-0 align-middle">
+                                <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">Adicionar
+                                    evento</span></a>
+                        </li>
                         <li>
                             <a th:href="@{/team/all}" class="nav-link px-0 align-middle">
                                 <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">Equipas</span></a>
                         </li>
                         <li>
                             <a th:href="@{/statistics/}" class="nav-link px-0 align-middle">
-                                <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">Estatísticas</span></a>
+                                <i class="fs-4 bi-table"></i> <span
+                                    class="ms-1 d-none d-sm-inline">Estatísticas</span></a>
                         </li>
                         <!-- <li>
                             <a href="#submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">

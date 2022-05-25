@@ -49,14 +49,64 @@ public class EventController {
 
     @PostMapping("/create")
     public String teamView(@Valid @ModelAttribute Event event, BindingResult result, Model model) {
-        
+
         if (result.hasErrors()) {
             System.out.println("Erro a criar evento");
             return "redirect:/event/create?error";
         }
 
-        if(event.getName().equals("Fim")){
-            event.getGame().setHasEnded(true);
+        if (event.getName().equals("Fim")) {
+            Game game = event.getGame();
+            Team A = game.getTeamA();
+            Team B = game.getTeamB();
+
+            // set game as ended
+            game.setHasEnded(true);
+
+            // determine winner/looser and update count
+            if (game.getTeamAScore() > game.getTeamBScore()) {
+                A.setWins(A.getWins() + 1);
+                B.setLosses(B.getLosses() + 1);
+            } else if (game.getTeamAScore() < game.getTeamBScore()) {
+                B.setWins(B.getWins() + 1);
+                A.setLosses(A.getLosses() + 1);
+            } else {
+                A.setTies(A.getTies() + 1);
+                B.setTies(B.getTies() + 1);
+            }
+        }
+
+        if (event.getName().equals("Golo")) {
+            Game game = event.getGame();
+            Team A = game.getTeamA();
+            Team B = game.getTeamB();
+            Team t = event.getTeam();
+            Player p = event.getPlayer();
+
+            if (t == null) {
+                return "redirect:/event/create?noTeamDefined";
+            }
+
+            // if (p == null) {
+            //     return "redirect:/event/create?noPlayerDefined";
+            // }
+
+            // update game score
+            if (A == t) {
+                game.setTeamAScore(game.getTeamAScore() + 1);
+            } else {
+                game.setTeamBScore(game.getTeamBScore() + 1);
+            }
+
+            // update teams total goals
+            A.setGoals(A.getGoals() + 1);
+            B.setGoals(B.getGoals() + 1);
+
+            // update player goals
+            if (p != null) {
+                p.setGoals(p.getGoals() + 1);
+            }
+
         }
 
         eventService.add(event);

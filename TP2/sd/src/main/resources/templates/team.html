@@ -14,15 +14,23 @@
             <h1 th:text="${team.name}"></h1>
             <img th:src="${team.imageUrl}" width="10%" height="10%">
             <h2>Jogadores</h2>
-            <div th:each="option : ${players}">
-                <h4 th:text="${option.name}">ceas</h4>
-            </div>
-            <h2>Estatísticas</h2>
-            <!-- TODO: Cenas para estatisticas -->
-            <!-- <div th:each="option : ${statistics}">
-                <h4 th:text="${option.name}">cenas</h4>
-            </div> -->
         </center>
+        <div class="table-responsive-sm" style="height:600px;overflow:auto;">
+            <table class="table sortable table-active table-responsive">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Golos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="item" th:each="option : ${players}">
+                        <td th:text="${option.name}"></td>
+                        <td th:text="${option.goals}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
 </html>
