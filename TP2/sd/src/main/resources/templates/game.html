@@ -14,7 +14,7 @@
             <h1 th:text="${game.teamA.name} + ' - ' + ${game.teamB.name}">Teams</h1>
             <h2 th:text="${game.teamAScore} + ' - ' + ${game.teamBScore}">Score</h2>
             <h3 th:text="'Localização: ' + ${game.location}">Local</h3>
-            <h3 th:text="'Inicio: ' + ${game.startTime}">Time</h3>
+            <h3 th:text="'Inicio: ' + ${#temporals.format(game.startTime, 'dd-MM-yyyy HH:mm')}">Time</h3>
 
             <div sec:authorize="isAuthenticated()">
                 <form th:action="@{/event/create}" method="get">
