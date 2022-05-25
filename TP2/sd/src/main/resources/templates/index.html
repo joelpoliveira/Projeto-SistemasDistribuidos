@@ -11,20 +11,43 @@
 <body>
     <div layout:fragment="content">
         <h3 th:text="${#lists.isEmpty(games)} ? 'Não há jogos a decorrer' : 'Jogos a decorrer' "></h3>
-        <table class="table table-sm">
-            <thead>
-                <tr th:each="game: ${games}">
-                    <td
-                        th:text="${game.teamA.name} + ' - ' + ${game.teamB.name} + ' (' + ${game.teamAScore} + ' - ' + ${game.teamBScore} + ')' ">
-                        Jogo</td>
-                    <td>
-                        <a th:href="@{'/game/'+${game.id}}">
-                            <button type="button" class="btn btn-outline-secondary">Selecionar</button>
-                        </a>
-                    </td>
-                </tr>
-            </thead>
-        </table>
+        <div class="table-responsive-sm" style="height:420px;overflow:auto;">
+            <table class="table sortable table-active table-responsive">
+                <tbody>
+                    <tr th:each="game: ${games}">
+                        <td
+                            th:text="${game.teamA.name} + ' - ' + ${game.teamB.name} + ' (' + ${game.teamAScore} + ' - ' + ${game.teamBScore} + ')' ">
+                            Jogo</td>
+                        <td>
+                            <a th:href="@{'/game/'+${game.id}}">
+                                <button type="button" class="btn btn-outline-secondary">Selecionar</button>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3 th:text="${#lists.isEmpty(past_games)} ? 'Não existem jogos passados' : 'Jogos passados' "></h3>
+        <div class="table-responsive-sm" style="height:420px;overflow:auto;">
+            <table class="table sortable table-active table-responsive">
+                <tbody>
+                    <tr th:each="game: ${past_games}">
+                        <td
+                            th:text="${game.teamA.name} + ' - ' + ${game.teamB.name} + ' (' + ${game.teamAScore} + ' - ' + ${game.teamBScore} + ')' ">
+                            Jogo</td>
+                        <td th:text="${#temporals.format(game.startTime, 'dd-MM-yyyy HH:mm')}"></td>
+                        <td>
+                            <a th:href="@{'/game/'+${game.id}}">
+                                <button type="button" class="btn btn-outline-secondary">Selecionar</button>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <p>Um jogo é dado por terminado se alguem fizer o registo do evento "Fim" ou passado 4 horas do seu início.</p>
     </div>
 </body>
 

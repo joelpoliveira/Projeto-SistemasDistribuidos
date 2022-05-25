@@ -41,7 +41,25 @@ public class GameService {
                 // System.out.println("Showing game with null date");
             }
         }
+        return games;
+    }
 
+    public List<Game> getAllNonActiveGames(){
+        List<Game> games = new ArrayList<>();
+        LocalDateTime now = LocalDateTime.now();
+
+        for (Game game : gameRepository.findAll()) {
+            try {
+                // Non active games -> game has ended or 4 hours since game start have passed
+                // in case peole don't report the end of the game
+                if (game.getHasEnded() || game.getStartTime().plusHours(4).isBefore(now)) {
+                    games.add(game);
+                }
+            } catch (NullPointerException e) {
+                // game with null date
+                // System.out.println("Showing game with null date");
+            }
+        }
         return games;
     }
 

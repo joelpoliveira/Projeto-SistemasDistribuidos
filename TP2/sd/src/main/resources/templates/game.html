@@ -16,7 +16,7 @@
             <h3 th:text="'Localização: ' + ${game.location}">Local</h3>
             <h3 th:text="'Inicio: ' + ${#temporals.format(game.startTime, 'dd-MM-yyyy HH:mm')}">Time</h3>
 
-            <div sec:authorize="isAuthenticated()">
+            <div sec:authorize="isAuthenticated()" th:if="${game.hasEnded == false}">
                 <form th:action="@{/event/create}" method="get">
                     <button type="submit">Add event</button>
                 </form>
