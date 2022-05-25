@@ -34,7 +34,7 @@
                         </thead>
                         <tbody>
                             <tr class="item" th:each="option : ${events}">
-                                <td th:text="${option.created_at}"></td>
+                                <td th:text="${#temporals.format(option.created_at, 'dd-MM-yyyy HH:mm')}"></td>
                                 <td th:text="${option.name}"></td>
                                 <td th:text="${option.team?.name}"></td>
                                 <td th:text="${option.player?.name}"></td>
