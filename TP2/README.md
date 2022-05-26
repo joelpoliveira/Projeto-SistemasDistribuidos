@@ -4,29 +4,17 @@
 
 ### Base de dados
 
-Existem duas maneiras de correr o containner com a base de dados:
-
-- Abrir o vscode na pasta backend e selecionar Open remote window > Reopen in containner
-- Usar o comando `docker-compose up` para correr separadamente
+- Usar o comando `docker-compose up` para correr o containner. 
+- É possível usar a flag `-d` para o containner ficar a correr em background, não sendo preciso vários terminais.
+- Usar o comando `docker-compose down` ou `docker stop projeto-sd` para parar o containner.
 
 É possível aceder CLI do postegresql com o comando: `psql postgres://postgres:admin@localhost:6000/projeto-sd`
 
 ### API
 
-- Usar o comando `./mvnw spring-boot:run` ou `./run`
+- Usar o comando `java -jar sd.war`
 
-## Endpoints
+### ENV
 
-### Random
+Adicionar uma chave de autenticação da [Sport-API](https://api-sports.io/) para poder usar dados desta API.
 
-- [/home](http://127.0.0.1:8080/home)
-
-### Auth
-
-- [/auth/register](http://127.0.0.1:8080/auth/register)
-- [/auth/login](http://127.0.0.1:8080/auth/login)
-- [/auth/logout](http://127.0.0.1:8080/auth/logout)
-
-### Team
-
-- [/team/create](http://127.0.0.1:8080/team/create)
