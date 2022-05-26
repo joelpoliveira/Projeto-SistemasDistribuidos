@@ -39,7 +39,7 @@
                             <ul class="collapse show nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
                                 <li class="w-100">
                                     <a th:href="@{/fill}" class="nav-link px-0"> <span
-                                            class="d-none d-sm-inline">Random</span></a>
+                                            class="d-none d-sm-inline">Custom</span></a>
                                 </li>
                                 <li>
                                     <a th:href="@{/fill-API}" class="nav-link px-0"> <span
@@ -62,21 +62,6 @@
                                 <i class="fs-4 bi-table"></i> <span
                                     class="ms-1 d-none d-sm-inline">Estatísticas</span></a>
                         </li>
-                        <!-- <li>
-                            <a href="#submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
-                                <i class="fs-4 bi-bootstrap"></i> <span class="ms-1 d-none d-sm-inline">TODO
-                                    2</span></a>
-                            <ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
-                                <li class="w-100">
-                                    <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Item</span>
-                                        1</a>
-                                </li>
-                                <li>
-                                    <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Item</span>
-                                        2</a>
-                                </li>
-                            </ul>
-                        </li> -->
                         <li sec:authorize="hasAuthority('ADMIN')">
                             <a href="#submenu3" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
                                 <i class="fs-4 bi-grid"></i> <span class="ms-1 d-none d-sm-inline">Admin panel</span>
@@ -84,15 +69,15 @@
                             <ul class="collapse nav flex-column ms-1" id="submenu3" data-bs-parent="#menu">
                                 <li class="w-100">
                                     <a th:href="@{/team/create}" class="nav-link px-0"> <span
-                                            class="d-none d-sm-inline">Create Team</span></a>
+                                            class="d-none d-sm-inline">Criar equipa</span></a>
                                 </li>
                                 <li>
                                     <a th:href="@{/player/create}" class="nav-link px-0"> <span
-                                            class="d-none d-sm-inline">Create Player</span></a>
+                                            class="d-none d-sm-inline">Criar jogador</span></a>
                                 </li>
                                 <li>
                                     <a th:href="@{/game/create}" class="nav-link px-0"> <span
-                                            class="d-none d-sm-inline">Create Game</span></a>
+                                            class="d-none d-sm-inline">Criar jogo</span></a>
                                 </li>
                             </ul>
                         </li>
