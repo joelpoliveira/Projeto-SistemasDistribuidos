@@ -60,9 +60,8 @@ public class HomeController {
 
     @GetMapping("/")
     public String homepage(Model model, HttpSession session) {
-        // model.addAttribute("games", gameService.getAllGames());
-        model.addAttribute("games", gameService.getAllActiveGames());
         model.addAttribute("past_games", gameService.getAllNonActiveGames());
+        model.addAttribute("games", gameService.getAllActiveGames());
 
         if (session.getAttribute("username") != null)
             model.addAttribute("username", session.getAttribute("username"));

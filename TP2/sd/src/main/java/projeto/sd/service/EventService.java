@@ -23,6 +23,48 @@ public class EventService {
     TeamService teamService;
 
     public Event add(Event event) {
+        if (event.getName().equals("Fim")) {
+            Game game = event.getGame();
+            Team A = game.getTeamA();
+            Team B = game.getTeamB();
+
+            // set game as ended
+            game.setHasEnded(true);
+
+            // determine winner/looser and update count
+            if (game.getTeamAScore() > game.getTeamBScore()) {
+                A.setWins(A.getWins() + 1);
+                B.setLosses(B.getLosses() + 1);
+            } else if (game.getTeamAScore() < game.getTeamBScore()) {
+                B.setWins(B.getWins() + 1);
+                A.setLosses(A.getLosses() + 1);
+            } else {
+                A.setTies(A.getTies() + 1);
+                B.setTies(B.getTies() + 1);
+            }
+        }
+
+        if (event.getName().equals("Golo")) {
+            Game game = event.getGame();
+            Team A = game.getTeamA();
+            Team B = game.getTeamB();
+            Team t = event.getTeam();
+            Player p = event.getPlayer();
+
+            // update game score and team goals
+            if (A == t) {
+                game.setTeamAScore(game.getTeamAScore() + 1);
+                A.setGoals(A.getGoals() + 1);
+            } else {
+                game.setTeamBScore(game.getTeamBScore() + 1);
+                B.setGoals(B.getGoals() + 1);
+            }
+
+            // update player goals
+
+            p.setGoals(p.getGoals() + 1);
+        }
+
         eventRepository.save(event);
         return event;
     }
@@ -51,5 +93,15 @@ public class EventService {
         }
 
         return response;
+    }
+
+    public boolean checkEnd(Game game) {
+        List<Event> events = getEventsByGameId(game.getId());
+        for (Event event : events) {
+            if (event.getName().equals("Fim")) {
+                return true;
+            }
+        }
+        return false;
     }
 }

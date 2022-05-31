@@ -18,6 +18,9 @@ public class GameService {
     @Autowired
     GameRepository gameRepository;
 
+    @Autowired
+    EventService eventService;
+
     public Game add(Game game) {
         gameRepository.save(game);
         return game;
@@ -33,7 +36,7 @@ public class GameService {
 
         for (Game game : gameRepository.findAll()) {
             try {
-                if (!now.isBefore(game.getStartTime()) && !game.getHasEnded()) {
+                if (now.isAfter(game.getStartTime()) && !game.getHasEnded()) {
                     games.add(game);
                 }
             } catch (NullPointerException e) {
@@ -44,15 +47,20 @@ public class GameService {
         return games;
     }
 
-    public List<Game> getAllNonActiveGames(){
+    public List<Game> getAllNonActiveGames() {
         List<Game> games = new ArrayList<>();
         LocalDateTime now = LocalDateTime.now();
 
         for (Game game : gameRepository.findAll()) {
             try {
                 // Non active games -> game has ended or 4 hours since game start have passed
-                // in case peole don't report the end of the game
+                // just in case peole don't report the end of the game
                 if (game.getHasEnded() || game.getStartTime().plusHours(4).isBefore(now)) {
+                    // check se tem o evento de Fim
+                    if (!eventService.checkEnd(game)) {
+                        // adicionar o evento Fim, caso nao tenha sido adicionado
+                        eventService.add(new Event("Fim", game, null, null));
+                    }
                     games.add(game);
                 }
             } catch (NullPointerException e) {

@@ -12,7 +12,7 @@
     <div layout:fragment="content">
         <h3 th:text="${#lists.isEmpty(games)} ? 'Não há jogos a decorrer' : 'Jogos a decorrer' "></h3>
         <div class="table-responsive-sm" style="height:420px;overflow:auto;">
-            <table class="table sortable table-active table-responsive">
+            <table class="table table-active table-responsive">
                 <tbody>
                     <tr th:each="game: ${games}">
                         <td
@@ -30,7 +30,7 @@
 
         <h3 th:text="${#lists.isEmpty(past_games)} ? 'Não existem jogos passados' : 'Jogos passados' "></h3>
         <div class="table-responsive-sm" style="height:420px;overflow:auto;">
-            <table class="table sortable table-active table-responsive">
+            <table class="table table-active table-responsive">
                 <tbody>
                     <tr th:each="game: ${past_games}">
                         <td

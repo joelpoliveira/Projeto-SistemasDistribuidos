@@ -3,37 +3,37 @@
 
 <head>
     <script type="text/javascript">
-        function update_teams(){
+        function update_teams() {
             value = document.getElementById("game_id").value;
             var teams_list = document.getElementById("teams");
 
-            for (let i = 0; i < teams_list.length; i++){
+            for (let i = 0; i < teams_list.length; i++) {
                 team = teams_list[i];
 
-                if (team.value != ""){
+                if (team.value != "") {
                     game_value = team.getAttribute('data-game')
-                    if (game_value === value){
+                    if (game_value === value) {
                         team.removeAttribute("hidden");
-                    }else{
+                    } else {
                         team.setAttribute("hidden", "hidden");
                     }
                 }
             }
-            teams_list.selectedIndex=0;
+            teams_list.selectedIndex = 0;
         }
 
-        function update_players(){
+        function update_players() {
             value = document.getElementById("teams").value;
             players_list = document.getElementById("players");
 
-            for (let i = 0; i < players_list.length; i++){
+            for (let i = 0; i < players_list.length; i++) {
                 player = players_list[i];
 
-                if (player.value!=""){
+                if (player.value != "") {
                     team_value = player.getAttribute('data-team');
-                    if (team_value===value){
+                    if (team_value === value) {
                         player.removeAttribute("hidden");
-                    }else{
+                    } else {
                         player.setAttribute("hidden", "hidden");
                     }
                 }
@@ -79,15 +79,12 @@
             </div>
 
             <div>
-                <select class="form-select form-select-lg mb-2" th:field="*{team}" style="visibility: visible" id="teams" onchange="update_players()">
+                <select class="form-select form-select-lg mb-2" th:field="*{team}" style="visibility: visible"
+                    id="teams" onchange="update_players()">
                     <option value="">Select Team</option>
-                    <option th:each="option: ${games}" 
-                        th:data-game="${option.id}"
-                        th:value="${option.teamA.id}" 
+                    <option th:each="option: ${games}" th:data-game="${option.id}" th:value="${option.teamA.id}"
                         th:text="${option.teamA.name}" hidden></option>
-                    <option th:each="option: ${games}" 
-                        th:data-game="${option.id}"
-                        th:value="${option.teamB.id}" 
+                    <option th:each="option: ${games}" th:data-game="${option.id}" th:value="${option.teamB.id}"
                         th:text="${option.teamB.name}" hidden></option>
                 </select>
             </div>
@@ -97,17 +94,13 @@
                     <option value="">Select Player</option>
                     <th:block th:each="option: ${games}">
                         <td:block th:each="option2: ${option.teamA}">
-                            <option th:each="option3: ${option2.players}"
-                                th:data-team="${option2.id}"
-                                th:value="${option3.id}" 
-                                th:text="${option3.name}">
+                            <option th:each="option3: ${option2.players}" th:data-team="${option2.id}"
+                                th:value="${option3.id}" th:text="${option3.name}">
                             </option>
                         </td:block>
                         <td:block th:each="option2: ${option.teamB}">
-                            <option th:each="option3: ${option2.players}"
-                                th:data-team="${option2.id}"
-                                th:value="${option3.id}" 
-                                th:text="${option3.name}">
+                            <option th:each="option3: ${option2.players}" th:data-team="${option2.id}"
+                                th:value="${option3.id}" th:text="${option3.name}">
                             </option>
                         </td:block>
                     </th:block>
