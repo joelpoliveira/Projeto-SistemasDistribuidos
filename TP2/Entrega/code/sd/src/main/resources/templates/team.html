@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout">
+
+<head>
+    <div layout:fragment="head">
+        <title>Team</title>
+    </div>
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <center>
+            <h1 th:text="${team.name}"></h1>
+            <img th:src="${team.imageUrl}" width="10%" height="10%">
+            <h2>Jogadores</h2>
+        </center>
+        <div class="table-responsive-sm" style="height:600px;overflow:auto;">
+            <table class="table sortable table-active table-responsive">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Golos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="item" th:each="option : ${players}">
+                        <td th:text="${option.name}"></td>
+                        <td th:text="${option.goals}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</html>

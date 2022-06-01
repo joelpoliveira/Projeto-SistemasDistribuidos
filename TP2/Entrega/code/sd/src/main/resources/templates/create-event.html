@@ -1,0 +1,120 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout">
+
+<head>
+    <script type="text/javascript">
+        function update_teams() {
+            value = document.getElementById("game_id").value;
+            var teams_list = document.getElementById("teams");
+
+            for (let i = 0; i < teams_list.length; i++) {
+                team = teams_list[i];
+
+                if (team.value != "") {
+                    game_value = team.getAttribute('data-game')
+                    if (game_value === value) {
+                        team.removeAttribute("hidden");
+                    } else {
+                        team.setAttribute("hidden", "hidden");
+                    }
+                }
+            }
+            teams_list.selectedIndex = 0;
+        }
+
+        function update_players() {
+            value = document.getElementById("teams").value;
+            players_list = document.getElementById("players");
+
+            for (let i = 0; i < players_list.length; i++) {
+                player = players_list[i];
+
+                if (player.value != "") {
+                    team_value = player.getAttribute('data-team');
+                    if (team_value === value) {
+                        player.removeAttribute("hidden");
+                    } else {
+                        player.setAttribute("hidden", "hidden");
+                    }
+                }
+            }
+            players_list.selectedIndex = 0;
+        }
+    </script>
+
+    <div layout:fragment="header">
+        <title>Create event</title>
+    </div>
+</head>
+
+<body>
+    <div layout:fragment="content">
+
+        <div th:if="${param.error}" class="alert alert-danger" role="alert">
+            Erro a criar evento!
+        </div>
+
+        <div th:if="${param.noTeamDefined}" class="alert alert-danger" role="alert">
+            Erro: É necessário escolher uma equipa para o evento selecionado
+        </div>
+
+        <div th:if="${param.noPlayerDefined}" class="alert alert-danger" role="alert">
+            Erro: É necessário escolher um jogador para o evento selecionado
+        </div>
+
+        <form th:action="@{/event/create}" th:object="${event}" method="post">
+            <div>
+                <select class="form-select form-select-lg mb-2" th:field="*{game}" id="game_id"
+                    onchange="update_teams()" required>
+                    <option value="">Select Game</option>
+                    <option th:each="option : ${games}" th:value="${option.id}"
+                        th:text="${option.teamA.name} + ' vs ' + ${option.teamB.name}"></option>
+                </select>
+            </div>
+            <div>
+                <select class="form-select form-select-lg mb-2" th:field="*{name}" id="option_list" required>
+                    <option value="">Select Event</option>
+                    <option th:each="option : ${events}" th:value="${option}" th:text="${option}"></option>
+                </select>
+            </div>
+
+            <div>
+                <select class="form-select form-select-lg mb-2" th:field="*{team}" style="visibility: visible"
+                    id="teams" onchange="update_players()">
+                    <option value="">Select Team</option>
+                    <option th:each="option: ${games}" th:data-game="${option.id}" th:value="${option.teamA.id}"
+                        th:text="${option.teamA.name}" hidden></option>
+                    <option th:each="option: ${games}" th:data-game="${option.id}" th:value="${option.teamB.id}"
+                        th:text="${option.teamB.name}" hidden></option>
+                </select>
+            </div>
+
+            <div>
+                <select class="form-select form-select-lg mb-2" th:field="*{player}" id="players">
+                    <option value="">Select Player</option>
+                    <th:block th:each="option: ${games}">
+                        <td:block th:each="option2: ${option.teamA}">
+                            <option th:each="option3: ${option2.players}" th:data-team="${option2.id}"
+                                th:value="${option3.id}" th:text="${option3.name}">
+                            </option>
+                        </td:block>
+                        <td:block th:each="option2: ${option.teamB}">
+                            <option th:each="option3: ${option2.players}" th:data-team="${option2.id}"
+                                th:value="${option3.id}" th:text="${option3.name}">
+                            </option>
+                        </td:block>
+                    </th:block>
+                </select>
+            </div>
+
+            <div>
+                <button type="submit" class="btn btn-outline-primary"
+                    style="padding-left: 2.5rem; padding-right: 2.5rem;">Criar evento</button>
+            </div>
+        </form>
+
+    </div>
+
+</body>
+
+</html>

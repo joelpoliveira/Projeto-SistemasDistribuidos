@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout">
+
+<head>
+    <div layout:fragment="head">
+        <title>Estatísticas</title>
+    </div>
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <table class="table sortable table-active">
+            <thead>
+                <tr>
+                    <th>Equipa</th>
+                    <th>Jogos</th>
+                    <th>Vitórias</th>
+                    <th>Derrotas</th>
+                    <th>Empates</th>
+                    <th>Golos</th>
+                    <th>Melhor marcador</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="item" th:each="option : ${teams}">
+                    <td th:text="${option.name}"></td>
+                    <td th:text="${option.getNumberGames()}"></td>
+                    <td th:text="${option.wins}"></td>
+                    <td th:text="${option.losses}"></td>
+                    <td th:text="${option.ties}"></td>
+                    <td th:text="${option.goals}"></td>
+                    <td th:text="${option.bestScorer?.name}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,43 @@
+</html>
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout">
+
+<head>
+    <div layout:fragment="head">
+        <title>Teams</title>
+    </div>
+</head>
+
+<body>
+    <div layout:fragment="content">
+
+        <div th:if="${param.noTeam}" class="alert alert-danger" role="alert">
+            Equipa não existe!
+        </div>
+
+        <div>
+            <h2>Teams</h2>
+        </div>
+
+        <div class="table-responsive-sm" style="height:800px;overflow:auto;">
+            <table class="table sortable table-active table-responsive">
+                <thead>
+
+                </thead>
+                <tbody>
+                    <tr class="item" th:each="option : ${teams}">
+                        <td th:text="${option.name}"></td>
+                        <td>
+                            <a th:href="@{'/team/'+${option.id}}">
+                                <button type="button" class="btn btn-outline-secondary">Selecionar</button>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</html>

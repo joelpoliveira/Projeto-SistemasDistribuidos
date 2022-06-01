@@ -1,0 +1,32 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout">
+
+<head>
+    <div layout:fragment="header">
+        <title>Create Team</title>
+    </div>
+</head>
+
+<body>
+
+    <div layout:fragment="content">
+
+        <div th:if="${param.error}" class="alert alert-danger" role="alert">
+            Erro a criar equipa!
+        </div>
+
+        <form th:action="@{/team/create}" th:object="${team}" method="post">
+            <div>
+                <input class="input-group input-group-lg" type="text" th:field="*{name}" placeholder="Team name" />
+                <input class="input-group input-group-lg" type="text" th:field="*{imageUrl}" placeholder="Image URL" />
+            </div>
+            <div>
+                <button type="submit" class="btn btn-outline-primary"
+                    style="padding-left: 2.5rem; padding-right: 2.5rem;">Criar equipa</button>
+            </div>
+        </form>
+    </div>
+
+</body>
+
+</html>

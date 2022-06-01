@@ -1,0 +1,44 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout">
+
+<head>
+    <div layout:fragment="header">
+        <title>Create Game</title>
+    </div>
+</head>
+
+<body>
+    <div layout:fragment="content">
+
+        <div th:if="${param.error}" class="alert alert-danger" role="alert">
+            Erro a criar Jogo!
+        </div>
+
+
+        <form th:action="@{/game/create}" th:object="${game}" method="post">
+            <div>
+                <select class="form-select form-select-lg mb-2" th:field="*{teamA}">
+                    <option value="">Select Team A</option>
+                    <option th:each="option : ${teams}" th:value="${option.id}" th:text="${option.name}"></option>
+                </select>
+                <select class="form-select form-select-lg mb-2" th:field="*{teamB}">
+                    <option value="">Select Team B</option>
+                    <option th:each="option : ${teams}" th:value="${option.id}" th:text="${option.name}"></option>
+                </select>
+            </div>
+            <div>
+                <input class="input-group input-group-lg" type="text" th:field="*{location}" placeholder="Location" />
+            </div>
+            <div>
+                <label>Starting Time</label>
+                <input class="input-group input-group-lg" type="datetime-local" th:field="*{startTime}" />
+            </div>
+            <div>
+                <button type="submit" class="btn btn-outline-primary"
+                    style="padding-left: 2.5rem; padding-right: 2.5rem;">Criar jogo</button>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
